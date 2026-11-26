@@ -1,0 +1,41 @@
+// SplitLang Live Demo Script — Weekend Group Outing (VND)
+// Run with: python cli.py examples/dinner_demo.split --inspect
+// Or click "Run Demo Script" in the SplitLang GUI!
+
+group "Saigon Weekend"
+currency VND
+reset
+add members alice, bob, charlie, dave
+
+// 1. Equal split with arithmetic expression (operator precedence: * before +)
+alice paid 120k + 30k * 4 for "Grab & Parking" split equally on 26-11-2026
+
+// 2. Equal split excluding a member who skipped coffee
+bob paid 180k for "Specialty Coffee" excluding dave on 26-11-2026
+
+// 3. Exact split with tax modifier
+charlie paid 300k for "Cinema Tickets" split exact alice: 100k, bob: 80k, charlie: 60k, dave: 60k on 26-11-2026
+
+// 4. Percentage split for karaoke room
+dave paid 500k for "Karaoke Room" split percent alice: 30%, bob: 30%, charlie: 20%, dave: 20% on 26-11-2026
+
+// 5. Ratio / weighted split with discount
+alice paid 400k for "Hotpot" split ratio alice: 2, bob: 1, charlie: 1, dave: 1 with discount 50k on 26-11-2026
+
+// 6. Block-structured Itemized Bill with proportional tax & tip
+bill "BBQ Night" paid by bob on 26-11-2026 {
+    item "Wagyu Beef Platter" 480k for all
+    item "Craft Beer Tower" 240k for alice, bob, dave
+    item "Matcha Iced Tea" 60k for charlie
+    discount 60k
+    tax 10%
+    tip 5%
+}
+
+// 7. Partial repayment
+dave pays alice 100k for "partial payback" on 26-11-2026
+
+// 8. Queries & Optimal Minimum-Transfer Settlement Plan
+show summary
+show balances
+settle up
