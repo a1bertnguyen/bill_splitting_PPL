@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SplitLang — Bill-Splitting Custom DSL (ANTLR 4.9.2)</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Header -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo">SL</div>
+        <div>
+          <div class="brand-title">SplitLang</div>
+          <div class="brand-sub">Bill-Splitting Custom DSL &middot; ANTLR 4.9.2 Five-Stage Interpreter</div>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <div class="group-picker">
+          <span class="group-picker-label">Group</span>
+          <select id="groupSelect" title="Switch active group"></select>
+          <span id="currencyBadge" class="currency-pill">VND</span>
+        </div>
+
+        <div class="demo-dropdown">
+          <select id="demoSelect" title="Choose demo scenario">
+            <option value="dinner">Saigon Weekend (VND)</option>
+            <option value="trip">Tokyo Trip (USD)</option>
+          </select>
+          <button id="btnRunDemo" class="btn btn-emerald">Run Demo</button>
+        </div>
+
+        <label class="btn btn-secondary file-btn">
+          Open .split
+          <input id="fileInput" type="file" accept=".split,.txt" hidden />
+        </label>
+        <button id="btnUndo" class="btn btn-secondary" title="Undo last expense or settlement">Undo</button>
+        <button id="btnHelp" class="btn btn-secondary" title="Show DSL syntax reference">Help</button>
+        <button id="btnReset" class="btn btn-danger" title="Clear active group">Reset</button>
+      </div>
+    </header>
+
+    <!-- Main 2-Column Workspace -->
+    <main class="workspace">
+      <!-- Left Column: Interactive DSL Console & Editor -->
+      <section class="panel console-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span class="dot dot-cyan"></span>
+            DSL Console &amp; Transcript
+          </div>
+          <button id="btnClearLog" class="btn-ghost">Clear Log</button>
+        </div>
+
+        <div id="consoleLog" class="console-log" aria-live="polite"></div>
+
+        <div class="chips-section">
+          <span class="chips-label">Quick insert:</span>
+          <div id="quickChips" class="chips-list"></div>
+        </div>
+
+        <div class="editor-section">
+          <div class="editor-meta">
+            <span>Enter SplitLang command or multi-line script</span>
+            <span class="kbd-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> to run &middot; <kbd>&uarr;</kbd>/<kbd>&darr;</kbd> history</span>
+          </div>
+          <div class="editor-row">
+            <textarea
+              id="dslInput"
+              class="dsl-input"
+              rows="5"
+              spellcheck="false"
+              placeholder='e.g. alice paid 120k + 30k * 2 for "Hotpot" split equally with tax 10%'
+            ></textarea>
+            <button id="btnRun" class="btn btn-primary run-btn">
+              <span>Run DSL</span>
+              <small>Ctrl+Enter</small>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Live Dashboard & PPL Pipeline Inspector -->
+      <section class="panel dashboard-panel">
+        <nav class="tabs-bar" role="tablist">
+          <button class="tab-btn active" data-tab="balances" role="tab">Balances &amp; Settle Up</button>
+          <button class="tab-btn" data-tab="expenses" role="tab">
+            Expenses &amp; Bills <span id="expenseCountBadge" class="tab-badge">0</span>
+          </button>
+          <button class="tab-btn" data-tab="ppl" role="tab">
+            PPL Inspector <span class="tab-badge badge-indigo">5 Stages</span>
+          </button>
+        </nav>
+
+        <!-- Tab 1: Balances & Settle Up -->
+        <div id="tab-balances" class="tab-content active">
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-label">Total Spent</div>
+              <div id="kpiTotalSpent" class="kpi-value text-cyan">0 VND</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Members</div>
+              <div id="kpiMembers" class="kpi-value text-violet">0</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Expenses / Bills</div>
+              <div id="kpiExpenses" class="kpi-value text-amber">0</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Min Transfers</div>
+              <div id="kpiTransfers" class="kpi-value text-emerald">0</div>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-title">Member Balances</div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Member</th>
+                    <th class="num">Total Paid</th>
+                    <th class="num">Total Share</th>
+                    <th class="num">Net Balance</th>
+                  </tr>
+                </thead>
+                <tbody id="balancesBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-title text-emerald">
+              Optimal Settlement Plan
+              <span class="section-sub">Greedy Minimum Cash Flow (&le; N &minus; 1 transfers)</span>
+            </div>
+            <div id="transfersList" class="transfers-list"></div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Expenses & Bills -->
+        <div id="tab-expenses" class="tab-content">
+          <div class="section-title">
+            Recorded Expenses &amp; Itemized Bills
+            <span class="section-sub">Newest first &middot; Largest-Remainder exact rounding</span>
+          </div>
+          <div id="expensesList" class="expenses-list"></div>
+        </div>
+
+        <!-- Tab 3: PPL Inspector -->
+        <div id="tab-ppl" class="tab-content">
+          <div id="pipelineStepper" class="pipeline-stepper">
+            <div class="stage-step" data-stage="1"><span class="stage-num">1</span> Input</div>
+            <div class="stage-arrow">&rarr;</div>
+            <div class="stage-step" data-stage="2"><span class="stage-num">2</span> Lexer</div>
+            <div class="stage-arrow">&rarr;</div>
+            <div class="stage-step" data-stage="3"><span class="stage-num">3</span> Parser</div>
+            <div class="stage-arrow">&rarr;</div>
+            <div class="stage-step" data-stage="4"><span class="stage-num">4</span> Visitor &amp; AST</div>
+            <div class="stage-arrow">&rarr;</div>
+            <div class="stage-step" data-stage="5"><span class="stage-num">5</span> Action &amp; DB</div>
+          </div>
+
+          <div class="inspector-card">
+            <div class="inspector-header">
+              <span>Stage 2 &middot; Lexical Analysis (SplitLangLexer Tokens)</span>
+              <span id="tokenCountBadge" class="mini-pill">0 tokens</span>
+            </div>
+            <div id="tokensView" class="tokens-grid">
+              <div class="empty-muted">Run any SplitLang command to inspect tokens.</div>
+            </div>
+          </div>
+
+          <div class="inspector-grid">
+            <div class="inspector-card">
+              <div class="inspector-header">
+                <span>Stage 3 &middot; Concrete Parse Tree (SplitLangParser)</span>
+              </div>
+              <pre id="parseTreeView" class="code-box">(no parse tree yet)</pre>
+            </div>
+
+            <div class="inspector-card">
+              <div class="inspector-header">
+                <span>Stage 4 &middot; Abstract Syntax Tree (Distilled Op Nodes)</span>
+              </div>
+              <pre id="astTreeView" class="code-box ast-box">(no AST yet)</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

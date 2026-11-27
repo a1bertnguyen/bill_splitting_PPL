@@ -13,7 +13,7 @@
 | 1 | `[Member 1 Full Name]` | `[ITITIU...]` | Language & Grammar Design (`SplitLang.g4`), ANTLR 4.9.2 Lexer/Parser pipeline, Unit tests for Lexer/Parser |
 | 2 | `[Member 2 Full Name]` | `[ITITIU...]` | Visitor & AST Generation (`ASTGeneration.py`, `ASTutils.py`), Semantic Analysis & Validation |
 | 3 | `[Member 3 Full Name]` | `[ITITIU...]` | Financial Domain Engine (`utilFunction.py`: Decimal math, Largest-Remainder rounding, Min-Cash-Flow algorithm) & SQLite Database (`Database.py`) |
-| 4 | `[Member 4 Full Name]` | `[ITITIU...]` | Desktop GUI with Live PPL Inspector (`main.py`), CLI Script Runner (`cli.py`), Demo scripts & Report |
+| 4 | `[Member 4 Full Name]` | `[ITITIU...]` | Web Frontend & FastAPI Backend (`frontend/`, `api/server.py`) with Live 5-Stage PPL Inspector, CLI runner, Demo scripts & Report |
 
 *(Adjust rows to match your actual team size: 2 to 4 members.)*
 
@@ -73,7 +73,7 @@ While general-purpose Large Language Models (LLMs) can parse free-form text, the
 | **AST & Visitor** | `module/ASTGeneration.py`, `module/ASTutils.py` | Gang-of-Four **Visitor Pattern** subclassing `SplitLangVisitor`. Strips syntactic sugar (`for`, `,`, `{`, `}`, `?`) and produces typed Command AST nodes (`ExpenseOp`, `BillOp`, `SettleOp`, `QueryOp`, etc.). |
 | **Financial Split Engine** | `module/utilFunction.py` | Base-10 `Decimal` arithmetic (zero IEEE-754 float drift) + **Largest-Remainder (Hamilton) Rounding** guaranteeing `sum(shares) == total` to the last VND/cent + **Greedy Minimum Cash Flow** algorithm reducing debt settlement to at most `N - 1` transfers. |
 | **Persistence** | `module/Database.py` | Embedded relational **SQLite** database (`groups`, `members`, `expenses`, `expense_shares`, `settlements`, `action_log`) enabling zero-setup offline execution and `undo`/`reset`. |
-| **User Interfaces** | `main.py`, `cli.py` | Tkinter dark-themed Desktop App with live Balances/Expenses dashboard + **PPL Inspector** (Tokens, Parse Tree, AST), plus an interactive CLI REPL and `.split` script runner. |
+| **User Interfaces** | `api/server.py`, `frontend/`, `cli.py` | FastAPI REST backend + modern HTML/CSS/JS Web Frontend with live Balances/Expenses dashboard, one-click settlement, and interactive **5-Stage PPL Inspector** (color-coded Tokens, Parse Tree, AST), plus interactive CLI REPL. |
 
 ---
 

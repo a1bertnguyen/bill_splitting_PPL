@@ -231,30 +231,35 @@ class SplitLangInterpreter:
         }
 
     def get_dashboard_state(self) -> dict[str, Any]:
-        """Return live state of the active group for GUI dashboard tables."""
+        """Return live JSON-serializable state of the active group for Web/API clients."""
+        from decimal import Decimal
+
         grp = self.ctx.group
         currency = grp["currency"]
         members = self.db.list_members(grp["id"])
         expenses = self.db.list_expenses(grp["id"])
         balances = compute_balances(self.db, grp["id"])
         transfers = compute_optimal_settlements(balances, currency)
-
-        from decimal import Decimal
+        groups = self.db.list_groups()
 
         total_spent_dec = sum((e["total"] for e in expenses), Decimal("0"))
 
         return {
             "group": grp,
+            "groups": groups,
             "currency": currency,
             "members": members,
             "total_spent": format_money(total_spent_dec, currency),
+            "total_spent_raw": str(total_spent_dec),
             "expense_count": len(expenses),
             "balances": [
                 {
                     "member": b["member"],
                     "paid": format_money(b["paid"], currency),
+                    "paid_raw": float(b["paid"]),
                     "owed": format_money(b["owed"], currency),
-                    "net_raw": b["net"],
+                    "owed_raw": float(b["owed"]),
+                    "net_raw": float(b["net"]),
                     "net": (
                         f"+{format_money(b['net'], currency)}"
                         if b["net"] > 0
@@ -263,15 +268,33 @@ class SplitLangInterpreter:
                 }
                 for b in balances
             ],
-            "transfers": transfers,
+            "transfers": [
+                {
+                    "from": tr["from"],
+                    "to": tr["to"],
+                    "amount": str(tr["amount"]),
+                    "formatted": tr["formatted"],
+                }
+                for tr in transfers
+            ],
             "expenses": [
                 {
                     "id": e["id"],
+                    "kind": e["kind"],
                     "date": e["expense_date"],
                     "payer": e["payer"],
                     "description": e["description"],
                     "mode": "ITEMIZED" if e["kind"] == "bill" else e["split_mode"].upper(),
+                    "subtotal": format_money(e["subtotal"], currency),
+                    "discount": format_money(e["discount"], currency) if e["discount"] > 0 else None,
+                    "tax": format_money(e["tax_amount"], currency) if e["tax_amount"] > 0 else None,
+                    "tip": format_money(e["tip_amount"], currency) if e["tip_amount"] > 0 else None,
                     "total": format_money(e["total"], currency),
+                    "items": e["items"],
+                    "shares": [
+                        {"member": m, "formatted": format_money(s, currency)}
+                        for m, s in e["shares"].items()
+                    ],
                     "shares_text": ", ".join(
                         f"{m}: {format_money(s, currency)}" for m, s in e["shares"].items()
                     ),

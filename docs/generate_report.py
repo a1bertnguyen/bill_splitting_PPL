@@ -56,7 +56,7 @@ def generate_architecture_diagram() -> None:
             "1. Input",
             "#9D174D",
             "User DSL Command\nor .split Script",
-            "main.py (GUI)\ncli.py (REPL)",
+            "frontend/ (Web FE)\ncli.py (REPL)",
             "Hand-written",
         ),
         (
@@ -265,7 +265,7 @@ def generate_docx_report() -> None:
         ["1", "[Member 1 Full Name]", "[ITITIU...]", "Grammar Design (SplitLang.g4), ANTLR 4.9.2 generation, Lexer/Parser tests"],
         ["2", "[Member 2 Full Name]", "[ITITIU...]", "Visitor & AST Generation (ASTGeneration.py, ASTutils.py), Semantic validation"],
         ["3", "[Member 3 Full Name]", "[ITITIU...]", "Decimal Split Engine, Largest-Remainder rounding, Min-Cash-Flow & SQLite DB"],
-        ["4", "[Member 4 Full Name]", "[ITITIU...]", "Desktop GUI with Live PPL Inspector (main.py), CLI runner, Demo & Report"],
+        ["4", "[Member 4 Full Name]", "[ITITIU...]", "FastAPI Backend & Web Frontend (api/, frontend/) with Live PPL Inspector, CLI & Report"],
     ]
     tbl1 = doc.add_table(rows=1 + len(member_rows), cols=4)
     _style_table(tbl1, ["#", "Full Name", "Student ID", "Member Contributions"], member_rows, [0.4, 1.8, 1.2, 3.6])
@@ -314,7 +314,7 @@ def generate_docx_report() -> None:
         ["AST & Visitor", "module/ASTGeneration.py, ASTutils.py", "Visitor Pattern subclassing SplitLangVisitor; strips syntactic sugar and builds typed Command Ops (ExpenseOp, BillOp, SettleOp, QueryOp, etc.)."],
         ["Financial Engine", "module/utilFunction.py", "Base-10 Decimal arithmetic (zero float error), Largest-Remainder (Hamilton) rounding so sum(shares) == total, and Greedy Minimum Cash Flow (<= N-1 transfers)."],
         ["Persistence", "module/Database.py", "Zero-setup embedded SQLite (groups, members, expenses, expense_shares, settlements, action_log) supporting offline usage and undo/reset."],
-        ["GUI & CLI", "main.py, cli.py", "Tkinter desktop app with live Balances/Expenses dashboard + Live PPL Inspector (Tokens, Parse Tree, AST), plus interactive CLI REPL & .split runner."],
+        ["Web FE & CLI", "api/server.py, frontend/, cli.py", "FastAPI REST API + responsive HTML/CSS/JS Web Frontend with live Balances/Expenses dashboard + 5-Stage PPL Inspector, plus CLI REPL & .split runner."],
     ]
     tbl2 = doc.add_table(rows=1 + len(tech_rows), cols=3)
     _style_table(tbl2, ["Component", "Files", "Core Technique"], tech_rows, [1.4, 1.8, 3.8])

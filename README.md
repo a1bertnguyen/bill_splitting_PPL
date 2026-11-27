@@ -1,7 +1,7 @@
 # SplitLang — A Custom Domain-Specific Language (DSL) for Bill Splitting
 
 **Course:** Principles of Programming Languages (VNU-HCM International University — SCSE)  
-**Toolchain:** Python 3, ANTLR 4.9.2 (`antlr4-python3-runtime==4.9.2`), SQLite, Tkinter
+**Toolchain:** Python 3, ANTLR 4.9.2 (`antlr4-python3-runtime==4.9.2`), FastAPI, HTML/CSS/JS Frontend, SQLite
 
 ---
 
@@ -24,8 +24,17 @@ Instead of relying on a general-purpose LLM (which can miscalculate arithmetic, 
 
 ```text
 bill splitting app/
-├── main.py                       # Desktop GUI (Console + Balances + Live PPL Inspector)
+├── main.py                       # Web app entry point (http://127.0.0.1:8000)
 ├── cli.py                        # Interactive REPL & .split script runner
+├── api/
+│   └── server.py                 # FastAPI REST API wrapping SplitLangInterpreter
+├── frontend/                     # Modern Web Frontend (Zero build step)
+│   ├── index.html                # Responsive 2-column app shell
+│   ├── css/styles.css            # Dark slate/indigo fintech + IDE styling
+│   └── js/
+│       ├── api.js                # REST API fetch wrappers
+│       ├── render.js             # Dashboard, Expenses & 5-stage PPL Inspector renderer
+│       └── app.js                # Events, quick chips, file upload & history
 ├── controller/
 │   └── Response.py               # 5-stage pipeline orchestrator & custom ErrorListener
 ├── module/
@@ -59,11 +68,11 @@ bill splitting app/
 pip install -r requirements.txt
 ```
 
-### Run the Desktop GUI (with Live PPL Inspector!)
+### Run the Web Frontend (with Live 5-Stage PPL Inspector!)
 ```bash
 python main.py
 ```
-Click **Run Demo Script** to populate a complete group outing, and click the **PPL Inspector (Tokens / Tree / AST)** tab to inspect Stage 2 Tokens, Stage 3 Parse Tree, and Stage 4 AST live.
+Opens **http://127.0.0.1:8000** in your browser. Click **Run Demo** (`Saigon Weekend (VND)` or `Tokyo Trip (USD)`), mark optimal transfers as paid with one click, and open the **PPL Inspector** tab to view color-coded Lexer Tokens, Concrete Parse Tree, and AST live.
 
 ### Run via CLI / Script Runner
 ```bash
