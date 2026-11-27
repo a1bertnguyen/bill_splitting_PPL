@@ -61,3 +61,11 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Agent skills, local design specs & code-intelligence indexes
+design.md
+.claude/
+.gitnexus/
+.taste-skill/
+AGENTS.md
+CLAUDE.md

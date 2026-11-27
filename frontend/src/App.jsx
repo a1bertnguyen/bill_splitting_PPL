@@ -1,34 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { api, setCsrfToken } from "./api/client";
 import AuthScreen from "./components/AuthScreen.jsx";
-import BalancesTab from "./components/BalancesTab.jsx";
-import ConsolePanel from "./components/ConsolePanel.jsx";
-import ExpensesTab from "./components/ExpensesTab.jsx";
-import HeaderBar from "./components/HeaderBar.jsx";
-import PPLInspectorTab from "./components/PPLInspectorTab.jsx";
+import PlaygroundPage from "./components/PlaygroundPage.jsx";
+import { ConfirmModal, ToastStack } from "./components/ToastAndModal.jsx";
+import TopNav from "./components/TopNav.jsx";
+import WorkspacePage from "./components/WorkspacePage.jsx";
 
-let nextLogId = 1;
+let logSeq = 1;
+let toastSeq = 1;
 
 export default function App() {
+  const [theme, setTheme] = useState(() => localStorage.getItem("splitlang_theme") || "dark");
   const [user, setUser] = useState(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [state, setState] = useState(null);
-  const [activeTab, setActiveTab] = useState("balances");
-  const [demoName, setDemoName] = useState("dinner");
-  const [inputCode, setInputCode] = useState("");
+  const [mode, setMode] = useState("workspace"); // "workspace" | "playground"
+  const [code, setCode] = useState("");
   const [logs, setLogs] = useState([]);
   const [lastExecution, setLastExecution] = useState(null);
-  const [history, setHistory] = useState([]);
-  const [historyIdx, setHistoryIdx] = useState(0);
   const [busy, setBusy] = useState(false);
+  const [resetOpen, setResetOpen] = useState(false);
+  const [toasts, setToasts] = useState([]);
 
-  const pushLog = (kind, text, badge = null) => {
-    setLogs((prev) => [...prev, { id: nextLogId++, kind, text, badge }]);
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("splitlang_theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+
+  const notify = (kind, message) => {
+    const id = toastSeq++;
+    setToasts((prev) => [...prev, { id, kind, message }]);
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 3500);
   };
 
-  const refreshState = async () => {
-    const s = await api.getState();
-    setState(s);
+  const pushLog = (kind, text, badge = null) => {
+    setLogs((prev) => [...prev, { id: logSeq++, kind, text, badge }]);
   };
 
   useEffect(() => {
@@ -37,8 +47,7 @@ export default function App() {
         const me = await api.getMe();
         setCsrfToken(me.csrf_token);
         setUser(me.user);
-        const s = await api.getState();
-        setState(s);
+        setState(await api.getState());
       } catch {
         setUser(null);
       } finally {
@@ -51,22 +60,15 @@ export default function App() {
     setUser(authedUser);
     setLogs([]);
     setLastExecution(null);
-    await refreshState();
+    setState(await api.getState());
+    notify("ok", `Signed in as ${authedUser.username}`);
   };
 
-  const handleExecute = async (code, clearInput = false) => {
-    const trimmed = code.trim();
+  const handleExecute = async (sourceCode) => {
+    const trimmed = sourceCode.trim();
     if (!trimmed) return;
-
-    setHistory((prev) => {
-      const next = [...prev, trimmed];
-      setHistoryIdx(next.length);
-      return next;
-    });
-    if (clearInput) setInputCode("");
     pushLog("cmd", `>>> ${trimmed}`);
     setBusy(true);
-
     try {
       const data = await api.execute(trimmed);
       setLastExecution(data.execution);
@@ -79,34 +81,34 @@ export default function App() {
         const badge = data.execution.ok
           ? null
           : data.execution.stage_failed === "lexer_parser"
-          ? "Stage 2/3 · Lexer / Parser Rejected"
-          : "Stage 5 · Semantic Validation Error";
+          ? "Stage 02/03 · Lexer / Parser Rejected"
+          : "Stage 05 · Semantic Validation Error";
         pushLog(data.execution.ok ? "ok" : "err", data.execution.messages.join("\n"), badge);
+        notify(data.execution.ok ? "ok" : "err", data.execution.messages[0].split("\n")[0]);
       }
     } catch (err) {
       if (err.status === 401) {
         setUser(null);
         return;
       }
-      pushLog("err", err.message, "Request Error");
+      pushLog("err", err.message, "API Error");
+      notify("err", err.message);
     } finally {
       setBusy(false);
     }
   };
 
-  const handleRunDemo = async () => {
+  const handleRunDemo = async (demoName) => {
     setBusy(true);
     try {
       const data = await api.runDemo(demoName);
-      pushLog("cmd", `/* Loaded demo: ${demoName} */\n${data.code.trim()}`);
-      pushLog(
-        data.execution.ok ? "ok" : "err",
-        (data.execution.messages || []).join("\n")
-      );
+      pushLog("cmd", `/* Demo: ${demoName} */\n${data.code.trim()}`);
+      pushLog(data.execution.ok ? "ok" : "err", (data.execution.messages || []).join("\n"));
       setLastExecution(data.execution);
       setState(data.state);
+      notify("ok", `Loaded '${data.state.group.name}' (${data.state.expense_count} expenses)`);
     } catch (err) {
-      pushLog("err", err.message, "Demo Error");
+      notify("err", err.message);
     } finally {
       setBusy(false);
     }
@@ -116,20 +118,32 @@ export default function App() {
     try {
       const s = await api.selectGroup(groupId);
       setState(s);
-      pushLog("ok", `Switched to group '${s.group.name}' (${s.currency}).`);
+      notify("ok", `Switched to '${s.group.name}' (${s.currency})`);
     } catch (err) {
-      pushLog("err", err.message, "Access Error");
+      notify("err", err.message);
     }
+  };
+
+  const handleCreateGroup = async (name, currency) => {
+    const safe = name.replaceAll('"', '\\"');
+    await handleExecute(`group "${safe}"\ncurrency ${currency}`);
   };
 
   const handleUploadFile = async (file) => {
     try {
       const res = await api.uploadSplitFile(file);
-      setInputCode(res.code);
-      pushLog("ok", `Loaded '${res.filename}' (${res.size_bytes} bytes) into editor.`);
+      setCode(res.code);
+      setMode("playground");
+      notify("ok", `Loaded '${res.filename}' (${res.size_bytes} bytes)`);
     } catch (err) {
-      pushLog("err", err.message, "Upload Blocked");
+      notify("err", err.message);
     }
+  };
+
+  const handleInspectInPlayground = async (dsl) => {
+    setCode(dsl);
+    setMode("playground");
+    await handleExecute(dsl);
   };
 
   const handleLogout = async () => {
@@ -144,92 +158,78 @@ export default function App() {
     setLogs([]);
   };
 
-  const handleHistoryNav = (nextIdx) => {
-    setHistoryIdx(nextIdx);
-    setInputCode(nextIdx < history.length ? history[nextIdx] : "");
-  };
-
   if (checkingAuth) {
     return (
-      <div className="auth-page">
-        <div className="empty-muted">Loading SplitLang...</div>
+      <div style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}>
+        <span className="t-label">Loading splitlang...</span>
       </div>
     );
   }
 
   if (!user) {
-    return <AuthScreen onAuthenticated={handleAuthenticated} />;
+    return (
+      <>
+        <AuthScreen theme={theme} onToggleTheme={toggleTheme} onAuthenticated={handleAuthenticated} />
+        <ToastStack toasts={toasts} onDismiss={(id) => setToasts((p) => p.filter((t) => t.id !== id))} />
+      </>
+    );
   }
 
   return (
-    <div className="app-shell">
-      <HeaderBar
+    <div>
+      <TopNav
         user={user}
         state={state}
-        demoName={demoName}
-        onDemoNameChange={setDemoName}
-        onRunDemo={handleRunDemo}
+        mode={mode}
+        onModeChange={setMode}
         onSelectGroup={handleSelectGroup}
-        onUploadFile={handleUploadFile}
+        onCreateGroup={handleCreateGroup}
         onUndo={() => handleExecute("undo")}
-        onHelp={() => handleExecute("help")}
-        onReset={() => {
-          if (window.confirm("Clear all members, expenses, and settlements in the active group?")) {
-            handleExecute("reset");
-          }
-        }}
+        onOpenReset={() => setResetOpen(true)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
         onLogout={handleLogout}
       />
 
-      <main className="workspace">
-        <ConsolePanel
-          logs={logs}
-          inputCode={inputCode}
-          onInputChange={setInputCode}
-          onExecute={handleExecute}
-          onClearLogs={() => setLogs([])}
-          history={history}
-          historyIdx={historyIdx}
-          onHistoryNav={handleHistoryNav}
-          busy={busy}
-        />
-
-        <section className="panel dashboard-panel">
-          <nav className="tabs-bar" role="tablist">
-            <button
-              type="button"
-              className={`tab-btn ${activeTab === "balances" ? "active" : ""}`}
-              onClick={() => setActiveTab("balances")}
-            >
-              Balances &amp; Settle Up
-            </button>
-            <button
-              type="button"
-              className={`tab-btn ${activeTab === "expenses" ? "active" : ""}`}
-              onClick={() => setActiveTab("expenses")}
-            >
-              Expenses &amp; Bills{" "}
-              <span className="tab-badge">{state?.expense_count || 0}</span>
-            </button>
-            <button
-              type="button"
-              className={`tab-btn ${activeTab === "ppl" ? "active" : ""}`}
-              onClick={() => setActiveTab("ppl")}
-            >
-              PPL Inspector <span className="tab-badge badge-indigo">5 Stages</span>
-            </button>
-          </nav>
-
-          {activeTab === "balances" && (
-            <BalancesTab
-              state={state}
-              onMarkPaid={(from, to, amt) => handleExecute(`${from} pays ${to} ${amt}`)}
-            />
-          )}
-          {activeTab === "expenses" && <ExpensesTab expenses={state?.expenses || []} />}
-          {activeTab === "ppl" && <PPLInspectorTab execution={lastExecution} />}
-        </section>
+      <main className="wrap page-main">
+        {mode === "workspace" ? (
+          <WorkspacePage
+            state={state}
+            busy={busy}
+            onExecute={handleExecute}
+            onRunDemo={handleRunDemo}
+            onInspectInPlayground={handleInspectInPlayground}
+          />
+        ) : (
+          <PlaygroundPage
+            code={code}
+            onCodeChange={setCode}
+            logs={logs}
+            onClearLogs={() => setLogs([])}
+            onExecute={handleExecute}
+            onUploadFile={handleUploadFile}
+            lastExecution={lastExecution}
+            busy={busy}
+          />
+        )}
       </main>
+
+      <ConfirmModal
+        open={resetOpen}
+        title={`Reset "${state?.group?.name || "Group"}"?`}
+        message="This clears all members, expenses, bills, and repayments in the active group."
+        confirmLabel="Reset Group"
+        onCancel={() => setResetOpen(false)}
+        onConfirm={() => {
+          setResetOpen(false);
+          handleExecute("reset");
+        }}
+      />
+
+      <ToastStack
+        toasts={toasts}
+        onDismiss={(id) => setToasts((prev) => prev.filter((t) => t.id !== id))}
+      />
     </div>
   );
 }

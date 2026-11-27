@@ -57,28 +57,24 @@ bill splitting app/
 
 ## 3. Setup & Running with Local MySQL + React
 
-### Step 1: Initialize MySQL Database & Least-Privilege App User
-Open `sql/init_mysql.sql`, change `ChangeMe_StrongAppPass!2026` to your own strong password, then run:
-```powershell
-& "C:\Program Files\MySQL\MySQL Server 9.4\bin\mysql.exe" -u root -p < sql\init_mysql.sql
-```
-
-### Step 2: Create Your Local `.env` (Never Committed to Git)
+### Option A — Run Everything with Docker Compose (Recommended)
 ```powershell
 Copy-Item .env.example .env
-python scripts/generate_secrets.py
+python scripts/generate_secrets.py   # paste SECRET_KEY & DATA_ENCRYPTION_KEY into .env
+docker compose up --build -d
 ```
-Paste the generated `SECRET_KEY`, `DATA_ENCRYPTION_KEY`, and your `MYSQL_PASSWORD` into `.env`.
+Open **http://127.0.0.1:8000** — Docker automatically starts hardened **MySQL 8.4** + **React/FastAPI** (non-root container, read-only rootfs, internal network).
 
-### Step 3: Install Dependencies & Build React Frontend
+### Option B — Run Locally with Local MySQL 9.x + React
+1. Initialize MySQL database & least-privilege user (`sql/init_mysql.sql`):
+```powershell
+Get-Content sql\init_mysql.sql | & "C:\Program Files\MySQL\MySQL Server 9.4\bin\mysql.exe" -u root -p
+```
+2. Create `.env` from `.env.example`, install deps, build React, and start:
 ```powershell
 pip install -r requirements.txt
 npm --prefix frontend install
 npm --prefix frontend run build
-```
-
-### Step 4: Launch the App
-```powershell
 python main.py
 ```
 Open **http://127.0.0.1:8000** (or run `npm --prefix frontend run dev` on port `5173` during React development).
