@@ -105,17 +105,20 @@ export default function AuthScreen({ theme, onToggleTheme, onAuthenticated }) {
               <span className="t-label">deterministic math</span>
             </div>
             <div className="auth-spec-code">
-              <span className="k">bill</span> "BBQ Night" <span className="k">paid by</span> alice{" "}
-              {"{\n"}
+              <span className="k">let</span> vat = 10%; <span className="k">let</span> drinkers ={" "}
+              <span className="k">all</span> - [charlie]{"\n"}
+              <span className="k">bill</span> "BBQ Night" {"{\n"}
               {"    "}
-              <span className="k">item</span> "Wagyu Beef" 480k <span className="k">for all</span>
+              <span className="k">payer:</span> alice{"\n"}
+              {"    "}
+              <span className="k">item</span> "Wagyu Beef" = 480k <span className="k">for all</span>
               {"\n    "}
-              <span className="k">item</span> "Craft Beer" 240k <span className="k">for</span> alice, bob
+              <span className="k">item</span> "Craft Beer" = 60k * 4 <span className="k">for</span> drinkers
               {"\n    "}
-              <span className="k">discount</span> 60k; <span className="k">tax</span> 10%;{" "}
-              <span className="k">tip</span> 5%{"\n}\n"}
-              <span className="k">settle up</span>{" "}
-              <span className="c">// Greedy Minimum Cash Flow</span>
+              <span className="k">discount:</span> 60k; <span className="k">tax:</span> vat;{" "}
+              <span className="k">tip:</span> 5%{"\n}\n"}
+              <span className="k">assert balanced</span>; <span className="k">settle</span>{" "}
+              <span className="c">// Min Cash Flow</span>
             </div>
           </div>
         </div>

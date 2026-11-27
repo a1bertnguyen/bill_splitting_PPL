@@ -2,36 +2,56 @@ import React, { useEffect, useRef, useState } from "react";
 import { Play, Trash2, Upload } from "lucide-react";
 
 const QUICK_EXAMPLES = [
-  { label: "+ Members", code: "add members alice, bob, charlie, dave" },
-  { label: "Math + Equal", code: 'alice paid 120k + 30k * 4 for "Grab & Parking" split equally' },
   {
-    label: "Ratio + Tax",
-    code: 'bob paid 400k for "Hotpot" split ratio alice: 2, bob: 1, charlie: 1 with tax 10%',
+    label: "Workspace + Let",
+    code:
+      'workspace "Team Dinner" {\n' +
+      "    currency: VND\n" +
+      "    members: [alice, bob, charlie, dave]\n" +
+      "}\n" +
+      "let vat      = 10%\n" +
+      "let drinkers = all - [charlie]\n" +
+      "query env",
+  },
+  {
+    label: "Rule + Expense",
+    code:
+      "rule host_w = ratio { alice: 2, bob: 1, charlie: 1, dave: 1 }\n" +
+      'expense "Hotpot" {\n' +
+      "    payer:    alice\n" +
+      "    amount:   120k + 30k * 4\n" +
+      "    split:    host_w\n" +
+      "    tax:      10%\n" +
+      "}",
   },
   {
     label: "Itemized Bill",
     code:
-      'bill "BBQ Night" paid by alice {\n' +
-      '    item "Wagyu Beef" 480k for all\n' +
-      '    item "Craft Beer" 240k for alice, bob, dave\n' +
-      '    item "Matcha Tea" 60k for charlie\n' +
-      "    discount 60k\n" +
-      "    tax 10%\n" +
-      "    tip 5%\n" +
+      'bill "BBQ Night" {\n' +
+      "    payer: bob\n" +
+      '    item "Wagyu Beef" = 480k for all\n' +
+      '    item "Craft Beer" = 60k * 4 for all - [charlie]\n' +
+      '    item "Matcha Tea" = 60k for [charlie]\n' +
+      "    discount: 60k\n" +
+      "    tax:      10%\n" +
+      "    tip:      5%\n" +
       "}",
   },
-  { label: "Settle Up", code: "settle up" },
-  { label: "Syntax Error", code: "hello splitlang" },
-  { label: "Semantic Error", code: "alice paid 100k for snacks split percent alice: 60%, bob: 30%" },
+  {
+    label: "Assert + Settle",
+    code: "assert balanced\nquery balances\nsettle",
+  },
+  { label: "Type Error", code: "let invalid = 100k + 10%" },
+  { label: "Syntax Error", code: "expense broken syntax" },
 ];
 
 const SYNTAX_GUIDE = [
-  ["Groups", 'group "Da Lat Trip"\ncurrency VND  // VND, USD, EUR, JPY, GBP, SGD'],
-  ["Members", "add members alice, bob, charlie, dave\nremove member dave"],
-  ["Equal + Math", 'alice paid 120k + 30k * 4 for "Taxi" split equally\nbob paid 180k for "Coffee" excluding dave'],
-  ["Exact / % / Ratio", 'bob paid 150k for coffee split exact alice: 60k, bob: 50k, charlie: 40k\nalice paid 1m for hotel split percent alice: 40%, bob: 30%, charlie: 30%\ncharlie paid 400k for hotpot split ratio alice: 2, bob: 1, charlie: 1 with tax 10%'],
-  ["Itemized Bill", 'bill "BBQ" paid by alice {\n    item "Beef" 450k for all\n    item "Tea" 60k for charlie\n    discount 50k; tax 10%; tip 5%\n}'],
-  ["Settle & Query", "dave pays alice 100k\nshow balances; who owes whom?; settle up"],
+  ["Workspace & Members", 'workspace "Da Lat Trip" {\n    currency: VND\n    members: [alice, bob, charlie, dave]\n}\nmember add [eve]\nmember remove [eve]'],
+  ["Typed Let & Set Algebra", "let vat      = 10%               // PERCENT\nlet beer     = 60k               // MONEY\nlet drinkers = all - [charlie]   // MEMBER_SET\nquery env                        // Inspect symbol table"],
+  ["Reusable Split Rule", "rule host_w = ratio { alice: 2, bob: 1, charlie: 1, dave: 1 }\nrule pct_ab = percent { alice: 60%, bob: 40% }"],
+  ["Inline & Block Expense", 'expense "Grab" paid_by alice = 120k + 30k * 4 split equal(all)\nexpense "Hotpot" {\n    payer:    alice\n    amount:   400k\n    split:    host_w\n    discount: 50k\n    tax:      vat\n}'],
+  ["Itemized Bill Block", 'bill "BBQ Night" {\n    payer: bob\n    item "Wagyu Beef" = 480k for all\n    item "Craft Beer" = beer * 4 for drinkers\n    discount: 60k; tax: vat; tip: 5%\n}'],
+  ["Transfers & Assertions", 'transfer dave -> alice = 100k note "payback"\nassert balanced\nquery balances; query balance(alice); settle'],
 ];
 
 function stepClass(execution, num) {
@@ -42,7 +62,7 @@ function stepClass(execution, num) {
     if (num === 2 || num === 3) return "fail";
     return "";
   }
-  if (execution.stage_failed === "semantic") {
+  if (execution.stage_failed === "semantic" || execution.stage_failed === "type_error") {
     return num <= 4 ? "pass" : "fail";
   }
   return "";

@@ -1,4 +1,4 @@
-"""Unit tests for Stage 2 (Lexer) and Stage 3 (Parser) of SplitLang."""
+"""Unit tests for Stage 2 (Lexer) and Stage 3 (Parser) of SplitLang v2.0."""
 
 import pytest
 from controller.Response import SplitLangInterpreter
@@ -14,42 +14,42 @@ def interp():
 @pytest.mark.parametrize(
     "valid_input",
     [
-        'group "Da Lat Trip"',
-        "use group Weekend",
-        "currency USD",
-        "add members alice, bob, charlie, dave",
-        "ADD MEMBER Alice",
-        "remove member dave",
-        "alice paid 300k",
-        "alice paid 300k for dinner",
-        "alice paid 120k + 30k * 2 for bun bo hue split equally",
-        "alice paid (100k + 50k) * 2 for dinner split equally among alice, bob",
-        "alice paid 200k for drinks excluding charlie",
-        "bob paid 150k for coffee split exact alice: 60k, bob: 50k, charlie: 40k",
-        "alice paid 1.5m for hotel split percent alice: 40%, bob: 30%, charlie: 30%",
-        "charlie paid 400k for hotpot split ratio alice: 2, bob: 1, charlie: 1",
-        "alice paid $45.50 for lunch with tax 10% with tip 5% with discount $5 on 26-11-2026",
-        'bill "BBQ" paid by alice {\n  item "Beef" 450k for all\n  item "Tea" 50k for charlie\n  tax 10%\n}',
-        'bill "Drink" paid by bob { item "Beer" 100k for all excluding charlie; tip 10k }',
-        "bob pays alice 100k",
-        "settle bob to alice 100k for dinner on 26/11/2026",
-        "settle up",
-        "show members",
-        "check balances",
-        "show expenses",
-        "check summary",
-        "show settlements",
-        "show groups",
-        "who owes whom?",
-        "how much does bob owe?",
-        "what is alice's balance?",
+        'workspace "Da Lat Trip"',
+        'workspace "Trip" {\n  currency: USD\n  members: [alice, bob, charlie]\n}',
+        "currency VND",
+        "member add [alice, bob, charlie, dave]",
+        "member remove [dave]",
+        "let vat = 10%",
+        "let beer = 60k",
+        "let total = 120k + 30k * 4",
+        "let neg = -50k",
+        "let drinkers = all - [charlie]",
+        "let combined = drinkers + [eve]",
+        "rule host_w = ratio { alice: 2, bob: 1, charlie: 1 }",
+        "rule even_ab = equal([alice, bob])",
+        'expense "Dinner" paid_by alice = 300k',
+        'expense "Grab" paid_by alice = (100k + 50k) * 2 split equal(all - [dave]) tax 10% on 2026-11-26',
+        'expense "Hotpot" {\n  payer: alice\n  amount: 400k\n  split: host_w\n  discount: 50k\n  tax: vat\n  tip: 5%\n  date: 2026-11-26\n}',
+        'expense "Coffee" {\n  payer: bob\n  amount: 150k\n  split: exact { alice: 60k, bob: 50k, charlie: 40k }\n}',
+        'expense "Hotel" {\n  payer: alice\n  amount: 1.5m\n  split: percent { alice: 40%, bob: 30%, charlie: 30% }\n}',
+        'bill "BBQ" {\n  payer: bob\n  item "Beef" = 480k for all\n  item "Beer" = 60k * 4 for all - [charlie]\n  discount: 60k\n  tax: 10%\n  tip: 5%\n}',
+        'transfer dave -> alice = 100k note "payback" on 2026-11-26',
+        "assert balanced",
+        "query summary",
+        "query balances",
+        "query balance(alice)",
+        "query expenses",
+        "query members",
+        "query groups",
+        "query env",
+        "settle",
         "undo",
         "reset",
         "help",
-        "// comment only\nadd members alice, bob # trailing comment",
+        "/* block comment */\n// line comment\nmember add [alice, bob]",
     ],
 )
-def test_valid_grammar_accepted(interp: SplitLangInterpreter, valid_input: str):
+def test_valid_v2_grammar_accepted(interp: SplitLangInterpreter, valid_input: str):
     analysis = interp.analyze(valid_input)
     assert analysis["errors"] == [], f"Unexpected syntax errors for {valid_input!r}: {analysis['errors']}"
     assert len(analysis["tokens"]) > 0
@@ -59,18 +59,18 @@ def test_valid_grammar_accepted(interp: SplitLangInterpreter, valid_input: str):
     "invalid_input",
     [
         "hello splitlang",
-        "alice paid",
-        "alice paid for dinner",
-        "add members",
-        "alice paid 100k split percent",
-        "alice paid 100k split exact alice:",
-        'bill "Empty" paid by alice { }',
+        "expense broken syntax",
+        'expense "Dinner" paid_by alice =',
+        "member add []",
+        "let 123 = 50k",
+        "transfer alice => bob = 50k",
         "currency BTC",
-        "show unknown_thing",
-        "alice paid 100k + * 50k",
+        "query unknown_table",
+        'expense "Bad" paid_by alice = 100k + * 50k',
+        'bill "Empty" {}',
     ],
 )
-def test_invalid_grammar_rejected(interp: SplitLangInterpreter, invalid_input: str):
+def test_invalid_v2_grammar_rejected(interp: SplitLangInterpreter, invalid_input: str):
     res = interp.execute(invalid_input)
     assert res["ok"] is False
     assert res["stage_failed"] == "lexer_parser"

@@ -96,6 +96,8 @@ def create_app(
     app.state.db = db
     app.state.settings = cfg
     app.state.active_groups: dict[int, int] = {}  # user_id -> active_group_id
+    app.state.user_envs: dict[int, dict[str, Any]] = {}   # user_id -> Symbol Table variables
+    app.state.user_rules: dict[int, dict[str, Any]] = {}  # user_id -> Symbol Table split rules
     app.state.login_limiter = SlidingWindowRateLimiter(
         max_requests=cfg.login_rate_limit_max,
         window_seconds=cfg.login_rate_limit_window_sec,
@@ -162,7 +164,11 @@ def create_app(
                 if requested_group_id is not None:
                     raise HTTPException(status_code=403, detail="Access denied to requested group.")
                 gid = None
-        interp = SplitLangInterpreter(db=db, owner_user_id=user_id, active_group_id=gid)
+        env = app.state.user_envs.setdefault(user_id, {})
+        rules = app.state.user_rules.setdefault(user_id, {})
+        interp = SplitLangInterpreter(
+            db=db, owner_user_id=user_id, active_group_id=gid, env=env, rules=rules
+        )
         app.state.active_groups[user_id] = interp.ctx.active_group_id
         return interp
 

@@ -1,10 +1,22 @@
-"""Unit tests for Stage 4 (Visitor & Parse Tree -> AST Transformation)."""
+"""Unit tests for Stage 4 (Visitor & Typed AST Generation) of SplitLang v2.0."""
 
 from decimal import Decimal
 import pytest
 
 from controller.Response import SplitLangInterpreter
-from module.ASTutils import BillOp, ExpenseOp, MemberOp, QueryOp, SettleOp
+from module.ASTutils import (
+    AssertBalancedOp,
+    BillOp,
+    BinaryOp,
+    ExpenseOp,
+    LetOp,
+    MemberOp,
+    MoneyLit,
+    RuleOp,
+    ScalarLit,
+    TransferOp,
+    WorkspaceOp,
+)
 
 
 @pytest.fixture
@@ -20,83 +32,60 @@ def _parse_ops(interp: SplitLangInterpreter, code: str):
     return interp.visitor.visit(analysis["tree"])
 
 
-def test_recursive_person_list_ast(interp: SplitLangInterpreter):
-    ops = _parse_ops(interp, "add members alice, bob, charlie, dave")
+def test_workspace_and_recursive_member_list_ast(interp: SplitLangInterpreter):
+    ops = _parse_ops(
+        interp,
+        'workspace "Trip" {\n  currency: USD\n  members: [alice, bob, charlie, dave]\n}',
+    )
     assert len(ops) == 1
-    assert isinstance(ops[0], MemberOp)
-    assert ops[0].verb == "add"
+    assert isinstance(ops[0], WorkspaceOp)
+    assert ops[0].name == "Trip"
+    assert ops[0].currency == "USD"
     assert ops[0].members == ["alice", "bob", "charlie", "dave"]
 
-
-def test_arithmetic_precedence_and_parentheses(interp: SplitLangInterpreter):
-    # 120k + 30k * 2 == 180,000 (not 300,000)
-    ops1 = _parse_ops(interp, "alice paid 120k + 30k * 2 for dinner")
-    assert isinstance(ops1[0], ExpenseOp)
-    assert ops1[0].amount == Decimal("180000")
-
-    # (120k + 30k) * 2 == 300,000
-    ops2 = _parse_ops(interp, "alice paid (120k + 30k) * 2 for dinner")
-    assert ops2[0].amount == Decimal("300000")
-
-    # 1.5m - 500k / 2 == 1,250,000
-    ops3 = _parse_ops(interp, "alice paid 1.5m - 500k / 2 for hotel")
-    assert ops3[0].amount == Decimal("1250000")
+    ops2 = _parse_ops(interp, "member add [eve, frank]")
+    assert isinstance(ops2[0], MemberOp)
+    assert ops2[0].verb == "add"
+    assert ops2[0].members == ["eve", "frank"]
 
 
-def test_expense_modifiers_and_split_ast(interp: SplitLangInterpreter):
-    code = (
-        'bob paid 400k for "Hotpot Night" '
-        "split ratio alice: 2, bob: 1, charlie: 1 "
-        "with discount 40k with tax 10% with tip 5% on 26-11-2026"
-    )
-    ops = _parse_ops(interp, code)
-    op = ops[0]
-    assert isinstance(op, ExpenseOp)
-    assert op.payer == "bob"
-    assert op.description == "Hotpot Night"
-    assert op.split_spec == {
-        "mode": "ratio",
-        "allocations": [
-            ("alice", Decimal("2")),
-            ("bob", Decimal("1")),
-            ("charlie", Decimal("1")),
-        ],
-    }
-    assert len(op.modifiers) == 3
-    assert op.expense_date == "26-11-2026"
+def test_arithmetic_precedence_ast_structure(interp: SplitLangInterpreter):
+    # 120k + 30k * 2 -> BinOp('+', Money(120000), BinOp('*', Money(30000), Scalar(2)))
+    ops = _parse_ops(interp, "let total = 120k + 30k * 2")
+    assert isinstance(ops[0], LetOp)
+    ast = ops[0].expr
+    assert isinstance(ast, BinaryOp) and ast.op == "+"
+    assert isinstance(ast.left, MoneyLit) and ast.left.value == Decimal("120000")
+    assert isinstance(ast.right, BinaryOp) and ast.right.op == "*"
+    assert ast.eval(interp.ctx).value == Decimal("180000")
+
+    # Parentheses override precedence: (120k + 30k) * 2 == 300,000
+    ops2 = _parse_ops(interp, "let total2 = (120k + 30k) * 2")
+    assert ops2[0].expr.eval(interp.ctx).value == Decimal("300000")
 
 
-def test_bill_block_ast(interp: SplitLangInterpreter):
+def test_rule_expense_bill_transfer_assert_ast(interp: SplitLangInterpreter):
     code = """
-    bill "BBQ" paid by alice {
-        item "Beef" 450k for all excluding charlie
-        item "Tea" 60k for charlie
-        tax 10%
-        tip 20k
+    rule weighted = ratio { alice: 2, bob: 1 }
+    expense "Hotpot" {
+        payer: alice
+        amount: 400k
+        split: weighted
+        tax: 10%
+        date: 2026-11-26
     }
+    bill "BBQ" {
+        payer: bob
+        item "Beef" = 480k for all
+        item "Tea"  = 60k  for [charlie]
+        discount: 60k
+    }
+    transfer bob -> alice = 100k note "part 1"
+    assert balanced
     """
     ops = _parse_ops(interp, code)
-    assert len(ops) == 1
-    op = ops[0]
-    assert isinstance(op, BillOp)
-    assert op.title == "BBQ"
-    assert op.payer == "alice"
-    assert len(op.items) == 2
-    assert op.items[0]["for_all"] is True
-    assert op.items[0]["excluding"] == ["charlie"]
-    assert op.items[1]["consumers"] == ["charlie"]
-    assert len(op.modifiers) == 2
-
-
-def test_possessive_person_query_ast(interp: SplitLangInterpreter):
-    ops = _parse_ops(interp, "what is alice's balance?")
-    assert isinstance(ops[0], QueryOp)
-    assert ops[0].query_kind == "person_balance"
-    assert ops[0].target_member == "alice"
-
-
-def test_settle_aliases_build_same_op(interp: SplitLangInterpreter):
-    op1 = _parse_ops(interp, "bob pays alice 100k")[0]
-    op2 = _parse_ops(interp, "settle bob to alice 100k")[0]
-    assert isinstance(op1, SettleOp) and isinstance(op2, SettleOp)
-    assert (op1.from_member, op1.to_member, op1.amount) == (op2.from_member, op2.to_member, op2.amount)
+    assert isinstance(ops[0], RuleOp) and ops[0].name == "weighted"
+    assert isinstance(ops[1], ExpenseOp) and ops[1].split_node.rule_name == "weighted"
+    assert isinstance(ops[2], BillOp) and len(ops[2].items) == 2
+    assert isinstance(ops[3], TransferOp) and ops[3].note == "part 1"
+    assert isinstance(ops[4], AssertBalancedOp)

@@ -522,42 +522,49 @@ def today_str() -> str:
     return date.today().strftime("%d-%m-%Y")
 
 
-HELP_TEXT = """SplitLang Quick Grammar Reference
+HELP_TEXT = """SplitLang v2.0 — Professional DSL Reference
 ======================================================================
-1. Groups & Currency
-   group "Da Lat Trip"                 | Switch or create a group
-   currency VND                        | Set currency (VND, USD, EUR, JPY, GBP, SGD)
-   add members alice, bob, charlie     | Add one or more members
-   remove member dave                  | Remove a member
+1. Workspace & Members
+   workspace "Saigon Weekend" {
+       currency: VND
+       members: [alice, bob, charlie, dave]
+   }
+   member add [eve]
+   member remove [eve]
 
-2. Recording Expenses (supports arithmetic: 120k + 30k * 2, $25.50, 1.5m)
-   alice paid 300k for dinner
-   alice paid 300k for dinner split equally among alice, bob
-   alice paid 300k for dinner excluding charlie
-   bob paid 150k for coffee split exact alice: 60k, bob: 50k, charlie: 40k
-   alice paid 1m for hotel split percent alice: 40%, bob: 30%, charlie: 30%
-   charlie paid 400k for hotpot split ratio alice: 2, bob: 1, charlie: 1
-   ... with tax 10% with tip 5% with discount 20k on 26-11-2026
+2. Typed Bindings (Symbol Table) & Reusable Split Rules
+   let vat      = 10%                      // PERCENT
+   let beer     = 60k                      // MONEY
+   let drinkers = all - [charlie]          // MEMBER_SET (set difference)
+   rule host_w  = ratio { alice: 2, bob: 1, charlie: 1, dave: 1 }
 
-3. Itemized Bill Block
-   bill "BBQ Night" paid by alice {
-       item "Wagyu Beef" 450k for all
-       item "Beer Tower" 200k for alice, bob
-       item "Matcha Tea" 60k for charlie
-       tax 10%
-       tip 5%
-       discount 50k
+3. Expenses (Inline or Structured Block)
+   expense "Grab" paid_by alice = 120k + 30k * 4 split equal(all)
+   expense "Coffee" paid_by bob = 180k split equal(all - [dave])
+   expense "Hotpot" {
+       payer:    alice
+       amount:   400k
+       split:    host_w
+       discount: 50k
+       tax:      vat
    }
 
-4. Settlements & Queries
-   bob pays alice 100k                 | Record a repayment
-   settle bob to alice 100k            | Alternate repayment syntax
-   settle up                           | Optimal min-transfer settlement plan
-   show members / balances / expenses / summary / settlements / groups
-   who owes whom?                      | List optimal debt transfers
-   how much does bob owe?              | Check one person's debt/credit
-   what is alice balance?              | Check detailed balance of a member
+4. Itemized Bill Block
+   bill "BBQ Night" {
+       payer:    bob
+       item "Wagyu Beef" = 480k for all
+       item "Beer Tower" = beer * 4 for drinkers
+       item "Matcha Tea" = 60k for [charlie]
+       discount: 60k
+       tax:      vat
+       tip:      5%
+   }
 
-5. Controls
-   undo | reset | help
+5. Transfers, Assertions & Queries
+   transfer dave -> alice = 100k note "partial payback"
+   assert balanced                         // Verify Σ net_balance == 0
+   query summary | query balances | query balance(alice)
+   query expenses | query members | query groups | query env
+   settle                                  // Optimal min-transfer plan
+   undo | reset | clear | help
 """

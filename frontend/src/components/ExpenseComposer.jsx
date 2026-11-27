@@ -76,53 +76,63 @@ export default function ExpenseComposer({
     return members.reduce((acc, m) => acc + (parseFloat(String(allocs[m] || "0").replace("%", "")) || 0), 0);
   }, [mode, members, allocs]);
 
-  // Generate real SplitLang DSL
+  // Generate real SplitLang v2.0 DSL
   const generatedDSL = useMemo(() => {
     if (!payer || !members.length) return "";
     if (kind === "expense") {
       if (!amount.trim()) return "";
       const safeDesc = desc.trim().replaceAll('"', '\\"') || "Expense";
-      let cmd = `${payer} paid ${amount.trim()} for "${safeDesc}"`;
+      let splitStr = "equal(all)";
       if (mode === "equal") {
         if (selected.length > 0 && selected.length < members.length) {
-          cmd += ` split equally among ${selected.join(", ")}`;
-        } else {
-          cmd += " split equally";
+          const excluded = members.filter((m) => !selected.includes(m));
+          splitStr =
+            excluded.length <= selected.length
+              ? `equal(all - [${excluded.join(", ")}])`
+              : `equal([${selected.join(", ")}])`;
         }
       } else if (mode === "exact") {
         const pairs = members
           .filter((m) => (allocs[m] || "").trim())
           .map((m) => `${m}: ${allocs[m].trim()}`);
-        if (pairs.length) cmd += ` split exact ${pairs.join(", ")}`;
+        if (pairs.length) splitStr = `exact { ${pairs.join(", ")} }`;
       } else if (mode === "percent") {
         const pairs = members
           .filter((m) => (allocs[m] || "").trim())
           .map((m) => `${m}: ${String(allocs[m]).trim().replace(/%$/, "")}%`);
-        if (pairs.length) cmd += ` split percent ${pairs.join(", ")}`;
+        if (pairs.length) splitStr = `percent { ${pairs.join(", ")} }`;
       } else if (mode === "ratio") {
         const pairs = members
           .filter((m) => (allocs[m] || "").trim())
           .map((m) => `${m}: ${allocs[m].trim()}`);
-        if (pairs.length) cmd += ` split ratio ${pairs.join(", ")}`;
+        if (pairs.length) splitStr = `ratio { ${pairs.join(", ")} }`;
       }
-      if (discount.trim()) cmd += ` with discount ${discount.trim()}`;
-      if (taxPct.trim()) cmd += ` with tax ${taxPct.trim().replace(/%$/, "")}%`;
-      if (tipPct.trim()) cmd += ` with tip ${tipPct.trim().replace(/%$/, "")}%`;
-      return cmd;
+
+      const lines = [
+        `expense "${safeDesc}" {`,
+        `    payer:  ${payer}`,
+        `    amount: ${amount.trim()}`,
+        `    split:  ${splitStr}`,
+      ];
+      if (discount.trim()) lines.push(`    discount: ${discount.trim()}`);
+      if (taxPct.trim()) lines.push(`    tax: ${taxPct.trim().replace(/%$/, "")}%`);
+      if (tipPct.trim()) lines.push(`    tip: ${tipPct.trim().replace(/%$/, "")}%`);
+      lines.push("}");
+      return lines.join("\n");
     }
 
-    // Itemized bill block
+    // Itemized bill block (SplitLang v2.0)
     const validItems = items.filter((it) => it.name.trim() && it.price.trim());
     if (!validItems.length) return "";
     const safeTitle = billTitle.trim().replaceAll('"', '\\"') || "Itemized Bill";
-    const lines = [`bill "${safeTitle}" paid by ${payer} {`];
+    const lines = [`bill "${safeTitle}" {`, `    payer: ${payer}`];
     for (const it of validItems) {
-      const target = it.forAll || !it.consumers.length ? "all" : it.consumers.join(", ");
-      lines.push(`    item "${it.name.trim().replaceAll('"', '\\"')}" ${it.price.trim()} for ${target}`);
+      const target = it.forAll || !it.consumers.length ? "all" : `[${it.consumers.join(", ")}]`;
+      lines.push(`    item "${it.name.trim().replaceAll('"', '\\"')}" = ${it.price.trim()} for ${target}`);
     }
-    if (discount.trim()) lines.push(`    discount ${discount.trim()}`);
-    if (taxPct.trim()) lines.push(`    tax ${taxPct.trim().replace(/%$/, "")}%`);
-    if (tipPct.trim()) lines.push(`    tip ${tipPct.trim().replace(/%$/, "")}%`);
+    if (discount.trim()) lines.push(`    discount: ${discount.trim()}`);
+    if (taxPct.trim()) lines.push(`    tax: ${taxPct.trim().replace(/%$/, "")}%`);
+    if (tipPct.trim()) lines.push(`    tip: ${tipPct.trim().replace(/%$/, "")}%`);
     lines.push("}");
     return lines.join("\n");
   }, [kind, payer, members, amount, desc, mode, selected, allocs, discount, taxPct, tipPct, billTitle, items]);

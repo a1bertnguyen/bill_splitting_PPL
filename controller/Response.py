@@ -27,7 +27,7 @@ from SplitLangLexer import SplitLangLexer
 from SplitLangParser import SplitLangParser
 
 from module.ASTGeneration import SplitLangASTGenerator
-from module.ASTutils import BaseOp, ExecutionContext
+from module.ASTutils import BaseOp, ExecutionContext, SplitTypeError
 from module.Database import Database
 from module.utilFunction import (
     SemanticError,
@@ -90,6 +90,8 @@ class SplitLangInterpreter:
         db: Database | None = None,
         owner_user_id: int | None = None,
         active_group_id: int | None = None,
+        env: dict[str, Any] | None = None,
+        rules: dict[str, Any] | None = None,
     ) -> None:
         self._owns_db = db is None
         self.db = db if db is not None else Database(db_path=db_path)
@@ -98,7 +100,13 @@ class SplitLangInterpreter:
             grp = self.db.get_group_by_id(active_group_id, owner_user_id=uid)
         else:
             grp = self.db.ensure_group("Default", currency="VND", owner_user_id=uid)
-        self.ctx = ExecutionContext(db=self.db, owner_user_id=uid, active_group_id=grp["id"])
+        self.ctx = ExecutionContext(
+            db=self.db,
+            owner_user_id=uid,
+            active_group_id=grp["id"],
+            env=env if env is not None else {},
+            rules=rules if rules is not None else {},
+        )
         self.visitor = SplitLangASTGenerator()
 
     def close(self) -> None:
@@ -217,6 +225,20 @@ class SplitLangInterpreter:
                 msg = res.get("result", {}).get("message", "")
                 if msg:
                     messages.append(msg)
+            except SplitTypeError as exc:
+                err_msg = f"[Type Error] {exc}"
+                errors.append(err_msg)
+                messages.append(err_msg)
+                return {
+                    "ok": False,
+                    "stage_failed": "type_error",
+                    "messages": messages,
+                    "ops": op_dicts,
+                    "tokens": analysis["tokens"],
+                    "parse_tree": analysis["parse_tree"],
+                    "ast_tree": ast_tree_str,
+                    "errors": errors,
+                }
             except SemanticError as exc:
                 err_msg = f"[Semantic Error] {exc}"
                 errors.append(err_msg)

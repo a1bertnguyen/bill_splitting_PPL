@@ -37,7 +37,7 @@ export default function WorkspacePage({
     e.preventDefault();
     const cleaned = newMember.trim();
     if (!cleaned) return;
-    onExecute(`add members ${cleaned}`);
+    onExecute(`member add [${cleaned}]`);
     setNewMember("");
   };
 
@@ -91,7 +91,7 @@ export default function WorkspacePage({
                 <span>{m}</span>
                 <button
                   type="button"
-                  onClick={() => onExecute(`remove member ${m}`)}
+                  onClick={() => onExecute(`member remove [${m}]`)}
                   title={`Remove ${m}`}
                   aria-label={`Remove ${m}`}
                 >
@@ -187,7 +187,7 @@ export default function WorkspacePage({
                       type="button"
                       className="btn btn-secondary btn-xs"
                       disabled={busy}
-                      onClick={() => onExecute(`${tr.from} pays ${tr.to} ${tr.amount}`)}
+                      onClick={() => onExecute(`transfer ${tr.from} -> ${tr.to} = ${tr.amount}`)}
                     >
                       Mark Paid
                     </button>

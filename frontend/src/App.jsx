@@ -82,6 +82,8 @@ export default function App() {
           ? null
           : data.execution.stage_failed === "lexer_parser"
           ? "Stage 02/03 · Lexer / Parser Rejected"
+          : data.execution.stage_failed === "type_error"
+          ? "Stage 05 · Dimensional Type Error"
           : "Stage 05 · Semantic Validation Error";
         pushLog(data.execution.ok ? "ok" : "err", data.execution.messages.join("\n"), badge);
         notify(data.execution.ok ? "ok" : "err", data.execution.messages[0].split("\n")[0]);
@@ -126,7 +128,7 @@ export default function App() {
 
   const handleCreateGroup = async (name, currency) => {
     const safe = name.replaceAll('"', '\\"');
-    await handleExecute(`group "${safe}"\ncurrency ${currency}`);
+    await handleExecute(`workspace "${safe}" {\n    currency: ${currency}\n}`);
   };
 
   const handleUploadFile = async (file) => {

@@ -1,20 +1,40 @@
-# SplitLang USD Trip Demo — Demonstrates $ literals & cent-exact rounding
-group "Tokyo Trip"
-currency USD
+/*
+ * SplitLang v2.0 USD Trip Demo — Tokyo Trip
+ * Demonstrates $ literals, cent-exact rounding, set algebra, and assertions.
+ */
+
+workspace "Tokyo Trip" {
+    currency: USD
+}
 reset
-add members linh, minh, tuan
+member add [linh, minh, tuan]
 
-linh paid $100 for "Airport Express" split equally on 26-11-2026
-minh paid $45.50 + $14.50 for "Ramen Dinner" with tax 10% with tip 15% on 26-11-2026
+let jp_tax   = 8%
+let izakaya_tip = 10%
+let sake_drinkers = all - [minh]
 
-bill "Izakaya Night" paid by tuan on 26-11-2026 {
-    item "Yakitori Set" $36 for all
-    item "Sake Carafe" $24 for linh, tuan
-    item "Yuzu Soda" $6 for minh
-    tax 8%
-    tip 10%
+expense "Airport Express" paid_by linh = $100 split equal(all) on 2026-11-26
+
+expense "Ramen Dinner" {
+    payer:  minh
+    amount: $45.50 + $14.50
+    split:  equal(all)
+    tax:    10%
+    tip:    15%
+    date:   2026-11-26
 }
 
-show balances
-who owes whom?
-what is minh's balance?
+bill "Izakaya Night" {
+    payer: tuan
+    date:  2026-11-26
+    item "Yakitori Set" = $36 for all
+    item "Sake Carafe"  = $24 for sake_drinkers
+    item "Yuzu Soda"    = $6  for [minh]
+    tax:   jp_tax
+    tip:   izakaya_tip
+}
+
+assert balanced
+query balances
+query balance(minh)
+settle
