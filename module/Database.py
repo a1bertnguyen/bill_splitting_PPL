@@ -13,10 +13,14 @@ from __future__ import annotations
 
 import json
 import sqlite3
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
+
+
+def _utc_now() -> datetime:
+    return datetime.now(timezone.utc).replace(tzinfo=None)
 
 import pymysql
 from pymysql.cursors import DictCursor
@@ -346,7 +350,7 @@ class Database:
         row = self._fetchone("SELECT id FROM users WHERE LOWER(username) = LOWER(%s)", ("cli_local",))
         if row:
             return int(row["id"])
-        now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        now = _utc_now().strftime("%Y-%m-%d %H:%M:%S")
         uid = self._insert(
             "INSERT INTO users (username, email_enc, password_hash, role, created_at) VALUES (%s, %s, %s, %s, %s)",
             ("cli_local", None, "!locked-local-cli-account!", "user", now),
@@ -355,7 +359,7 @@ class Database:
         return uid
 
     def create_user(self, *, username: str, email: str | None, password_hash: str) -> dict[str, Any]:
-        now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        now = _utc_now().strftime("%Y-%m-%d %H:%M:%S")
         email_enc = self.encryptor.encrypt(email) if email else None
         uid = self._insert(
             "INSERT INTO users (username, email_enc, password_hash, role, created_at) VALUES (%s, %s, %s, %s, %s)",
@@ -388,7 +392,7 @@ class Database:
         return row
 
     def create_session(self, *, user_id: int, token_hash: str, csrf_token: str, ttl_hours: int) -> dict[str, Any]:
-        now_dt = datetime.utcnow()
+        now_dt = _utc_now()
         exp_dt = now_dt + timedelta(hours=ttl_hours)
         now_s = now_dt.strftime("%Y-%m-%d %H:%M:%S")
         exp_s = exp_dt.strftime("%Y-%m-%d %H:%M:%S")
@@ -413,7 +417,7 @@ class Database:
             return None
         exp = row["expires_at"]
         exp_dt = exp if isinstance(exp, datetime) else datetime.strptime(str(exp), "%Y-%m-%d %H:%M:%S")
-        if exp_dt < datetime.utcnow():
+        if exp_dt < _utc_now():
             self.delete_session(token_hash)
             return None
         return row
@@ -449,7 +453,7 @@ class Database:
         )
         if row:
             return row
-        now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        now = _utc_now().strftime("%Y-%m-%d %H:%M:%S")
         gid = self._insert(
             "INSERT INTO `groups` (owner_user_id, name, currency, created_at) VALUES (%s, %s, %s, %s)",
             (owner_user_id, clean, currency.upper(), now),
@@ -498,7 +502,7 @@ class Database:
         self._assert_group_owner(group_id, owner_user_id)
         added: list[str] = []
         existed: list[str] = []
-        now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        now = _utc_now().strftime("%Y-%m-%d %H:%M:%S")
         for raw in names:
             clean = raw.strip()
             existing = self._fetchone(
@@ -578,7 +582,7 @@ class Database:
         items: list[dict[str, Any]] | None = None,
     ) -> int:
         self._assert_group_owner(group_id, owner_user_id)
-        now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        now = _utc_now().strftime("%Y-%m-%d %H:%M:%S")
         desc_enc = self.encryptor.encrypt(description)
         items_enc = self.encryptor.encrypt(json.dumps(items)) if items is not None else None
 
@@ -663,7 +667,7 @@ class Database:
         settle_date: str,
     ) -> int:
         self._assert_group_owner(group_id, owner_user_id)
-        now = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        now = _utc_now().strftime("%Y-%m-%d %H:%M:%S")
         note_enc = self.encryptor.encrypt(note)
         settle_id = self._insert(
             """
