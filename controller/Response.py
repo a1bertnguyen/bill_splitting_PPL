@@ -81,16 +81,29 @@ def format_parse_tree(tree, rule_names: list[str], symbolic_names: list[str], pr
 
 
 class SplitLangInterpreter:
-    """Stateful interpreter session for SplitLang (used by GUI, CLI, and tests)."""
+    """Stateful, owner-scoped interpreter session for SplitLang."""
 
-    def __init__(self, db_path: str | Path | None = None) -> None:
-        self.db = Database(db_path=db_path)
-        default_group = self.db.ensure_group("Default", currency="VND")
-        self.ctx = ExecutionContext(db=self.db, active_group_id=default_group["id"])
+    def __init__(
+        self,
+        db_path: str | Path | None = None,
+        *,
+        db: Database | None = None,
+        owner_user_id: int | None = None,
+        active_group_id: int | None = None,
+    ) -> None:
+        self._owns_db = db is None
+        self.db = db if db is not None else Database(db_path=db_path)
+        uid = owner_user_id if owner_user_id is not None else self.db.ensure_local_cli_user()
+        if active_group_id is not None:
+            grp = self.db.get_group_by_id(active_group_id, owner_user_id=uid)
+        else:
+            grp = self.db.ensure_group("Default", currency="VND", owner_user_id=uid)
+        self.ctx = ExecutionContext(db=self.db, owner_user_id=uid, active_group_id=grp["id"])
         self.visitor = SplitLangASTGenerator()
 
     def close(self) -> None:
-        self.db.close()
+        if self._owns_db:
+            self.db.close()
 
     def analyze(self, source: str) -> dict[str, Any]:
         """Run Stage 2 (Lexer) and Stage 3 (Parser) and return diagnostics."""
@@ -231,22 +244,33 @@ class SplitLangInterpreter:
         }
 
     def get_dashboard_state(self) -> dict[str, Any]:
-        """Return live JSON-serializable state of the active group for Web/API clients."""
+        """Return live trimmed, JSON-serializable state for the active user's group."""
         from decimal import Decimal
 
+        uid = self.ctx.owner_user_id
         grp = self.ctx.group
         currency = grp["currency"]
-        members = self.db.list_members(grp["id"])
-        expenses = self.db.list_expenses(grp["id"])
-        balances = compute_balances(self.db, grp["id"])
+        members = self.db.list_members(grp["id"], owner_user_id=uid)
+        expenses = self.db.list_expenses(grp["id"], owner_user_id=uid)
+        balances = compute_balances(self.db, grp["id"], owner_user_id=uid)
         transfers = compute_optimal_settlements(balances, currency)
-        groups = self.db.list_groups()
+        groups = self.db.list_groups(owner_user_id=uid)
 
         total_spent_dec = sum((e["total"] for e in expenses), Decimal("0"))
 
+        # Control #17 (Trim API responses): expose only needed public fields (never owner_user_id)
         return {
-            "group": grp,
-            "groups": groups,
+            "group": {"id": grp["id"], "name": grp["name"], "currency": grp["currency"]},
+            "groups": [
+                {
+                    "id": g["id"],
+                    "name": g["name"],
+                    "currency": g["currency"],
+                    "member_count": g["member_count"],
+                    "expense_count": g["expense_count"],
+                }
+                for g in groups
+            ],
             "currency": currency,
             "members": members,
             "total_spent": format_money(total_spent_dec, currency),

@@ -1,12 +1,7 @@
 """
 Abstract Syntax Tree (AST) node classes ("Ops") for SplitLang.
 
-Each Op represents the distilled semantic meaning of a SplitLang statement
-after the Visitor strips syntactic sugar (punctuation, optional keywords, etc.).
-Each Op implements:
-  - action(context) : runs deterministic domain logic & updates SQLite DB
-  - to_dict()       : returns structured payload for UI / API / tests
-  - pretty_ast()    : returns an indented tree string for the PPL Inspector
+Each Op executes inside a Row-Level-Secured ExecutionContext (db, owner_user_id, active_group_id).
 """
 
 from __future__ import annotations
@@ -32,14 +27,15 @@ from module.utilFunction import (
 
 @dataclass
 class ExecutionContext:
-    """Mutable session state shared across statements in a SplitLang session."""
+    """Mutable session state scoped strictly to one authenticated owner_user_id."""
 
     db: Database
+    owner_user_id: int
     active_group_id: int
 
     @property
     def group(self) -> dict[str, Any]:
-        return self.db.get_group_by_id(self.active_group_id)
+        return self.db.get_group_by_id(self.active_group_id, owner_user_id=self.owner_user_id)
 
     @property
     def currency(self) -> str:
@@ -47,8 +43,6 @@ class ExecutionContext:
 
 
 class BaseOp:
-    """Abstract base class for all SplitLang AST Command Ops."""
-
     op_name: str = "BaseOp"
 
     def action(self, ctx: ExecutionContext) -> dict[str, Any]:
@@ -62,23 +56,18 @@ class BaseOp:
         return f"{pad}{self.__class__.__name__}()"
 
 
-# ============================================================================
-# 1. Group, Currency & Member Ops
-# ============================================================================
-
-
 @dataclass
 class GroupOp(BaseOp):
     name: str
     result: dict[str, Any] = field(default_factory=dict)
 
     def action(self, ctx: ExecutionContext) -> dict[str, Any]:
-        existed = ctx.db.get_group_by_name(self.name) is not None
-        grp = ctx.db.ensure_group(self.name)
+        existed = ctx.db.get_group_by_name(self.name, owner_user_id=ctx.owner_user_id) is not None
+        grp = ctx.db.ensure_group(self.name, owner_user_id=ctx.owner_user_id)
         ctx.active_group_id = grp["id"]
         status = "Switched to" if existed else "Created and switched to"
         self.result = {
-            "group": grp,
+            "group": {"id": grp["id"], "name": grp["name"], "currency": grp["currency"]},
             "message": f"{status} group '{grp['name']}' (currency: {grp['currency']}).",
         }
         return self.to_dict()
@@ -87,8 +76,7 @@ class GroupOp(BaseOp):
         return {"type": "GroupOp", "name": self.name, "result": self.result}
 
     def pretty_ast(self, indent: int = 0) -> str:
-        pad = "  " * indent
-        return f"{pad}GroupOp(name={self.name!r})"
+        return f"{'  ' * indent}GroupOp(name={self.name!r})"
 
 
 @dataclass
@@ -97,9 +85,9 @@ class CurrencyOp(BaseOp):
     result: dict[str, Any] = field(default_factory=dict)
 
     def action(self, ctx: ExecutionContext) -> dict[str, Any]:
-        grp = ctx.db.set_currency(ctx.active_group_id, self.currency)
+        grp = ctx.db.set_currency(ctx.active_group_id, self.currency, owner_user_id=ctx.owner_user_id)
         self.result = {
-            "group": grp,
+            "group": {"id": grp["id"], "name": grp["name"], "currency": grp["currency"]},
             "message": f"Currency for group '{grp['name']}' set to {grp['currency']}.",
         }
         return self.to_dict()
@@ -108,63 +96,53 @@ class CurrencyOp(BaseOp):
         return {"type": "CurrencyOp", "currency": self.currency, "result": self.result}
 
     def pretty_ast(self, indent: int = 0) -> str:
-        pad = "  " * indent
-        return f"{pad}CurrencyOp(currency={self.currency!r})"
+        return f"{'  ' * indent}CurrencyOp(currency={self.currency!r})"
 
 
 @dataclass
 class MemberOp(BaseOp):
-    verb: str  # 'add' or 'remove'
+    verb: str
     members: list[str]
     result: dict[str, Any] = field(default_factory=dict)
 
     def action(self, ctx: ExecutionContext) -> dict[str, Any]:
         if self.verb == "add":
-            added, existed = ctx.db.add_members(ctx.active_group_id, self.members)
+            added, existed = ctx.db.add_members(
+                ctx.active_group_id, self.members, owner_user_id=ctx.owner_user_id
+            )
             parts: list[str] = []
             if added:
                 parts.append(f"Added member(s): {', '.join(added)}")
             if existed:
                 parts.append(f"Already in group: {', '.join(existed)}")
-            msg = ". ".join(parts) + "."
             self.result = {
                 "added": added,
                 "existed": existed,
-                "all_members": ctx.db.list_members(ctx.active_group_id),
-                "message": msg,
+                "all_members": ctx.db.list_members(ctx.active_group_id, owner_user_id=ctx.owner_user_id),
+                "message": ". ".join(parts) + ".",
             }
         else:
-            removed, not_found = ctx.db.remove_members(ctx.active_group_id, self.members)
+            removed, not_found = ctx.db.remove_members(
+                ctx.active_group_id, self.members, owner_user_id=ctx.owner_user_id
+            )
             parts = []
             if removed:
                 parts.append(f"Removed member(s): {', '.join(removed)}")
             if not_found:
                 parts.append(f"Not found: {', '.join(not_found)}")
-            msg = ". ".join(parts) + "."
             self.result = {
                 "removed": removed,
                 "not_found": not_found,
-                "all_members": ctx.db.list_members(ctx.active_group_id),
-                "message": msg,
+                "all_members": ctx.db.list_members(ctx.active_group_id, owner_user_id=ctx.owner_user_id),
+                "message": ". ".join(parts) + ".",
             }
         return self.to_dict()
 
     def to_dict(self) -> dict[str, Any]:
-        return {
-            "type": "MemberOp",
-            "verb": self.verb,
-            "members": self.members,
-            "result": self.result,
-        }
+        return {"type": "MemberOp", "verb": self.verb, "members": self.members, "result": self.result}
 
     def pretty_ast(self, indent: int = 0) -> str:
-        pad = "  " * indent
-        return f"{pad}MemberOp(verb={self.verb!r}, members={self.members!r})"
-
-
-# ============================================================================
-# 2. Expense & Itemized Bill Ops
-# ============================================================================
+        return f"{'  ' * indent}MemberOp(verb={self.verb!r}, members={self.members!r})"
 
 
 @dataclass
@@ -179,7 +157,9 @@ class ExpenseOp(BaseOp):
 
     def action(self, ctx: ExecutionContext) -> dict[str, Any]:
         currency = ctx.currency
-        canonical_payer = resolve_member_strict(ctx.db, ctx.active_group_id, self.payer)
+        canonical_payer = resolve_member_strict(
+            ctx.db, ctx.active_group_id, self.payer, owner_user_id=ctx.owner_user_id
+        )
         mod_calc, shares, split_mode = compute_expense_shares(
             ctx.db,
             ctx.active_group_id,
@@ -187,10 +167,12 @@ class ExpenseOp(BaseOp):
             self.amount,
             self.split_spec,
             self.modifiers,
+            owner_user_id=ctx.owner_user_id,
         )
         exp_date = self.expense_date or today_str()
         exp_id = ctx.db.add_expense(
             ctx.active_group_id,
+            owner_user_id=ctx.owner_user_id,
             kind="expense",
             payer=canonical_payer,
             description=self.description,
@@ -203,9 +185,7 @@ class ExpenseOp(BaseOp):
             shares=shares,
             expense_date=exp_date,
         )
-        share_str = ", ".join(
-            f"{m}: {format_money(amt, currency)}" for m, amt in shares.items()
-        )
+        share_str = ", ".join(f"{m}: {format_money(amt, currency)}" for m, amt in shares.items())
         mod_notes: list[str] = []
         if mod_calc.discount_amount > 0:
             mod_notes.append(f"discount -{format_money(mod_calc.discount_amount, currency)}")
@@ -237,6 +217,15 @@ class ExpenseOp(BaseOp):
         }
         return self.to_dict()
 
+    def _serializable_split(self) -> dict[str, Any]:
+        out = dict(self.split_spec)
+        if "allocations" in out:
+            out["allocations"] = [(p, str(v)) for p, v in out["allocations"]]
+        return out
+
+    def _serializable_modifiers(self) -> list[dict[str, Any]]:
+        return [{**m, "value": str(m["value"])} for m in self.modifiers]
+
     def to_dict(self) -> dict[str, Any]:
         return {
             "type": "ExpenseOp",
@@ -248,18 +237,6 @@ class ExpenseOp(BaseOp):
             "date": self.expense_date,
             "result": self.result,
         }
-
-    def _serializable_split(self) -> dict[str, Any]:
-        out = dict(self.split_spec)
-        if "allocations" in out:
-            out["allocations"] = [(p, str(v)) for p, v in out["allocations"]]
-        return out
-
-    def _serializable_modifiers(self) -> list[dict[str, Any]]:
-        return [
-            {**m, "value": str(m["value"])}
-            for m in self.modifiers
-        ]
 
     def pretty_ast(self, indent: int = 0) -> str:
         pad = "  " * indent
@@ -289,17 +266,21 @@ class BillOp(BaseOp):
 
     def action(self, ctx: ExecutionContext) -> dict[str, Any]:
         currency = ctx.currency
-        canonical_payer = resolve_member_strict(ctx.db, ctx.active_group_id, self.payer)
+        canonical_payer = resolve_member_strict(
+            ctx.db, ctx.active_group_id, self.payer, owner_user_id=ctx.owner_user_id
+        )
         mod_calc, shares, resolved_items = compute_bill_shares(
             ctx.db,
             ctx.active_group_id,
             currency,
             self.items,
             self.modifiers,
+            owner_user_id=ctx.owner_user_id,
         )
         b_date = self.bill_date or today_str()
         exp_id = ctx.db.add_expense(
             ctx.active_group_id,
+            owner_user_id=ctx.owner_user_id,
             kind="bill",
             payer=canonical_payer,
             description=self.title,
@@ -330,9 +311,7 @@ class BillOp(BaseOp):
                 f"    - {it['name']}: {format_money(Decimal(it['amount']), currency)} "
                 f"({', '.join(it['consumers'])})"
             )
-        share_str = ", ".join(
-            f"{m}: {format_money(amt, currency)}" for m, amt in shares.items()
-        )
+        share_str = ", ".join(f"{m}: {format_money(amt, currency)}" for m, amt in shares.items())
         lines.append(f"  Shares   -> {share_str}")
 
         self.result = {
@@ -376,18 +355,15 @@ class BillOp(BaseOp):
                 if it["for_all"]
                 else repr(it["consumers"])
             )
-            lines.append(f"{pad}    BillItem(name={it['name']!r}, amount={it['amount']}, for={target}),")
+            lines.append(
+                f"{pad}    BillItem(name={it['name']!r}, amount={it['amount']}, for={target}),"
+            )
         lines.append(f"{pad}  ],")
         if self.modifiers:
             mods = [{**m, "value": str(m["value"])} for m in self.modifiers]
             lines.append(f"{pad}  modifiers={mods!r},")
         lines.append(f"{pad})")
         return "\n".join(lines)
-
-
-# ============================================================================
-# 3. Settlement Ops
-# ============================================================================
 
 
 @dataclass
@@ -401,8 +377,12 @@ class SettleOp(BaseOp):
 
     def action(self, ctx: ExecutionContext) -> dict[str, Any]:
         currency = ctx.currency
-        src = resolve_member_strict(ctx.db, ctx.active_group_id, self.from_member)
-        dst = resolve_member_strict(ctx.db, ctx.active_group_id, self.to_member)
+        src = resolve_member_strict(
+            ctx.db, ctx.active_group_id, self.from_member, owner_user_id=ctx.owner_user_id
+        )
+        dst = resolve_member_strict(
+            ctx.db, ctx.active_group_id, self.to_member, owner_user_id=ctx.owner_user_id
+        )
         if src.lower() == dst.lower():
             raise SemanticError(f"Cannot record a settlement from '{src}' to themselves.")
         amt = quantize_money(self.amount, currency)
@@ -412,6 +392,7 @@ class SettleOp(BaseOp):
         s_date = self.settle_date or today_str()
         sid = ctx.db.add_settlement(
             ctx.active_group_id,
+            owner_user_id=ctx.owner_user_id,
             from_member=src,
             to_member=dst,
             amount=amt,
@@ -446,9 +427,8 @@ class SettleOp(BaseOp):
         }
 
     def pretty_ast(self, indent: int = 0) -> str:
-        pad = "  " * indent
         return (
-            f"{pad}SettleOp(from={self.from_member!r}, to={self.to_member!r}, "
+            f"{'  ' * indent}SettleOp(from={self.from_member!r}, to={self.to_member!r}, "
             f"amount={self.amount}, note={self.note!r})"
         )
 
@@ -459,7 +439,7 @@ class SettleUpOp(BaseOp):
 
     def action(self, ctx: ExecutionContext) -> dict[str, Any]:
         currency = ctx.currency
-        balances = compute_balances(ctx.db, ctx.active_group_id)
+        balances = compute_balances(ctx.db, ctx.active_group_id, owner_user_id=ctx.owner_user_id)
         transfers = compute_optimal_settlements(balances, currency)
         if not transfers:
             msg = f"All settled up in group '{ctx.group['name']}'! No transfers needed."
@@ -472,9 +452,7 @@ class SettleUpOp(BaseOp):
                 lines.append(f"  {i}. {tr['from']} -> {tr['to']}: {tr['formatted']}")
             msg = "\n".join(lines)
         self.result = {
-            "transfers": [
-                {**t, "amount": str(t["amount"])} for t in transfers
-            ],
+            "transfers": [{**t, "amount": str(t["amount"])} for t in transfers],
             "message": msg,
         }
         return self.to_dict()
@@ -483,18 +461,12 @@ class SettleUpOp(BaseOp):
         return {"type": "SettleUpOp", "result": self.result}
 
     def pretty_ast(self, indent: int = 0) -> str:
-        pad = "  " * indent
-        return f"{pad}SettleUpOp()"
-
-
-# ============================================================================
-# 4. Query & Report Ops
-# ============================================================================
+        return f"{'  ' * indent}SettleUpOp()"
 
 
 @dataclass
 class QueryOp(BaseOp):
-    query_kind: str  # members, expenses, balances, summary, settlements, groups, who_owes_whom, how_much_owes, person_balance
+    query_kind: str
     target_member: str | None = None
     result: dict[str, Any] = field(default_factory=dict)
 
@@ -503,7 +475,7 @@ class QueryOp(BaseOp):
         currency = grp["currency"]
 
         if self.query_kind == "members":
-            members = ctx.db.list_members(ctx.active_group_id)
+            members = ctx.db.list_members(ctx.active_group_id, owner_user_id=ctx.owner_user_id)
             msg = (
                 f"Members in '{grp['name']}' ({len(members)}): {', '.join(members)}"
                 if members
@@ -512,7 +484,7 @@ class QueryOp(BaseOp):
             self.result = {"members": members, "message": msg}
 
         elif self.query_kind == "groups":
-            groups = ctx.db.list_groups()
+            groups = ctx.db.list_groups(owner_user_id=ctx.owner_user_id)
             lines = ["Groups:"]
             for g in groups:
                 marker = " *active*" if g["id"] == ctx.active_group_id else ""
@@ -523,7 +495,7 @@ class QueryOp(BaseOp):
             self.result = {"groups": groups, "message": "\n".join(lines)}
 
         elif self.query_kind == "expenses":
-            expenses = ctx.db.list_expenses(ctx.active_group_id)
+            expenses = ctx.db.list_expenses(ctx.active_group_id, owner_user_id=ctx.owner_user_id)
             if not expenses:
                 msg = f"No expenses recorded in '{grp['name']}' yet."
             else:
@@ -553,7 +525,7 @@ class QueryOp(BaseOp):
             }
 
         elif self.query_kind == "balances":
-            balances = compute_balances(ctx.db, ctx.active_group_id)
+            balances = compute_balances(ctx.db, ctx.active_group_id, owner_user_id=ctx.owner_user_id)
             if not balances:
                 msg = f"No members in '{grp['name']}' yet."
             else:
@@ -585,7 +557,7 @@ class QueryOp(BaseOp):
             }
 
         elif self.query_kind in ("settlements", "who_owes_whom"):
-            balances = compute_balances(ctx.db, ctx.active_group_id)
+            balances = compute_balances(ctx.db, ctx.active_group_id, owner_user_id=ctx.owner_user_id)
             transfers = compute_optimal_settlements(balances, currency)
             if not transfers:
                 msg = f"Everyone is settled up in '{grp['name']}'!"
@@ -600,10 +572,10 @@ class QueryOp(BaseOp):
             }
 
         elif self.query_kind == "summary":
-            members = ctx.db.list_members(ctx.active_group_id)
-            expenses = ctx.db.list_expenses(ctx.active_group_id)
-            settlements = ctx.db.list_settlements(ctx.active_group_id)
-            balances = compute_balances(ctx.db, ctx.active_group_id)
+            members = ctx.db.list_members(ctx.active_group_id, owner_user_id=ctx.owner_user_id)
+            expenses = ctx.db.list_expenses(ctx.active_group_id, owner_user_id=ctx.owner_user_id)
+            settlements = ctx.db.list_settlements(ctx.active_group_id, owner_user_id=ctx.owner_user_id)
+            balances = compute_balances(ctx.db, ctx.active_group_id, owner_user_id=ctx.owner_user_id)
             transfers = compute_optimal_settlements(balances, currency)
             total_spent = sum((e["total"] for e in expenses), Decimal("0"))
             avg_per_member = (total_spent / len(members)) if members else Decimal("0")
@@ -633,8 +605,10 @@ class QueryOp(BaseOp):
 
         elif self.query_kind in ("how_much_owes", "person_balance"):
             assert self.target_member is not None
-            canonical = resolve_member_strict(ctx.db, ctx.active_group_id, self.target_member)
-            balances = compute_balances(ctx.db, ctx.active_group_id)
+            canonical = resolve_member_strict(
+                ctx.db, ctx.active_group_id, self.target_member, owner_user_id=ctx.owner_user_id
+            )
+            balances = compute_balances(ctx.db, ctx.active_group_id, owner_user_id=ctx.owner_user_id)
             transfers = compute_optimal_settlements(balances, currency)
             person_row = next(b for b in balances if b["member"].lower() == canonical.lower())
             net = person_row["net"]
@@ -684,28 +658,22 @@ class QueryOp(BaseOp):
         return f"{pad}QueryOp(kind={self.query_kind!r})"
 
 
-# ============================================================================
-# 5. Control Ops
-# ============================================================================
-
-
 @dataclass
 class ControlOp(BaseOp):
-    command: str  # undo, reset, clear, help
+    command: str
     result: dict[str, Any] = field(default_factory=dict)
 
     def action(self, ctx: ExecutionContext) -> dict[str, Any]:
         if self.command == "undo":
-            undone = ctx.db.undo_last_action(ctx.active_group_id)
-            if undone:
-                msg = f"Undid last action: {undone}"
-            else:
-                msg = "Nothing to undo in this group."
+            undone = ctx.db.undo_last_action(ctx.active_group_id, owner_user_id=ctx.owner_user_id)
+            msg = f"Undid last action: {undone}" if undone else "Nothing to undo in this group."
             self.result = {"undone": undone, "message": msg}
         elif self.command == "reset":
             grp_name = ctx.group["name"]
-            ctx.db.reset_group(ctx.active_group_id)
-            self.result = {"message": f"Reset group '{grp_name}' (cleared members, expenses, settlements)."}
+            ctx.db.reset_group(ctx.active_group_id, owner_user_id=ctx.owner_user_id)
+            self.result = {
+                "message": f"Reset group '{grp_name}' (cleared members, expenses, settlements)."
+            }
         elif self.command == "clear":
             self.result = {"clear_ui": True, "message": "Console cleared."}
         elif self.command == "help":
@@ -718,5 +686,4 @@ class ControlOp(BaseOp):
         return {"type": "ControlOp", "command": self.command, "result": self.result}
 
     def pretty_ast(self, indent: int = 0) -> str:
-        pad = "  " * indent
-        return f"{pad}ControlOp(command={self.command!r})"
+        return f"{'  ' * indent}ControlOp(command={self.command!r})"

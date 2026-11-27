@@ -29,7 +29,13 @@ def main() -> None:
     if not args.no_browser:
         threading.Timer(1.0, lambda: webbrowser.open(url)).start()
 
-    uvicorn.run("api.server:app", host=args.host, port=args.port, reload=False)
+    uvicorn.run(
+        "api.server:get_default_app",
+        factory=True,
+        host=args.host,
+        port=args.port,
+        reload=False,
+    )
 
 
 if __name__ == "__main__":

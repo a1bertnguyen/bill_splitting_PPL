@@ -199,10 +199,10 @@ def compute_modifiers(
     )
 
 
-def resolve_member_strict(db: Database, group_id: int, raw_name: str) -> str:
-    resolved = db.resolve_member_name(group_id, raw_name)
+def resolve_member_strict(db: Database, group_id: int, raw_name: str, *, owner_user_id: int) -> str:
+    resolved = db.resolve_member_name(group_id, raw_name, owner_user_id=owner_user_id)
     if not resolved:
-        existing = db.list_members(group_id)
+        existing = db.list_members(group_id, owner_user_id=owner_user_id)
         hint = (
             f"Current members: {', '.join(existing)}."
             if existing
@@ -212,11 +212,13 @@ def resolve_member_strict(db: Database, group_id: int, raw_name: str) -> str:
     return resolved
 
 
-def resolve_unique_members(db: Database, group_id: int, raw_names: list[str]) -> list[str]:
+def resolve_unique_members(
+    db: Database, group_id: int, raw_names: list[str], *, owner_user_id: int
+) -> list[str]:
     seen: set[str] = set()
     ordered: list[str] = []
     for name in raw_names:
-        canonical = resolve_member_strict(db, group_id, name)
+        canonical = resolve_member_strict(db, group_id, name, owner_user_id=owner_user_id)
         key = canonical.lower()
         if key not in seen:
             seen.add(key)
@@ -231,13 +233,15 @@ def compute_expense_shares(
     subtotal: Decimal,
     split_spec: dict[str, Any],
     modifiers: list[dict[str, Any]],
+    *,
+    owner_user_id: int,
 ) -> tuple[ModifierCalc, dict[str, Decimal], str]:
     """
     Validate participants & split rules, compute modifiers, and return
     (ModifierCalc, {member: final_share}, canonical_split_mode).
     """
     mod_calc = compute_modifiers(subtotal, modifiers, currency)
-    all_members = db.list_members(group_id)
+    all_members = db.list_members(group_id, owner_user_id=owner_user_id)
     if not all_members:
         raise SemanticError("Group has no members. Add members first with 'add members alice, bob'.")
 
@@ -245,10 +249,15 @@ def compute_expense_shares(
 
     if mode == "equal":
         if split_spec.get("among"):
-            participants = resolve_unique_members(db, group_id, split_spec["among"])
+            participants = resolve_unique_members(
+                db, group_id, split_spec["among"], owner_user_id=owner_user_id
+            )
         elif split_spec.get("excluding"):
             excluded = {
-                m.lower() for m in resolve_unique_members(db, group_id, split_spec["excluding"])
+                m.lower()
+                for m in resolve_unique_members(
+                    db, group_id, split_spec["excluding"], owner_user_id=owner_user_id
+                )
             }
             participants = [m for m in all_members if m.lower() not in excluded]
         else:
@@ -265,7 +274,7 @@ def compute_expense_shares(
         allocs: list[tuple[str, Decimal]] = split_spec["allocations"]
         weights_raw: dict[str, Decimal] = {}
         for raw_person, amt in allocs:
-            canonical = resolve_member_strict(db, group_id, raw_person)
+            canonical = resolve_member_strict(db, group_id, raw_person, owner_user_id=owner_user_id)
             if canonical in weights_raw:
                 raise SemanticError(f"Duplicate member '{canonical}' in exact split.")
             if amt < 0:
@@ -289,7 +298,7 @@ def compute_expense_shares(
         allocs_pct: list[tuple[str, Decimal]] = split_spec["allocations"]
         weights_pct: dict[str, Decimal] = {}
         for raw_person, pct in allocs_pct:
-            canonical = resolve_member_strict(db, group_id, raw_person)
+            canonical = resolve_member_strict(db, group_id, raw_person, owner_user_id=owner_user_id)
             if canonical in weights_pct:
                 raise SemanticError(f"Duplicate member '{canonical}' in percentage split.")
             if pct < 0:
@@ -308,7 +317,7 @@ def compute_expense_shares(
         allocs_ratio: list[tuple[str, Decimal]] = split_spec["allocations"]
         weights_ratio: dict[str, Decimal] = {}
         for raw_person, ratio in allocs_ratio:
-            canonical = resolve_member_strict(db, group_id, raw_person)
+            canonical = resolve_member_strict(db, group_id, raw_person, owner_user_id=owner_user_id)
             if canonical in weights_ratio:
                 raise SemanticError(f"Duplicate member '{canonical}' in ratio split.")
             if ratio <= 0:
@@ -327,6 +336,8 @@ def compute_bill_shares(
     currency: str,
     items: list[dict[str, Any]],
     modifiers: list[dict[str, Any]],
+    *,
+    owner_user_id: int,
 ) -> tuple[ModifierCalc, dict[str, Decimal], list[dict[str, Any]]]:
     """
     Evaluate an itemized bill block:
@@ -334,7 +345,7 @@ def compute_bill_shares(
       - Bill-level discount, tax, and tip are distributed proportionally to each person's
         item subtotal using exact largest-remainder rounding.
     """
-    all_members = db.list_members(group_id)
+    all_members = db.list_members(group_id, owner_user_id=owner_user_id)
     if not all_members:
         raise SemanticError("Group has no members. Add members first with 'add members alice, bob'.")
     if not items:
@@ -352,11 +363,15 @@ def compute_bill_shares(
         if item["for_all"]:
             excluded = {
                 m.lower()
-                for m in resolve_unique_members(db, group_id, item.get("excluding", []))
+                for m in resolve_unique_members(
+                    db, group_id, item.get("excluding", []), owner_user_id=owner_user_id
+                )
             }
             consumers = [m for m in all_members if m.lower() not in excluded]
         else:
-            consumers = resolve_unique_members(db, group_id, item["consumers"])
+            consumers = resolve_unique_members(
+                db, group_id, item["consumers"], owner_user_id=owner_user_id
+            )
 
         if not consumers:
             raise SemanticError(f"Item '{item['name']}' has 0 consumers.")
@@ -382,14 +397,14 @@ def compute_bill_shares(
     return mod_calc, final_shares, resolved_items
 
 
-def compute_balances(db: Database, group_id: int) -> list[dict[str, Any]]:
+def compute_balances(db: Database, group_id: int, *, owner_user_id: int) -> list[dict[str, Any]]:
     """
     Compute per-member financial ledger:
       net_balance = total_paid - total_owed + settlements_sent - settlements_received
     Positive net_balance => others owe this person (creditor).
     Negative net_balance => this person owes others (debtor).
     """
-    members = db.list_members(group_id)
+    members = db.list_members(group_id, owner_user_id=owner_user_id)
     ledger: dict[str, dict[str, Decimal]] = {
         m: {
             "paid": Decimal("0"),
@@ -400,7 +415,7 @@ def compute_balances(db: Database, group_id: int) -> list[dict[str, Any]]:
         for m in members
     }
 
-    for exp in db.list_expenses(group_id):
+    for exp in db.list_expenses(group_id, owner_user_id=owner_user_id):
         payer = exp["payer"]
         if payer not in ledger:
             ledger[payer] = {
@@ -420,7 +435,7 @@ def compute_balances(db: Database, group_id: int) -> list[dict[str, Any]]:
                 }
             ledger[member_name]["owed"] += share
 
-    for st in db.list_settlements(group_id):
+    for st in db.list_settlements(group_id, owner_user_id=owner_user_id):
         f_m = st["from_member"]
         t_m = st["to_member"]
         amt = st["amount"]

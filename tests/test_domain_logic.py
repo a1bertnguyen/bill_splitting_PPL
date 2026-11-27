@@ -63,7 +63,9 @@ def test_all_four_split_modes_and_modifiers(interp: SplitLangInterpreter):
     }
 
     # Ledger zero-sum invariant: sum of all net balances MUST equal 0
-    balances = compute_balances(interp.db, interp.ctx.active_group_id)
+    balances = compute_balances(
+        interp.db, interp.ctx.active_group_id, owner_user_id=interp.ctx.owner_user_id
+    )
     assert sum(b["net"] for b in balances) == Decimal("0")
 
 
@@ -124,14 +126,18 @@ def test_repayment_reduces_debt_and_undo_reverses(interp: SplitLangInterpreter):
         bob pays alice 100k
         """
     )
-    balances = compute_balances(interp.db, interp.ctx.active_group_id)
+    balances = compute_balances(
+        interp.db, interp.ctx.active_group_id, owner_user_id=interp.ctx.owner_user_id
+    )
     transfers = compute_optimal_settlements(balances, "VND")
     assert transfers == []
 
     # Undo the repayment -> Bob owes Alice 100k again
     undo_res = interp.execute("undo")
     assert undo_res["ok"] is True
-    balances_after = compute_balances(interp.db, interp.ctx.active_group_id)
+    balances_after = compute_balances(
+        interp.db, interp.ctx.active_group_id, owner_user_id=interp.ctx.owner_user_id
+    )
     transfers_after = compute_optimal_settlements(balances_after, "VND")
     assert len(transfers_after) == 1
     assert transfers_after[0]["from"] == "bob"
