@@ -27,7 +27,7 @@ from SplitLangLexer import SplitLangLexer
 from SplitLangParser import SplitLangParser
 
 from module.ASTGeneration import SplitLangASTGenerator
-from module.ASTutils import BaseOp, ExecutionContext
+from module.ASTutils import BaseOp, ExecutionContext, SplitTypeError
 from module.Database import Database
 from module.utilFunction import (
     SemanticError,
@@ -81,16 +81,37 @@ def format_parse_tree(tree, rule_names: list[str], symbolic_names: list[str], pr
 
 
 class SplitLangInterpreter:
-    """Stateful interpreter session for SplitLang (used by GUI, CLI, and tests)."""
+    """Stateful, owner-scoped interpreter session for SplitLang."""
 
-    def __init__(self, db_path: str | Path | None = None) -> None:
-        self.db = Database(db_path=db_path)
-        default_group = self.db.ensure_group("Default", currency="VND")
-        self.ctx = ExecutionContext(db=self.db, active_group_id=default_group["id"])
+    def __init__(
+        self,
+        db_path: str | Path | None = None,
+        *,
+        db: Database | None = None,
+        owner_user_id: int | None = None,
+        active_group_id: int | None = None,
+        env: dict[str, Any] | None = None,
+        rules: dict[str, Any] | None = None,
+    ) -> None:
+        self._owns_db = db is None
+        self.db = db if db is not None else Database(db_path=db_path)
+        uid = owner_user_id if owner_user_id is not None else self.db.ensure_local_cli_user()
+        if active_group_id is not None:
+            grp = self.db.get_group_by_id(active_group_id, owner_user_id=uid)
+        else:
+            grp = self.db.ensure_group("Default", currency="VND", owner_user_id=uid)
+        self.ctx = ExecutionContext(
+            db=self.db,
+            owner_user_id=uid,
+            active_group_id=grp["id"],
+            env=env if env is not None else {},
+            rules=rules if rules is not None else {},
+        )
         self.visitor = SplitLangASTGenerator()
 
     def close(self) -> None:
-        self.db.close()
+        if self._owns_db:
+            self.db.close()
 
     def analyze(self, source: str) -> dict[str, Any]:
         """Run Stage 2 (Lexer) and Stage 3 (Parser) and return diagnostics."""
@@ -204,6 +225,20 @@ class SplitLangInterpreter:
                 msg = res.get("result", {}).get("message", "")
                 if msg:
                     messages.append(msg)
+            except SplitTypeError as exc:
+                err_msg = f"[Type Error] {exc}"
+                errors.append(err_msg)
+                messages.append(err_msg)
+                return {
+                    "ok": False,
+                    "stage_failed": "type_error",
+                    "messages": messages,
+                    "ops": op_dicts,
+                    "tokens": analysis["tokens"],
+                    "parse_tree": analysis["parse_tree"],
+                    "ast_tree": ast_tree_str,
+                    "errors": errors,
+                }
             except SemanticError as exc:
                 err_msg = f"[Semantic Error] {exc}"
                 errors.append(err_msg)
@@ -231,30 +266,46 @@ class SplitLangInterpreter:
         }
 
     def get_dashboard_state(self) -> dict[str, Any]:
-        """Return live state of the active group for GUI dashboard tables."""
+        """Return live trimmed, JSON-serializable state for the active user's group."""
+        from decimal import Decimal
+
+        uid = self.ctx.owner_user_id
         grp = self.ctx.group
         currency = grp["currency"]
-        members = self.db.list_members(grp["id"])
-        expenses = self.db.list_expenses(grp["id"])
-        balances = compute_balances(self.db, grp["id"])
+        members = self.db.list_members(grp["id"], owner_user_id=uid)
+        expenses = self.db.list_expenses(grp["id"], owner_user_id=uid)
+        balances = compute_balances(self.db, grp["id"], owner_user_id=uid)
         transfers = compute_optimal_settlements(balances, currency)
-
-        from decimal import Decimal
+        groups = self.db.list_groups(owner_user_id=uid)
 
         total_spent_dec = sum((e["total"] for e in expenses), Decimal("0"))
 
+        # Control #17 (Trim API responses): expose only needed public fields (never owner_user_id)
         return {
-            "group": grp,
+            "group": {"id": grp["id"], "name": grp["name"], "currency": grp["currency"]},
+            "groups": [
+                {
+                    "id": g["id"],
+                    "name": g["name"],
+                    "currency": g["currency"],
+                    "member_count": g["member_count"],
+                    "expense_count": g["expense_count"],
+                }
+                for g in groups
+            ],
             "currency": currency,
             "members": members,
             "total_spent": format_money(total_spent_dec, currency),
+            "total_spent_raw": str(total_spent_dec),
             "expense_count": len(expenses),
             "balances": [
                 {
                     "member": b["member"],
                     "paid": format_money(b["paid"], currency),
+                    "paid_raw": float(b["paid"]),
                     "owed": format_money(b["owed"], currency),
-                    "net_raw": b["net"],
+                    "owed_raw": float(b["owed"]),
+                    "net_raw": float(b["net"]),
                     "net": (
                         f"+{format_money(b['net'], currency)}"
                         if b["net"] > 0
@@ -263,15 +314,33 @@ class SplitLangInterpreter:
                 }
                 for b in balances
             ],
-            "transfers": transfers,
+            "transfers": [
+                {
+                    "from": tr["from"],
+                    "to": tr["to"],
+                    "amount": str(tr["amount"]),
+                    "formatted": tr["formatted"],
+                }
+                for tr in transfers
+            ],
             "expenses": [
                 {
                     "id": e["id"],
+                    "kind": e["kind"],
                     "date": e["expense_date"],
                     "payer": e["payer"],
                     "description": e["description"],
                     "mode": "ITEMIZED" if e["kind"] == "bill" else e["split_mode"].upper(),
+                    "subtotal": format_money(e["subtotal"], currency),
+                    "discount": format_money(e["discount"], currency) if e["discount"] > 0 else None,
+                    "tax": format_money(e["tax_amount"], currency) if e["tax_amount"] > 0 else None,
+                    "tip": format_money(e["tip_amount"], currency) if e["tip_amount"] > 0 else None,
                     "total": format_money(e["total"], currency),
+                    "items": e["items"],
+                    "shares": [
+                        {"member": m, "formatted": format_money(s, currency)}
+                        for m, s in e["shares"].items()
+                    ],
                     "shares_text": ", ".join(
                         f"{m}: {format_money(s, currency)}" for m, s in e["shares"].items()
                     ),

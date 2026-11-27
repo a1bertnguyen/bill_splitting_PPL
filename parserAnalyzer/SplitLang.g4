@@ -1,12 +1,18 @@
 grammar SplitLang;
 
 /*
- * SplitLang - A Domain-Specific Language (DSL) for Bill Splitting
+ * SplitLang v2.0 — A Professional Domain-Specific Language for Bill Splitting
  * Course: Principles of Programming Languages (VNU-HCM International University)
  *
- * Five-Stage PPL Architecture:
- *   Input -> Lexer (SplitLangLexer) -> Parser (SplitLangParser)
- *         -> Visitor / AST (ASTGeneration) -> Action / Engine (utilFunction + Database)
+ * Language Features:
+ *   - Declarative workspace blocks (`workspace "..." { currency: ...; members: [...] }`)
+ *   - Typed variable bindings & Symbol Table (`let vat = 10%`, `let drinkers = all - [charlie]`)
+ *   - Dimensional Type System (MONEY, SCALAR, PERCENT, MEMBER_SET)
+ *   - Unified expression grammar with unary minus, operator precedence (* / > + -), & set algebra
+ *   - Reusable named split rules (`rule host_weighted = ratio { alice: 2, bob: 1 }`)
+ *   - Concise inline expenses & structured expense/itemized bill blocks
+ *   - Explicit arrow repayments (`transfer dave -> alice = 100k`) & runtime assertions (`assert balanced`)
+ *   - Classic CFG right-recursion for identifier lists & allocation maps
  */
 
 // ============================================================================
@@ -22,232 +28,220 @@ stmtSep
     ;
 
 statement
-    : groupStmt
+    : workspaceStmt
     | currencyStmt
     | memberStmt
+    | letStmt
+    | ruleStmt
     | expenseStmt
     | billStmt
-    | settleStmt
-    | settleUpStmt
+    | transferStmt
+    | assertStmt
     | queryStmt
     | controlStmt
     ;
 
-// 1. Group & Currency Management
-groupStmt
-    : USE? GROUP description
+// 1. Workspace & Currency Declarations
+workspaceStmt
+    : WORKSPACE STRING (LBRACE NEWLINE* wsField (stmtSep wsField)* stmtSep? RBRACE)?
+    ;
+
+wsField
+    : CURRENCY COLON CURRENCY_CODE              # WsCurrencyField
+    | MEMBERS COLON LBRACK idList? RBRACK       # WsMembersField
     ;
 
 currencyStmt
     : CURRENCY CURRENCY_CODE
     ;
 
-// 2. Member Management
+// 2. Member Mutations
 memberStmt
-    : ADD MEMBER_KW personList          # AddMembersStmt
-    | REMOVE MEMBER_KW personList       # RemoveMembersStmt
+    : MEMBER ADD LBRACK idList RBRACK           # MemberAddStmt
+    | MEMBER REMOVE LBRACK idList RBRACK        # MemberRemoveStmt
     ;
 
-// 3. Single Expense Statement (4 split modes + modifiers + arithmetic expr)
+// 3. Symbol Table Bindings & Reusable Split Rules
+letStmt
+    : LET ID ASSIGN expr
+    ;
+
+ruleStmt
+    : RULE ID ASSIGN splitExpr
+    ;
+
+// 4. Expenses (Inline Expression Form & Structured Block Form)
 expenseStmt
-    : person PAID expr (FOR description)? splitClause? modifier* dateClause?
+    : EXPENSE STRING PAID_BY ID ASSIGN expr (SPLIT splitExpr)? modifierClause* dateClause?    # InlineExpenseStmt
+    | EXPENSE STRING LBRACE NEWLINE* expenseField (stmtSep expenseField)* stmtSep? RBRACE     # BlockExpenseStmt
     ;
 
-splitClause
-    : SPLIT EQUALLY (AMONG personList | EXCLUDING personList)?   # EqualSplit
-    | (AMONG personList | EXCLUDING personList)                  # ShorthandEqualSplit
-    | SPLIT EXACT exactAllocList                                 # ExactSplit
-    | SPLIT PERCENT percentAllocList                             # PercentSplit
-    | SPLIT RATIO ratioAllocList                                 # RatioSplit
+expenseField
+    : PAYER COLON ID                # ExpPayerField
+    | AMOUNT COLON expr             # ExpAmountField
+    | SPLIT COLON splitExpr         # ExpSplitField
+    | DISCOUNT COLON expr           # ExpDiscountField
+    | TAX COLON expr                # ExpTaxField
+    | TIP COLON expr                # ExpTipField
+    | DATE_KW COLON DATE            # ExpDateField
     ;
 
-modifier
-    : WITH? TAX (PERCENT_LIT | expr)        # TaxMod
-    | WITH? TIP (PERCENT_LIT | expr)        # TipMod
-    | WITH? DISCOUNT (PERCENT_LIT | expr)   # DiscountMod
+modifierClause
+    : DISCOUNT expr                 # InlineDiscountMod
+    | TAX expr                      # InlineTaxMod
+    | TIP expr                      # InlineTipMod
     ;
 
 dateClause
     : ON DATE
     ;
 
-// 4. Itemized Bill Block Statement (block-structured DSL syntax)
+splitExpr
+    : EQUAL LPAREN expr RPAREN                                  # EqualSplitExpr
+    | EQUAL                                                     # EqualAllSplitExpr
+    | EXACT LBRACE NEWLINE* allocList? NEWLINE* RBRACE          # ExactSplitExpr
+    | PERCENT LBRACE NEWLINE* allocList? NEWLINE* RBRACE        # PercentSplitExpr
+    | RATIO LBRACE NEWLINE* allocList? NEWLINE* RBRACE          # RatioSplitExpr
+    | ID                                                        # RuleRefSplitExpr
+    ;
+
+// 5. Block-Structured Itemized Receipt
 billStmt
-    : BILL description PAID BY person dateClause?
-      LBRACE NEWLINE* billEntry (stmtSep billEntry)* stmtSep? RBRACE
+    : BILL STRING LBRACE NEWLINE* billField (stmtSep billField)* stmtSep? RBRACE
     ;
 
-billEntry
-    : ITEM description expr FOR (ALL (EXCLUDING personList)? | personList)   # BillItemEntry
-    | TAX (PERCENT_LIT | expr)                                               # BillTaxEntry
-    | TIP (PERCENT_LIT | expr)                                               # BillTipEntry
-    | DISCOUNT (PERCENT_LIT | expr)                                          # BillDiscountEntry
+billField
+    : PAYER COLON ID                        # BillPayerField
+    | DATE_KW COLON DATE                    # BillDateField
+    | ITEM STRING ASSIGN expr FOR expr      # BillItemField
+    | DISCOUNT COLON expr                   # BillDiscountField
+    | TAX COLON expr                        # BillTaxField
+    | TIP COLON expr                        # BillTipField
     ;
 
-// 5. Settlement / Repayment Statements
-settleStmt
-    : person PAYS person expr (FOR description)? dateClause?                 # DirectPaySettle
-    | SETTLE person TO person expr (FOR description)? dateClause?            # KeywordSettle
+// 6. Repayment Transfers & Invariant Assertions
+transferStmt
+    : TRANSFER ID ARROW ID ASSIGN expr (NOTE STRING)? dateClause?
     ;
 
-settleUpStmt
-    : SETTLE UP
+assertStmt
+    : ASSERT BALANCED
     ;
 
-// 6. Query & Reporting Statements
+// 7. Queries & Settlement
 queryStmt
-    : (SHOW | CHECK) queryTarget                                 # ShowQuery
-    | WHO OWES WHOM QUESTIONMARK?                                # WhoOwesWhomQuery
-    | HOW MUCH DOES person OWES QUESTIONMARK?                    # HowMuchOwesQuery
-    | WHAT IS person BALANCES QUESTIONMARK?                      # PersonBalanceQuery
+    : QUERY SUMMARY                         # QuerySummary
+    | QUERY BALANCES                        # QueryBalances
+    | QUERY BALANCE LPAREN ID RPAREN        # QueryPersonBalance
+    | QUERY EXPENSES                        # QueryExpenses
+    | QUERY MEMBERS                         # QueryMembers
+    | QUERY GROUPS                          # QueryGroups
+    | QUERY ENV                             # QueryEnv
+    | SETTLE                                # SettleQuery
     ;
 
-queryTarget
-    : MEMBER_KW
-    | EXPENSES
-    | BALANCES
-    | SUMMARY
-    | SETTLEMENTS
-    | GROUPS
-    ;
-
-// 7. Control Statements
+// 8. Control Commands
 controlStmt
-    : UNDO      # UndoCtrl
-    | RESET     # ResetCtrl
-    | CLEAR     # ClearCtrl
-    | HELP      # HelpCtrl
+    : UNDO                                  # UndoCtrl
+    | RESET                                 # ResetCtrl
+    | CLEAR                                 # ClearCtrl
+    | HELP                                  # HelpCtrl
     ;
 
 // ============================================================================
 // RECURSIVE LIST RULES (Classic CFG Right-Recursion)
 // ============================================================================
 
-personList
-    : person COMMA personList
-    | person
+idList
+    : ID COMMA NEWLINE* idList
+    | ID
     ;
 
-exactAllocList
-    : exactAlloc COMMA exactAllocList
-    | exactAlloc
+allocList
+    : allocEntry (COMMA | NEWLINE)+ allocList
+    | allocEntry COMMA?
     ;
 
-exactAlloc
-    : person COLON expr
-    ;
-
-percentAllocList
-    : percentAlloc COMMA percentAllocList
-    | percentAlloc
-    ;
-
-percentAlloc
-    : person COLON PERCENT_LIT
-    ;
-
-ratioAllocList
-    : ratioAlloc COMMA ratioAllocList
-    | ratioAlloc
-    ;
-
-ratioAlloc
-    : person COLON NUMBER
+allocEntry
+    : ID COLON expr
     ;
 
 // ============================================================================
-// ARITHMETIC EXPRESSION GRAMMAR (Operator Precedence & Associativity)
+// UNIFIED TYPED EXPRESSION GRAMMAR (Arithmetic + Set Algebra + Variables)
+// Precedence: Unary (-) > Mul/Div (* /) > Add/Sub (+ -)
 // ============================================================================
 
 expr
-    : expr op=(STAR | SLASH) expr       # MulDivExpr
-    | expr op=(PLUS | MINUS) expr       # AddSubExpr
-    | LPAREN expr RPAREN                # ParenExpr
-    | amountAtom                        # AtomExpr
-    ;
-
-amountAtom
-    : MONEY_K
-    | MONEY_M
-    | MONEY_USD
-    | NUMBER
-    ;
-
-person
-    : ID
-    ;
-
-description
-    : STRING
-    | ID+
+    : MINUS expr                            # UnaryNegExpr
+    | expr op=(STAR | SLASH) expr           # MulDivExpr
+    | expr op=(PLUS | MINUS) expr           # AddSubExpr
+    | LPAREN expr RPAREN                    # ParenExpr
+    | LBRACK NEWLINE* idList? NEWLINE* RBRACK  # SetLitExpr
+    | ALL                                   # AllMembersExpr
+    | PERCENT_LIT                           # PercentLitExpr
+    | MONEY_K                               # MoneyKLitExpr
+    | MONEY_M                               # MoneyMLitExpr
+    | MONEY_USD                             # MoneyUsdLitExpr
+    | NUMBER                                # NumberLitExpr
+    | ID                                    # VarRefExpr
     ;
 
 // ============================================================================
-// LEXER RULES (Case-insensitive keywords declared before general ID)
+// LEXER RULES (Strict lowercase keywords declared before general ID)
 // ============================================================================
 
-// Keywords
-GROUP       : G R O U P ;
-GROUPS      : G R O U P S ;
-USE         : U S E ;
-CURRENCY    : C U R R E N C Y ;
-ADD         : A D D ;
-REMOVE      : R E M O V E ;
-MEMBER_KW   : M E M B E R S? ;
-PAID        : P A I D | S P E N T ;
-PAYS        : P A Y S | R E P A Y S ;
-FOR         : F O R ;
-SPLIT       : S P L I T ;
-EQUALLY     : E Q U A L L Y | E Q U A L ;
-EXACT       : E X A C T ;
-PERCENT     : P E R C E N T | P E R C E N T A G E ;
-RATIO       : R A T I O | S H A R E S | W E I G H T S? ;
-AMONG       : A M O N G | B E T W E E N ;
-EXCLUDING   : E X C L U D I N G | E X C E P T ;
-WITH        : W I T H ;
-TAX         : T A X ;
-TIP         : T I P ;
-DISCOUNT    : D I S C O U N T ;
-ON          : O N ;
-BILL        : B I L L ;
-BY          : B Y ;
-ITEM        : I T E M ;
-SETTLE      : S E T T L E ;
-UP          : U P ;
-TO          : T O ;
-SHOW        : S H O W ;
-CHECK       : C H E C K ;
-BALANCES    : B A L A N C E S? ;
-EXPENSES    : E X P E N S E S? | H I S T O R Y ;
-SUMMARY     : S U M M A R Y | S T A T S | S T A T I S T I C S ;
-SETTLEMENTS : S E T T L E M E N T S? | T R A N S F E R S? ;
-WHO         : W H O ;
-OWES        : O W E S? ;
-WHOM        : W H O M ;
-HOW         : H O W ;
-MUCH        : M U C H ;
-DOES        : D O E S ;
-WHAT        : W H A T ;
-IS          : I S ;
-UNDO        : U N D O ;
-RESET       : R E S E T ;
-CLEAR       : C L E A R ;
-HELP        : H E L P ;
-ALL         : A L L ;
+// Declarations & Blocks
+WORKSPACE   : 'workspace' ;
+CURRENCY    : 'currency' ;
+MEMBERS     : 'members' ;
+MEMBER      : 'member' ;
+ADD         : 'add' ;
+REMOVE      : 'remove' ;
+LET         : 'let' ;
+RULE        : 'rule' ;
+EXPENSE     : 'expense' ;
+BILL        : 'bill' ;
+ITEM        : 'item' ;
+PAYER       : 'payer' ;
+PAID_BY     : 'paid_by' ;
+AMOUNT      : 'amount' ;
+SPLIT       : 'split' ;
+EQUAL       : 'equal' ;
+EXACT       : 'exact' ;
+PERCENT     : 'percent' ;
+RATIO       : 'ratio' ;
+DISCOUNT    : 'discount' ;
+TAX         : 'tax' ;
+TIP         : 'tip' ;
+DATE_KW     : 'date' ;
+FOR         : 'for' ;
+ALL         : 'all' ;
+ON          : 'on' ;
+TRANSFER    : 'transfer' ;
+NOTE        : 'note' ;
+ASSERT      : 'assert' ;
+BALANCED    : 'balanced' ;
+QUERY       : 'query' ;
+SUMMARY     : 'summary' ;
+BALANCES    : 'balances' ;
+BALANCE     : 'balance' ;
+EXPENSES    : 'expenses' ;
+GROUPS      : 'groups' ;
+ENV         : 'env' ;
+SETTLE      : 'settle' ;
+UNDO        : 'undo' ;
+RESET       : 'reset' ;
+CLEAR       : 'clear' ;
+HELP        : 'help' ;
 
 CURRENCY_CODE
-    : V N D
-    | U S D
-    | E U R
-    | J P Y
-    | G B P
-    | S G D
+    : 'VND' | 'USD' | 'EUR' | 'JPY' | 'GBP' | 'SGD'
     ;
 
-// Literals (order matters: more specific tokens first)
+// Literals (specific tokens before general NUMBER / ID)
 DATE
-    : [0-9][0-9] ('-' | '/') [0-9][0-9] ('-' | '/') [0-9][0-9][0-9][0-9]
-    | [0-9][0-9][0-9][0-9] '-' [0-9][0-9] '-' [0-9][0-9]
+    : [0-9][0-9][0-9][0-9] '-' [0-9][0-9] '-' [0-9][0-9]
+    | [0-9][0-9] '-' [0-9][0-9] '-' [0-9][0-9][0-9][0-9]
     ;
 
 PERCENT_LIT : [0-9]+ ('.' [0-9]+)? '%' ;
@@ -261,10 +255,11 @@ STRING
     | '\'' ( '\\' . | ~['\\\r\n] )* '\''
     ;
 
-// Identifiers (fallback after keywords)
-ID          : [a-zA-Z_] [a-zA-Z0-9_'-]* ;
+ID          : [a-zA-Z_] [a-zA-Z0-9_-]* ;
 
-// Operators & Punctuation
+// Operators & Punctuation (ARROW before MINUS)
+ARROW       : '->' ;
+ASSIGN      : '=' ;
 PLUS        : '+' ;
 MINUS       : '-' ;
 STAR        : '*' ;
@@ -273,40 +268,14 @@ LPAREN      : '(' ;
 RPAREN      : ')' ;
 LBRACE      : '{' ;
 RBRACE      : '}' ;
+LBRACK      : '[' ;
+RBRACK      : ']' ;
 COMMA       : ',' ;
 COLON       : ':' ;
 SEMI        : ';' ;
-QUESTIONMARK: '?' ;
 
-// Comments, Newlines, and Whitespace
-LINE_COMMENT: ('//' | '#') ~[\r\n]* -> skip ;
-NEWLINE     : '\r'? '\n' ;
-WS          : [ \t]+ -> skip ;
-
-// Case-insensitive letter fragments
-fragment A : [aA] ;
-fragment B : [bB] ;
-fragment C : [cC] ;
-fragment D : [dD] ;
-fragment E : [eE] ;
-fragment F : [fF] ;
-fragment G : [gG] ;
-fragment H : [hH] ;
-fragment I : [iI] ;
-fragment J : [jJ] ;
-fragment K : [kK] ;
-fragment L : [lL] ;
-fragment M : [mM] ;
-fragment N : [nN] ;
-fragment O : [oO] ;
-fragment P : [pP] ;
-fragment Q : [qQ] ;
-fragment R : [rR] ;
-fragment S : [sS] ;
-fragment T : [tT] ;
-fragment U : [uU] ;
-fragment V : [vV] ;
-fragment W : [wW] ;
-fragment X : [xX] ;
-fragment Y : [yY] ;
-fragment Z : [zZ] ;
+// Comments, Newlines & Whitespace
+BLOCK_COMMENT : '/*' .*? '*/' -> skip ;
+LINE_COMMENT  : ('//' | '#') ~[\r\n]* -> skip ;
+NEWLINE       : '\r'? '\n' ;
+WS            : [ \t]+ -> skip ;

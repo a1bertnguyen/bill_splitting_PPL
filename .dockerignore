@@ -1,0 +1,29 @@
+# Never send secrets, git history, or build caches into Docker build context
+.git/
+.gitignore
+.env
+.env.*
+*.pem
+*.key
+
+# Node & Python caches
+frontend/node_modules/
+frontend/dist/
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Local databases, docs, tests, videos
+data/
+*.db
+*.sqlite*
+demo/
+docs/
+tests/
+scripts/
+*.md
+.vscode/
+.idea/

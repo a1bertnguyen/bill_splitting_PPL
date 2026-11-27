@@ -24,8 +24,18 @@ class SplitLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#groupStmt.
-    def visitGroupStmt(self, ctx:SplitLangParser.GroupStmtContext):
+    # Visit a parse tree produced by SplitLangParser#workspaceStmt.
+    def visitWorkspaceStmt(self, ctx:SplitLangParser.WorkspaceStmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#WsCurrencyField.
+    def visitWsCurrencyField(self, ctx:SplitLangParser.WsCurrencyFieldContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#WsMembersField.
+    def visitWsMembersField(self, ctx:SplitLangParser.WsMembersFieldContext):
         return self.visitChildren(ctx)
 
 
@@ -34,58 +44,83 @@ class SplitLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#AddMembersStmt.
-    def visitAddMembersStmt(self, ctx:SplitLangParser.AddMembersStmtContext):
+    # Visit a parse tree produced by SplitLangParser#MemberAddStmt.
+    def visitMemberAddStmt(self, ctx:SplitLangParser.MemberAddStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#RemoveMembersStmt.
-    def visitRemoveMembersStmt(self, ctx:SplitLangParser.RemoveMembersStmtContext):
+    # Visit a parse tree produced by SplitLangParser#MemberRemoveStmt.
+    def visitMemberRemoveStmt(self, ctx:SplitLangParser.MemberRemoveStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#expenseStmt.
-    def visitExpenseStmt(self, ctx:SplitLangParser.ExpenseStmtContext):
+    # Visit a parse tree produced by SplitLangParser#letStmt.
+    def visitLetStmt(self, ctx:SplitLangParser.LetStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#EqualSplit.
-    def visitEqualSplit(self, ctx:SplitLangParser.EqualSplitContext):
+    # Visit a parse tree produced by SplitLangParser#ruleStmt.
+    def visitRuleStmt(self, ctx:SplitLangParser.RuleStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#ShorthandEqualSplit.
-    def visitShorthandEqualSplit(self, ctx:SplitLangParser.ShorthandEqualSplitContext):
+    # Visit a parse tree produced by SplitLangParser#InlineExpenseStmt.
+    def visitInlineExpenseStmt(self, ctx:SplitLangParser.InlineExpenseStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#ExactSplit.
-    def visitExactSplit(self, ctx:SplitLangParser.ExactSplitContext):
+    # Visit a parse tree produced by SplitLangParser#BlockExpenseStmt.
+    def visitBlockExpenseStmt(self, ctx:SplitLangParser.BlockExpenseStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#PercentSplit.
-    def visitPercentSplit(self, ctx:SplitLangParser.PercentSplitContext):
+    # Visit a parse tree produced by SplitLangParser#ExpPayerField.
+    def visitExpPayerField(self, ctx:SplitLangParser.ExpPayerFieldContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#RatioSplit.
-    def visitRatioSplit(self, ctx:SplitLangParser.RatioSplitContext):
+    # Visit a parse tree produced by SplitLangParser#ExpAmountField.
+    def visitExpAmountField(self, ctx:SplitLangParser.ExpAmountFieldContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#TaxMod.
-    def visitTaxMod(self, ctx:SplitLangParser.TaxModContext):
+    # Visit a parse tree produced by SplitLangParser#ExpSplitField.
+    def visitExpSplitField(self, ctx:SplitLangParser.ExpSplitFieldContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#TipMod.
-    def visitTipMod(self, ctx:SplitLangParser.TipModContext):
+    # Visit a parse tree produced by SplitLangParser#ExpDiscountField.
+    def visitExpDiscountField(self, ctx:SplitLangParser.ExpDiscountFieldContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#DiscountMod.
-    def visitDiscountMod(self, ctx:SplitLangParser.DiscountModContext):
+    # Visit a parse tree produced by SplitLangParser#ExpTaxField.
+    def visitExpTaxField(self, ctx:SplitLangParser.ExpTaxFieldContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#ExpTipField.
+    def visitExpTipField(self, ctx:SplitLangParser.ExpTipFieldContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#ExpDateField.
+    def visitExpDateField(self, ctx:SplitLangParser.ExpDateFieldContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#InlineDiscountMod.
+    def visitInlineDiscountMod(self, ctx:SplitLangParser.InlineDiscountModContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#InlineTaxMod.
+    def visitInlineTaxMod(self, ctx:SplitLangParser.InlineTaxModContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#InlineTipMod.
+    def visitInlineTipMod(self, ctx:SplitLangParser.InlineTipModContext):
         return self.visitChildren(ctx)
 
 
@@ -94,68 +129,118 @@ class SplitLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by SplitLangParser#EqualSplitExpr.
+    def visitEqualSplitExpr(self, ctx:SplitLangParser.EqualSplitExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#EqualAllSplitExpr.
+    def visitEqualAllSplitExpr(self, ctx:SplitLangParser.EqualAllSplitExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#ExactSplitExpr.
+    def visitExactSplitExpr(self, ctx:SplitLangParser.ExactSplitExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#PercentSplitExpr.
+    def visitPercentSplitExpr(self, ctx:SplitLangParser.PercentSplitExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#RatioSplitExpr.
+    def visitRatioSplitExpr(self, ctx:SplitLangParser.RatioSplitExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#RuleRefSplitExpr.
+    def visitRuleRefSplitExpr(self, ctx:SplitLangParser.RuleRefSplitExprContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by SplitLangParser#billStmt.
     def visitBillStmt(self, ctx:SplitLangParser.BillStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#BillItemEntry.
-    def visitBillItemEntry(self, ctx:SplitLangParser.BillItemEntryContext):
+    # Visit a parse tree produced by SplitLangParser#BillPayerField.
+    def visitBillPayerField(self, ctx:SplitLangParser.BillPayerFieldContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#BillTaxEntry.
-    def visitBillTaxEntry(self, ctx:SplitLangParser.BillTaxEntryContext):
+    # Visit a parse tree produced by SplitLangParser#BillDateField.
+    def visitBillDateField(self, ctx:SplitLangParser.BillDateFieldContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#BillTipEntry.
-    def visitBillTipEntry(self, ctx:SplitLangParser.BillTipEntryContext):
+    # Visit a parse tree produced by SplitLangParser#BillItemField.
+    def visitBillItemField(self, ctx:SplitLangParser.BillItemFieldContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#BillDiscountEntry.
-    def visitBillDiscountEntry(self, ctx:SplitLangParser.BillDiscountEntryContext):
+    # Visit a parse tree produced by SplitLangParser#BillDiscountField.
+    def visitBillDiscountField(self, ctx:SplitLangParser.BillDiscountFieldContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#DirectPaySettle.
-    def visitDirectPaySettle(self, ctx:SplitLangParser.DirectPaySettleContext):
+    # Visit a parse tree produced by SplitLangParser#BillTaxField.
+    def visitBillTaxField(self, ctx:SplitLangParser.BillTaxFieldContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#KeywordSettle.
-    def visitKeywordSettle(self, ctx:SplitLangParser.KeywordSettleContext):
+    # Visit a parse tree produced by SplitLangParser#BillTipField.
+    def visitBillTipField(self, ctx:SplitLangParser.BillTipFieldContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#settleUpStmt.
-    def visitSettleUpStmt(self, ctx:SplitLangParser.SettleUpStmtContext):
+    # Visit a parse tree produced by SplitLangParser#transferStmt.
+    def visitTransferStmt(self, ctx:SplitLangParser.TransferStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#ShowQuery.
-    def visitShowQuery(self, ctx:SplitLangParser.ShowQueryContext):
+    # Visit a parse tree produced by SplitLangParser#assertStmt.
+    def visitAssertStmt(self, ctx:SplitLangParser.AssertStmtContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#WhoOwesWhomQuery.
-    def visitWhoOwesWhomQuery(self, ctx:SplitLangParser.WhoOwesWhomQueryContext):
+    # Visit a parse tree produced by SplitLangParser#QuerySummary.
+    def visitQuerySummary(self, ctx:SplitLangParser.QuerySummaryContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#HowMuchOwesQuery.
-    def visitHowMuchOwesQuery(self, ctx:SplitLangParser.HowMuchOwesQueryContext):
+    # Visit a parse tree produced by SplitLangParser#QueryBalances.
+    def visitQueryBalances(self, ctx:SplitLangParser.QueryBalancesContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#PersonBalanceQuery.
-    def visitPersonBalanceQuery(self, ctx:SplitLangParser.PersonBalanceQueryContext):
+    # Visit a parse tree produced by SplitLangParser#QueryPersonBalance.
+    def visitQueryPersonBalance(self, ctx:SplitLangParser.QueryPersonBalanceContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#queryTarget.
-    def visitQueryTarget(self, ctx:SplitLangParser.QueryTargetContext):
+    # Visit a parse tree produced by SplitLangParser#QueryExpenses.
+    def visitQueryExpenses(self, ctx:SplitLangParser.QueryExpensesContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#QueryMembers.
+    def visitQueryMembers(self, ctx:SplitLangParser.QueryMembersContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#QueryGroups.
+    def visitQueryGroups(self, ctx:SplitLangParser.QueryGroupsContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#QueryEnv.
+    def visitQueryEnv(self, ctx:SplitLangParser.QueryEnvContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#SettleQuery.
+    def visitSettleQuery(self, ctx:SplitLangParser.SettleQueryContext):
         return self.visitChildren(ctx)
 
 
@@ -179,38 +264,23 @@ class SplitLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#personList.
-    def visitPersonList(self, ctx:SplitLangParser.PersonListContext):
+    # Visit a parse tree produced by SplitLangParser#idList.
+    def visitIdList(self, ctx:SplitLangParser.IdListContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#exactAllocList.
-    def visitExactAllocList(self, ctx:SplitLangParser.ExactAllocListContext):
+    # Visit a parse tree produced by SplitLangParser#allocList.
+    def visitAllocList(self, ctx:SplitLangParser.AllocListContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#exactAlloc.
-    def visitExactAlloc(self, ctx:SplitLangParser.ExactAllocContext):
+    # Visit a parse tree produced by SplitLangParser#allocEntry.
+    def visitAllocEntry(self, ctx:SplitLangParser.AllocEntryContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#percentAllocList.
-    def visitPercentAllocList(self, ctx:SplitLangParser.PercentAllocListContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by SplitLangParser#percentAlloc.
-    def visitPercentAlloc(self, ctx:SplitLangParser.PercentAllocContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by SplitLangParser#ratioAllocList.
-    def visitRatioAllocList(self, ctx:SplitLangParser.RatioAllocListContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by SplitLangParser#ratioAlloc.
-    def visitRatioAlloc(self, ctx:SplitLangParser.RatioAllocContext):
+    # Visit a parse tree produced by SplitLangParser#MoneyUsdLitExpr.
+    def visitMoneyUsdLitExpr(self, ctx:SplitLangParser.MoneyUsdLitExprContext):
         return self.visitChildren(ctx)
 
 
@@ -219,13 +289,43 @@ class SplitLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#ParenExpr.
-    def visitParenExpr(self, ctx:SplitLangParser.ParenExprContext):
+    # Visit a parse tree produced by SplitLangParser#MoneyMLitExpr.
+    def visitMoneyMLitExpr(self, ctx:SplitLangParser.MoneyMLitExprContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#AtomExpr.
-    def visitAtomExpr(self, ctx:SplitLangParser.AtomExprContext):
+    # Visit a parse tree produced by SplitLangParser#PercentLitExpr.
+    def visitPercentLitExpr(self, ctx:SplitLangParser.PercentLitExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#VarRefExpr.
+    def visitVarRefExpr(self, ctx:SplitLangParser.VarRefExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#SetLitExpr.
+    def visitSetLitExpr(self, ctx:SplitLangParser.SetLitExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#MoneyKLitExpr.
+    def visitMoneyKLitExpr(self, ctx:SplitLangParser.MoneyKLitExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#NumberLitExpr.
+    def visitNumberLitExpr(self, ctx:SplitLangParser.NumberLitExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#AllMembersExpr.
+    def visitAllMembersExpr(self, ctx:SplitLangParser.AllMembersExprContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by SplitLangParser#ParenExpr.
+    def visitParenExpr(self, ctx:SplitLangParser.ParenExprContext):
         return self.visitChildren(ctx)
 
 
@@ -234,18 +334,8 @@ class SplitLangVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by SplitLangParser#amountAtom.
-    def visitAmountAtom(self, ctx:SplitLangParser.AmountAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by SplitLangParser#person.
-    def visitPerson(self, ctx:SplitLangParser.PersonContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by SplitLangParser#description.
-    def visitDescription(self, ctx:SplitLangParser.DescriptionContext):
+    # Visit a parse tree produced by SplitLangParser#UnaryNegExpr.
+    def visitUnaryNegExpr(self, ctx:SplitLangParser.UnaryNegExprContext):
         return self.visitChildren(ctx)
 
 

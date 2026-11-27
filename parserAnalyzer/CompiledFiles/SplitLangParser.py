@@ -11,185 +11,231 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3I")
-        buf.write("\u0179\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3H")
+        buf.write("\u01cb\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
         buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
         buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
         buf.write("\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31")
-        buf.write("\t\31\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\3\2\7\2")
-        buf.write("<\n\2\f\2\16\2?\13\2\3\2\3\2\3\2\3\2\7\2E\n\2\f\2\16\2")
-        buf.write("H\13\2\5\2J\n\2\3\2\5\2M\n\2\3\2\3\2\3\3\6\3R\n\3\r\3")
-        buf.write("\16\3S\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4_\n\4\3")
-        buf.write("\5\5\5b\n\5\3\5\3\5\3\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3")
-        buf.write("\7\3\7\5\7p\n\7\3\b\3\b\3\b\3\b\3\b\5\bw\n\b\3\b\5\bz")
-        buf.write("\n\b\3\b\7\b}\n\b\f\b\16\b\u0080\13\b\3\b\5\b\u0083\n")
-        buf.write("\b\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u008b\n\t\3\t\3\t\3\t\3")
-        buf.write("\t\5\t\u0091\n\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5")
-        buf.write("\t\u009c\n\t\3\n\5\n\u009f\n\n\3\n\3\n\3\n\5\n\u00a4\n")
-        buf.write("\n\3\n\5\n\u00a7\n\n\3\n\3\n\3\n\5\n\u00ac\n\n\3\n\5\n")
-        buf.write("\u00af\n\n\3\n\3\n\3\n\5\n\u00b4\n\n\5\n\u00b6\n\n\3\13")
-        buf.write("\3\13\3\13\3\f\3\f\3\f\3\f\3\f\3\f\5\f\u00c1\n\f\3\f\3")
-        buf.write("\f\7\f\u00c5\n\f\f\f\16\f\u00c8\13\f\3\f\3\f\3\f\3\f\7")
-        buf.write("\f\u00ce\n\f\f\f\16\f\u00d1\13\f\3\f\5\f\u00d4\n\f\3\f")
-        buf.write("\3\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00df\n\r\3\r\5\r")
-        buf.write("\u00e2\n\r\3\r\3\r\3\r\5\r\u00e7\n\r\3\r\3\r\3\r\5\r\u00ec")
-        buf.write("\n\r\3\r\3\r\3\r\5\r\u00f1\n\r\5\r\u00f3\n\r\3\16\3\16")
-        buf.write("\3\16\3\16\3\16\3\16\5\16\u00fb\n\16\3\16\5\16\u00fe\n")
-        buf.write("\16\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u0107\n\16")
-        buf.write("\3\16\5\16\u010a\n\16\5\16\u010c\n\16\3\17\3\17\3\17\3")
-        buf.write("\20\3\20\3\20\3\20\3\20\3\20\5\20\u0117\n\20\3\20\3\20")
-        buf.write("\3\20\3\20\3\20\3\20\5\20\u011f\n\20\3\20\3\20\3\20\3")
-        buf.write("\20\3\20\5\20\u0126\n\20\5\20\u0128\n\20\3\21\3\21\3\22")
-        buf.write("\3\22\3\22\3\22\5\22\u0130\n\22\3\23\3\23\3\23\3\23\3")
-        buf.write("\23\5\23\u0137\n\23\3\24\3\24\3\24\3\24\3\24\5\24\u013e")
-        buf.write("\n\24\3\25\3\25\3\25\3\25\3\26\3\26\3\26\3\26\3\26\5\26")
-        buf.write("\u0149\n\26\3\27\3\27\3\27\3\27\3\30\3\30\3\30\3\30\3")
-        buf.write("\30\5\30\u0154\n\30\3\31\3\31\3\31\3\31\3\32\3\32\3\32")
-        buf.write("\3\32\3\32\3\32\5\32\u0160\n\32\3\32\3\32\3\32\3\32\3")
-        buf.write("\32\3\32\7\32\u0168\n\32\f\32\16\32\u016b\13\32\3\33\3")
-        buf.write("\33\3\34\3\34\3\35\3\35\6\35\u0173\n\35\r\35\16\35\u0174")
-        buf.write("\5\35\u0177\n\35\3\35\2\3\62\36\2\4\6\b\n\f\16\20\22\24")
-        buf.write("\26\30\32\34\36 \"$&(*,.\60\62\64\668\2\b\4\2EEHH\3\2")
-        buf.write("\37 \5\2\4\4\t\t!$\3\2=>\3\2;<\3\2\658\2\u01a1\2=\3\2")
-        buf.write("\2\2\4Q\3\2\2\2\6^\3\2\2\2\ba\3\2\2\2\nf\3\2\2\2\fo\3")
-        buf.write("\2\2\2\16q\3\2\2\2\20\u009b\3\2\2\2\22\u00b5\3\2\2\2\24")
-        buf.write("\u00b7\3\2\2\2\26\u00ba\3\2\2\2\30\u00f2\3\2\2\2\32\u010b")
-        buf.write("\3\2\2\2\34\u010d\3\2\2\2\36\u0127\3\2\2\2 \u0129\3\2")
-        buf.write("\2\2\"\u012f\3\2\2\2$\u0136\3\2\2\2&\u013d\3\2\2\2(\u013f")
-        buf.write("\3\2\2\2*\u0148\3\2\2\2,\u014a\3\2\2\2.\u0153\3\2\2\2")
-        buf.write("\60\u0155\3\2\2\2\62\u015f\3\2\2\2\64\u016c\3\2\2\2\66")
-        buf.write("\u016e\3\2\2\28\u0176\3\2\2\2:<\7H\2\2;:\3\2\2\2<?\3\2")
-        buf.write("\2\2=;\3\2\2\2=>\3\2\2\2>I\3\2\2\2?=\3\2\2\2@F\5\6\4\2")
-        buf.write("AB\5\4\3\2BC\5\6\4\2CE\3\2\2\2DA\3\2\2\2EH\3\2\2\2FD\3")
-        buf.write("\2\2\2FG\3\2\2\2GJ\3\2\2\2HF\3\2\2\2I@\3\2\2\2IJ\3\2\2")
-        buf.write("\2JL\3\2\2\2KM\5\4\3\2LK\3\2\2\2LM\3\2\2\2MN\3\2\2\2N")
-        buf.write("O\7\2\2\3O\3\3\2\2\2PR\t\2\2\2QP\3\2\2\2RS\3\2\2\2SQ\3")
-        buf.write("\2\2\2ST\3\2\2\2T\5\3\2\2\2U_\5\b\5\2V_\5\n\6\2W_\5\f")
-        buf.write("\7\2X_\5\16\b\2Y_\5\26\f\2Z_\5\32\16\2[_\5\34\17\2\\_")
-        buf.write("\5\36\20\2]_\5\"\22\2^U\3\2\2\2^V\3\2\2\2^W\3\2\2\2^X")
-        buf.write("\3\2\2\2^Y\3\2\2\2^Z\3\2\2\2^[\3\2\2\2^\\\3\2\2\2^]\3")
-        buf.write("\2\2\2_\7\3\2\2\2`b\7\5\2\2a`\3\2\2\2ab\3\2\2\2bc\3\2")
-        buf.write("\2\2cd\7\3\2\2de\58\35\2e\t\3\2\2\2fg\7\6\2\2gh\7\62\2")
-        buf.write("\2h\13\3\2\2\2ij\7\7\2\2jk\7\t\2\2kp\5$\23\2lm\7\b\2\2")
-        buf.write("mn\7\t\2\2np\5$\23\2oi\3\2\2\2ol\3\2\2\2p\r\3\2\2\2qr")
-        buf.write("\5\66\34\2rs\7\n\2\2sv\5\62\32\2tu\7\f\2\2uw\58\35\2v")
-        buf.write("t\3\2\2\2vw\3\2\2\2wy\3\2\2\2xz\5\20\t\2yx\3\2\2\2yz\3")
-        buf.write("\2\2\2z~\3\2\2\2{}\5\22\n\2|{\3\2\2\2}\u0080\3\2\2\2~")
-        buf.write("|\3\2\2\2~\177\3\2\2\2\177\u0082\3\2\2\2\u0080~\3\2\2")
-        buf.write("\2\u0081\u0083\5\24\13\2\u0082\u0081\3\2\2\2\u0082\u0083")
-        buf.write("\3\2\2\2\u0083\17\3\2\2\2\u0084\u0085\7\r\2\2\u0085\u008a")
-        buf.write("\7\16\2\2\u0086\u0087\7\22\2\2\u0087\u008b\5$\23\2\u0088")
-        buf.write("\u0089\7\23\2\2\u0089\u008b\5$\23\2\u008a\u0086\3\2\2")
-        buf.write("\2\u008a\u0088\3\2\2\2\u008a\u008b\3\2\2\2\u008b\u009c")
-        buf.write("\3\2\2\2\u008c\u008d\7\22\2\2\u008d\u0091\5$\23\2\u008e")
-        buf.write("\u008f\7\23\2\2\u008f\u0091\5$\23\2\u0090\u008c\3\2\2")
-        buf.write("\2\u0090\u008e\3\2\2\2\u0091\u009c\3\2\2\2\u0092\u0093")
-        buf.write("\7\r\2\2\u0093\u0094\7\17\2\2\u0094\u009c\5&\24\2\u0095")
-        buf.write("\u0096\7\r\2\2\u0096\u0097\7\20\2\2\u0097\u009c\5*\26")
-        buf.write("\2\u0098\u0099\7\r\2\2\u0099\u009a\7\21\2\2\u009a\u009c")
-        buf.write("\5.\30\2\u009b\u0084\3\2\2\2\u009b\u0090\3\2\2\2\u009b")
-        buf.write("\u0092\3\2\2\2\u009b\u0095\3\2\2\2\u009b\u0098\3\2\2\2")
-        buf.write("\u009c\21\3\2\2\2\u009d\u009f\7\24\2\2\u009e\u009d\3\2")
-        buf.write("\2\2\u009e\u009f\3\2\2\2\u009f\u00a0\3\2\2\2\u00a0\u00a3")
-        buf.write("\7\25\2\2\u00a1\u00a4\7\64\2\2\u00a2\u00a4\5\62\32\2\u00a3")
-        buf.write("\u00a1\3\2\2\2\u00a3\u00a2\3\2\2\2\u00a4\u00b6\3\2\2\2")
-        buf.write("\u00a5\u00a7\7\24\2\2\u00a6\u00a5\3\2\2\2\u00a6\u00a7")
-        buf.write("\3\2\2\2\u00a7\u00a8\3\2\2\2\u00a8\u00ab\7\26\2\2\u00a9")
-        buf.write("\u00ac\7\64\2\2\u00aa\u00ac\5\62\32\2\u00ab\u00a9\3\2")
-        buf.write("\2\2\u00ab\u00aa\3\2\2\2\u00ac\u00b6\3\2\2\2\u00ad\u00af")
-        buf.write("\7\24\2\2\u00ae\u00ad\3\2\2\2\u00ae\u00af\3\2\2\2\u00af")
-        buf.write("\u00b0\3\2\2\2\u00b0\u00b3\7\27\2\2\u00b1\u00b4\7\64\2")
-        buf.write("\2\u00b2\u00b4\5\62\32\2\u00b3\u00b1\3\2\2\2\u00b3\u00b2")
-        buf.write("\3\2\2\2\u00b4\u00b6\3\2\2\2\u00b5\u009e\3\2\2\2\u00b5")
-        buf.write("\u00a6\3\2\2\2\u00b5\u00ae\3\2\2\2\u00b6\23\3\2\2\2\u00b7")
-        buf.write("\u00b8\7\30\2\2\u00b8\u00b9\7\63\2\2\u00b9\25\3\2\2\2")
-        buf.write("\u00ba\u00bb\7\31\2\2\u00bb\u00bc\58\35\2\u00bc\u00bd")
-        buf.write("\7\n\2\2\u00bd\u00be\7\32\2\2\u00be\u00c0\5\66\34\2\u00bf")
-        buf.write("\u00c1\5\24\13\2\u00c0\u00bf\3\2\2\2\u00c0\u00c1\3\2\2")
-        buf.write("\2\u00c1\u00c2\3\2\2\2\u00c2\u00c6\7A\2\2\u00c3\u00c5")
-        buf.write("\7H\2\2\u00c4\u00c3\3\2\2\2\u00c5\u00c8\3\2\2\2\u00c6")
-        buf.write("\u00c4\3\2\2\2\u00c6\u00c7\3\2\2\2\u00c7\u00c9\3\2\2\2")
-        buf.write("\u00c8\u00c6\3\2\2\2\u00c9\u00cf\5\30\r\2\u00ca\u00cb")
-        buf.write("\5\4\3\2\u00cb\u00cc\5\30\r\2\u00cc\u00ce\3\2\2\2\u00cd")
-        buf.write("\u00ca\3\2\2\2\u00ce\u00d1\3\2\2\2\u00cf\u00cd\3\2\2\2")
-        buf.write("\u00cf\u00d0\3\2\2\2\u00d0\u00d3\3\2\2\2\u00d1\u00cf\3")
-        buf.write("\2\2\2\u00d2\u00d4\5\4\3\2\u00d3\u00d2\3\2\2\2\u00d3\u00d4")
-        buf.write("\3\2\2\2\u00d4\u00d5\3\2\2\2\u00d5\u00d6\7B\2\2\u00d6")
-        buf.write("\27\3\2\2\2\u00d7\u00d8\7\33\2\2\u00d8\u00d9\58\35\2\u00d9")
-        buf.write("\u00da\5\62\32\2\u00da\u00e1\7\f\2\2\u00db\u00de\7\61")
-        buf.write("\2\2\u00dc\u00dd\7\23\2\2\u00dd\u00df\5$\23\2\u00de\u00dc")
-        buf.write("\3\2\2\2\u00de\u00df\3\2\2\2\u00df\u00e2\3\2\2\2\u00e0")
-        buf.write("\u00e2\5$\23\2\u00e1\u00db\3\2\2\2\u00e1\u00e0\3\2\2\2")
-        buf.write("\u00e2\u00f3\3\2\2\2\u00e3\u00e6\7\25\2\2\u00e4\u00e7")
-        buf.write("\7\64\2\2\u00e5\u00e7\5\62\32\2\u00e6\u00e4\3\2\2\2\u00e6")
-        buf.write("\u00e5\3\2\2\2\u00e7\u00f3\3\2\2\2\u00e8\u00eb\7\26\2")
-        buf.write("\2\u00e9\u00ec\7\64\2\2\u00ea\u00ec\5\62\32\2\u00eb\u00e9")
-        buf.write("\3\2\2\2\u00eb\u00ea\3\2\2\2\u00ec\u00f3\3\2\2\2\u00ed")
-        buf.write("\u00f0\7\27\2\2\u00ee\u00f1\7\64\2\2\u00ef\u00f1\5\62")
-        buf.write("\32\2\u00f0\u00ee\3\2\2\2\u00f0\u00ef\3\2\2\2\u00f1\u00f3")
-        buf.write("\3\2\2\2\u00f2\u00d7\3\2\2\2\u00f2\u00e3\3\2\2\2\u00f2")
-        buf.write("\u00e8\3\2\2\2\u00f2\u00ed\3\2\2\2\u00f3\31\3\2\2\2\u00f4")
-        buf.write("\u00f5\5\66\34\2\u00f5\u00f6\7\13\2\2\u00f6\u00f7\5\66")
-        buf.write("\34\2\u00f7\u00fa\5\62\32\2\u00f8\u00f9\7\f\2\2\u00f9")
-        buf.write("\u00fb\58\35\2\u00fa\u00f8\3\2\2\2\u00fa\u00fb\3\2\2\2")
-        buf.write("\u00fb\u00fd\3\2\2\2\u00fc\u00fe\5\24\13\2\u00fd\u00fc")
-        buf.write("\3\2\2\2\u00fd\u00fe\3\2\2\2\u00fe\u010c\3\2\2\2\u00ff")
-        buf.write("\u0100\7\34\2\2\u0100\u0101\5\66\34\2\u0101\u0102\7\36")
-        buf.write("\2\2\u0102\u0103\5\66\34\2\u0103\u0106\5\62\32\2\u0104")
-        buf.write("\u0105\7\f\2\2\u0105\u0107\58\35\2\u0106\u0104\3\2\2\2")
-        buf.write("\u0106\u0107\3\2\2\2\u0107\u0109\3\2\2\2\u0108\u010a\5")
-        buf.write("\24\13\2\u0109\u0108\3\2\2\2\u0109\u010a\3\2\2\2\u010a")
-        buf.write("\u010c\3\2\2\2\u010b\u00f4\3\2\2\2\u010b\u00ff\3\2\2\2")
-        buf.write("\u010c\33\3\2\2\2\u010d\u010e\7\34\2\2\u010e\u010f\7\35")
-        buf.write("\2\2\u010f\35\3\2\2\2\u0110\u0111\t\3\2\2\u0111\u0128")
-        buf.write("\5 \21\2\u0112\u0113\7%\2\2\u0113\u0114\7&\2\2\u0114\u0116")
-        buf.write("\7\'\2\2\u0115\u0117\7F\2\2\u0116\u0115\3\2\2\2\u0116")
-        buf.write("\u0117\3\2\2\2\u0117\u0128\3\2\2\2\u0118\u0119\7(\2\2")
-        buf.write("\u0119\u011a\7)\2\2\u011a\u011b\7*\2\2\u011b\u011c\5\66")
-        buf.write("\34\2\u011c\u011e\7&\2\2\u011d\u011f\7F\2\2\u011e\u011d")
-        buf.write("\3\2\2\2\u011e\u011f\3\2\2\2\u011f\u0128\3\2\2\2\u0120")
-        buf.write("\u0121\7+\2\2\u0121\u0122\7,\2\2\u0122\u0123\5\66\34\2")
-        buf.write("\u0123\u0125\7!\2\2\u0124\u0126\7F\2\2\u0125\u0124\3\2")
-        buf.write("\2\2\u0125\u0126\3\2\2\2\u0126\u0128\3\2\2\2\u0127\u0110")
-        buf.write("\3\2\2\2\u0127\u0112\3\2\2\2\u0127\u0118\3\2\2\2\u0127")
-        buf.write("\u0120\3\2\2\2\u0128\37\3\2\2\2\u0129\u012a\t\4\2\2\u012a")
-        buf.write("!\3\2\2\2\u012b\u0130\7-\2\2\u012c\u0130\7.\2\2\u012d")
-        buf.write("\u0130\7/\2\2\u012e\u0130\7\60\2\2\u012f\u012b\3\2\2\2")
-        buf.write("\u012f\u012c\3\2\2\2\u012f\u012d\3\2\2\2\u012f\u012e\3")
-        buf.write("\2\2\2\u0130#\3\2\2\2\u0131\u0132\5\66\34\2\u0132\u0133")
-        buf.write("\7C\2\2\u0133\u0134\5$\23\2\u0134\u0137\3\2\2\2\u0135")
-        buf.write("\u0137\5\66\34\2\u0136\u0131\3\2\2\2\u0136\u0135\3\2\2")
-        buf.write("\2\u0137%\3\2\2\2\u0138\u0139\5(\25\2\u0139\u013a\7C\2")
-        buf.write("\2\u013a\u013b\5&\24\2\u013b\u013e\3\2\2\2\u013c\u013e")
-        buf.write("\5(\25\2\u013d\u0138\3\2\2\2\u013d\u013c\3\2\2\2\u013e")
-        buf.write("\'\3\2\2\2\u013f\u0140\5\66\34\2\u0140\u0141\7D\2\2\u0141")
-        buf.write("\u0142\5\62\32\2\u0142)\3\2\2\2\u0143\u0144\5,\27\2\u0144")
-        buf.write("\u0145\7C\2\2\u0145\u0146\5*\26\2\u0146\u0149\3\2\2\2")
-        buf.write("\u0147\u0149\5,\27\2\u0148\u0143\3\2\2\2\u0148\u0147\3")
-        buf.write("\2\2\2\u0149+\3\2\2\2\u014a\u014b\5\66\34\2\u014b\u014c")
-        buf.write("\7D\2\2\u014c\u014d\7\64\2\2\u014d-\3\2\2\2\u014e\u014f")
-        buf.write("\5\60\31\2\u014f\u0150\7C\2\2\u0150\u0151\5.\30\2\u0151")
-        buf.write("\u0154\3\2\2\2\u0152\u0154\5\60\31\2\u0153\u014e\3\2\2")
-        buf.write("\2\u0153\u0152\3\2\2\2\u0154/\3\2\2\2\u0155\u0156\5\66")
-        buf.write("\34\2\u0156\u0157\7D\2\2\u0157\u0158\78\2\2\u0158\61\3")
-        buf.write("\2\2\2\u0159\u015a\b\32\1\2\u015a\u015b\7?\2\2\u015b\u015c")
-        buf.write("\5\62\32\2\u015c\u015d\7@\2\2\u015d\u0160\3\2\2\2\u015e")
-        buf.write("\u0160\5\64\33\2\u015f\u0159\3\2\2\2\u015f\u015e\3\2\2")
-        buf.write("\2\u0160\u0169\3\2\2\2\u0161\u0162\f\6\2\2\u0162\u0163")
-        buf.write("\t\5\2\2\u0163\u0168\5\62\32\7\u0164\u0165\f\5\2\2\u0165")
-        buf.write("\u0166\t\6\2\2\u0166\u0168\5\62\32\6\u0167\u0161\3\2\2")
-        buf.write("\2\u0167\u0164\3\2\2\2\u0168\u016b\3\2\2\2\u0169\u0167")
-        buf.write("\3\2\2\2\u0169\u016a\3\2\2\2\u016a\63\3\2\2\2\u016b\u0169")
-        buf.write("\3\2\2\2\u016c\u016d\t\7\2\2\u016d\65\3\2\2\2\u016e\u016f")
-        buf.write("\7:\2\2\u016f\67\3\2\2\2\u0170\u0177\79\2\2\u0171\u0173")
-        buf.write("\7:\2\2\u0172\u0171\3\2\2\2\u0173\u0174\3\2\2\2\u0174")
-        buf.write("\u0172\3\2\2\2\u0174\u0175\3\2\2\2\u0175\u0177\3\2\2\2")
-        buf.write("\u0176\u0170\3\2\2\2\u0176\u0172\3\2\2\2\u01779\3\2\2")
-        buf.write("\2\65=FILS^aovy~\u0082\u008a\u0090\u009b\u009e\u00a3\u00a6")
-        buf.write("\u00ab\u00ae\u00b3\u00b5\u00c0\u00c6\u00cf\u00d3\u00de")
-        buf.write("\u00e1\u00e6\u00eb\u00f0\u00f2\u00fa\u00fd\u0106\u0109")
-        buf.write("\u010b\u0116\u011e\u0125\u0127\u012f\u0136\u013d\u0148")
-        buf.write("\u0153\u015f\u0167\u0169\u0174\u0176")
+        buf.write("\t\31\3\2\7\2\64\n\2\f\2\16\2\67\13\2\3\2\3\2\3\2\3\2")
+        buf.write("\7\2=\n\2\f\2\16\2@\13\2\5\2B\n\2\3\2\5\2E\n\2\3\2\3\2")
+        buf.write("\3\3\6\3J\n\3\r\3\16\3K\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3")
+        buf.write("\4\3\4\3\4\3\4\5\4Y\n\4\3\5\3\5\3\5\3\5\7\5_\n\5\f\5\16")
+        buf.write("\5b\13\5\3\5\3\5\3\5\3\5\7\5h\n\5\f\5\16\5k\13\5\3\5\5")
+        buf.write("\5n\n\5\3\5\3\5\5\5r\n\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\5")
+        buf.write("\6{\n\6\3\6\5\6~\n\6\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3")
+        buf.write("\b\3\b\3\b\3\b\3\b\3\b\3\b\5\b\u008f\n\b\3\t\3\t\3\t\3")
+        buf.write("\t\3\t\3\n\3\n\3\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3")
+        buf.write("\13\3\13\3\13\5\13\u00a3\n\13\3\13\7\13\u00a6\n\13\f\13")
+        buf.write("\16\13\u00a9\13\13\3\13\5\13\u00ac\n\13\3\13\3\13\3\13")
+        buf.write("\3\13\7\13\u00b2\n\13\f\13\16\13\u00b5\13\13\3\13\3\13")
+        buf.write("\3\13\3\13\7\13\u00bb\n\13\f\13\16\13\u00be\13\13\3\13")
+        buf.write("\5\13\u00c1\n\13\3\13\3\13\5\13\u00c5\n\13\3\f\3\f\3\f")
+        buf.write("\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3")
+        buf.write("\f\3\f\3\f\3\f\3\f\5\f\u00dc\n\f\3\r\3\r\3\r\3\r\3\r\3")
+        buf.write("\r\5\r\u00e4\n\r\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3")
+        buf.write("\17\3\17\3\17\3\17\3\17\7\17\u00f2\n\17\f\17\16\17\u00f5")
+        buf.write("\13\17\3\17\5\17\u00f8\n\17\3\17\7\17\u00fb\n\17\f\17")
+        buf.write("\16\17\u00fe\13\17\3\17\3\17\3\17\3\17\7\17\u0104\n\17")
+        buf.write("\f\17\16\17\u0107\13\17\3\17\5\17\u010a\n\17\3\17\7\17")
+        buf.write("\u010d\n\17\f\17\16\17\u0110\13\17\3\17\3\17\3\17\3\17")
+        buf.write("\7\17\u0116\n\17\f\17\16\17\u0119\13\17\3\17\5\17\u011c")
+        buf.write("\n\17\3\17\7\17\u011f\n\17\f\17\16\17\u0122\13\17\3\17")
+        buf.write("\3\17\5\17\u0126\n\17\3\20\3\20\3\20\3\20\7\20\u012c\n")
+        buf.write("\20\f\20\16\20\u012f\13\20\3\20\3\20\3\20\3\20\7\20\u0135")
+        buf.write("\n\20\f\20\16\20\u0138\13\20\3\20\5\20\u013b\n\20\3\20")
+        buf.write("\3\20\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21")
+        buf.write("\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21")
+        buf.write("\3\21\5\21\u0155\n\21\3\22\3\22\3\22\3\22\3\22\3\22\3")
+        buf.write("\22\3\22\5\22\u015f\n\22\3\22\5\22\u0162\n\22\3\23\3\23")
+        buf.write("\3\23\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24")
+        buf.write("\3\24\3\24\3\24\3\24\3\24\3\24\3\24\3\24\5\24\u0179\n")
+        buf.write("\24\3\25\3\25\3\25\3\25\5\25\u017f\n\25\3\26\3\26\3\26")
+        buf.write("\7\26\u0184\n\26\f\26\16\26\u0187\13\26\3\26\3\26\5\26")
+        buf.write("\u018b\n\26\3\27\3\27\6\27\u018f\n\27\r\27\16\27\u0190")
+        buf.write("\3\27\3\27\3\27\3\27\5\27\u0197\n\27\5\27\u0199\n\27\3")
+        buf.write("\30\3\30\3\30\3\30\3\31\3\31\3\31\3\31\3\31\3\31\3\31")
+        buf.write("\3\31\3\31\7\31\u01a8\n\31\f\31\16\31\u01ab\13\31\3\31")
+        buf.write("\5\31\u01ae\n\31\3\31\7\31\u01b1\n\31\f\31\16\31\u01b4")
+        buf.write("\13\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31\3\31\5\31\u01be")
+        buf.write("\n\31\3\31\3\31\3\31\3\31\3\31\3\31\7\31\u01c6\n\31\f")
+        buf.write("\31\16\31\u01c9\13\31\3\31\2\3\60\32\2\4\6\b\n\f\16\20")
+        buf.write("\22\24\26\30\32\34\36 \"$&(*,.\60\2\6\4\2DDGG\4\2BBGG")
+        buf.write("\3\2:;\3\289\2\u020c\2\65\3\2\2\2\4I\3\2\2\2\6X\3\2\2")
+        buf.write("\2\bZ\3\2\2\2\n}\3\2\2\2\f\177\3\2\2\2\16\u008e\3\2\2")
+        buf.write("\2\20\u0090\3\2\2\2\22\u0095\3\2\2\2\24\u00c4\3\2\2\2")
+        buf.write("\26\u00db\3\2\2\2\30\u00e3\3\2\2\2\32\u00e5\3\2\2\2\34")
+        buf.write("\u0125\3\2\2\2\36\u0127\3\2\2\2 \u0154\3\2\2\2\"\u0156")
+        buf.write("\3\2\2\2$\u0163\3\2\2\2&\u0178\3\2\2\2(\u017e\3\2\2\2")
+        buf.write("*\u018a\3\2\2\2,\u0198\3\2\2\2.\u019a\3\2\2\2\60\u01bd")
+        buf.write("\3\2\2\2\62\64\7G\2\2\63\62\3\2\2\2\64\67\3\2\2\2\65\63")
+        buf.write("\3\2\2\2\65\66\3\2\2\2\66A\3\2\2\2\67\65\3\2\2\28>\5\6")
+        buf.write("\4\29:\5\4\3\2:;\5\6\4\2;=\3\2\2\2<9\3\2\2\2=@\3\2\2\2")
+        buf.write("><\3\2\2\2>?\3\2\2\2?B\3\2\2\2@>\3\2\2\2A8\3\2\2\2AB\3")
+        buf.write("\2\2\2BD\3\2\2\2CE\5\4\3\2DC\3\2\2\2DE\3\2\2\2EF\3\2\2")
+        buf.write("\2FG\7\2\2\3G\3\3\2\2\2HJ\t\2\2\2IH\3\2\2\2JK\3\2\2\2")
+        buf.write("KI\3\2\2\2KL\3\2\2\2L\5\3\2\2\2MY\5\b\5\2NY\5\f\7\2OY")
+        buf.write("\5\16\b\2PY\5\20\t\2QY\5\22\n\2RY\5\24\13\2SY\5\36\20")
+        buf.write("\2TY\5\"\22\2UY\5$\23\2VY\5&\24\2WY\5(\25\2XM\3\2\2\2")
+        buf.write("XN\3\2\2\2XO\3\2\2\2XP\3\2\2\2XQ\3\2\2\2XR\3\2\2\2XS\3")
+        buf.write("\2\2\2XT\3\2\2\2XU\3\2\2\2XV\3\2\2\2XW\3\2\2\2Y\7\3\2")
+        buf.write("\2\2Z[\7\3\2\2[q\7\64\2\2\\`\7>\2\2]_\7G\2\2^]\3\2\2\2")
+        buf.write("_b\3\2\2\2`^\3\2\2\2`a\3\2\2\2ac\3\2\2\2b`\3\2\2\2ci\5")
+        buf.write("\n\6\2de\5\4\3\2ef\5\n\6\2fh\3\2\2\2gd\3\2\2\2hk\3\2\2")
+        buf.write("\2ig\3\2\2\2ij\3\2\2\2jm\3\2\2\2ki\3\2\2\2ln\5\4\3\2m")
+        buf.write("l\3\2\2\2mn\3\2\2\2no\3\2\2\2op\7?\2\2pr\3\2\2\2q\\\3")
+        buf.write("\2\2\2qr\3\2\2\2r\t\3\2\2\2st\7\4\2\2tu\7C\2\2u~\7-\2")
+        buf.write("\2vw\7\5\2\2wx\7C\2\2xz\7@\2\2y{\5*\26\2zy\3\2\2\2z{\3")
+        buf.write("\2\2\2{|\3\2\2\2|~\7A\2\2}s\3\2\2\2}v\3\2\2\2~\13\3\2")
+        buf.write("\2\2\177\u0080\7\4\2\2\u0080\u0081\7-\2\2\u0081\r\3\2")
+        buf.write("\2\2\u0082\u0083\7\6\2\2\u0083\u0084\7\7\2\2\u0084\u0085")
+        buf.write("\7@\2\2\u0085\u0086\5*\26\2\u0086\u0087\7A\2\2\u0087\u008f")
+        buf.write("\3\2\2\2\u0088\u0089\7\6\2\2\u0089\u008a\7\b\2\2\u008a")
+        buf.write("\u008b\7@\2\2\u008b\u008c\5*\26\2\u008c\u008d\7A\2\2\u008d")
+        buf.write("\u008f\3\2\2\2\u008e\u0082\3\2\2\2\u008e\u0088\3\2\2\2")
+        buf.write("\u008f\17\3\2\2\2\u0090\u0091\7\t\2\2\u0091\u0092\7\65")
+        buf.write("\2\2\u0092\u0093\7\67\2\2\u0093\u0094\5\60\31\2\u0094")
+        buf.write("\21\3\2\2\2\u0095\u0096\7\n\2\2\u0096\u0097\7\65\2\2\u0097")
+        buf.write("\u0098\7\67\2\2\u0098\u0099\5\34\17\2\u0099\23\3\2\2\2")
+        buf.write("\u009a\u009b\7\13\2\2\u009b\u009c\7\64\2\2\u009c\u009d")
+        buf.write("\7\17\2\2\u009d\u009e\7\65\2\2\u009e\u009f\7\67\2\2\u009f")
+        buf.write("\u00a2\5\60\31\2\u00a0\u00a1\7\21\2\2\u00a1\u00a3\5\34")
+        buf.write("\17\2\u00a2\u00a0\3\2\2\2\u00a2\u00a3\3\2\2\2\u00a3\u00a7")
+        buf.write("\3\2\2\2\u00a4\u00a6\5\30\r\2\u00a5\u00a4\3\2\2\2\u00a6")
+        buf.write("\u00a9\3\2\2\2\u00a7\u00a5\3\2\2\2\u00a7\u00a8\3\2\2\2")
+        buf.write("\u00a8\u00ab\3\2\2\2\u00a9\u00a7\3\2\2\2\u00aa\u00ac\5")
+        buf.write("\32\16\2\u00ab\u00aa\3\2\2\2\u00ab\u00ac\3\2\2\2\u00ac")
+        buf.write("\u00c5\3\2\2\2\u00ad\u00ae\7\13\2\2\u00ae\u00af\7\64\2")
+        buf.write("\2\u00af\u00b3\7>\2\2\u00b0\u00b2\7G\2\2\u00b1\u00b0\3")
+        buf.write("\2\2\2\u00b2\u00b5\3\2\2\2\u00b3\u00b1\3\2\2\2\u00b3\u00b4")
+        buf.write("\3\2\2\2\u00b4\u00b6\3\2\2\2\u00b5\u00b3\3\2\2\2\u00b6")
+        buf.write("\u00bc\5\26\f\2\u00b7\u00b8\5\4\3\2\u00b8\u00b9\5\26\f")
+        buf.write("\2\u00b9\u00bb\3\2\2\2\u00ba\u00b7\3\2\2\2\u00bb\u00be")
+        buf.write("\3\2\2\2\u00bc\u00ba\3\2\2\2\u00bc\u00bd\3\2\2\2\u00bd")
+        buf.write("\u00c0\3\2\2\2\u00be\u00bc\3\2\2\2\u00bf\u00c1\5\4\3\2")
+        buf.write("\u00c0\u00bf\3\2\2\2\u00c0\u00c1\3\2\2\2\u00c1\u00c2\3")
+        buf.write("\2\2\2\u00c2\u00c3\7?\2\2\u00c3\u00c5\3\2\2\2\u00c4\u009a")
+        buf.write("\3\2\2\2\u00c4\u00ad\3\2\2\2\u00c5\25\3\2\2\2\u00c6\u00c7")
+        buf.write("\7\16\2\2\u00c7\u00c8\7C\2\2\u00c8\u00dc\7\65\2\2\u00c9")
+        buf.write("\u00ca\7\20\2\2\u00ca\u00cb\7C\2\2\u00cb\u00dc\5\60\31")
+        buf.write("\2\u00cc\u00cd\7\21\2\2\u00cd\u00ce\7C\2\2\u00ce\u00dc")
+        buf.write("\5\34\17\2\u00cf\u00d0\7\26\2\2\u00d0\u00d1\7C\2\2\u00d1")
+        buf.write("\u00dc\5\60\31\2\u00d2\u00d3\7\27\2\2\u00d3\u00d4\7C\2")
+        buf.write("\2\u00d4\u00dc\5\60\31\2\u00d5\u00d6\7\30\2\2\u00d6\u00d7")
+        buf.write("\7C\2\2\u00d7\u00dc\5\60\31\2\u00d8\u00d9\7\31\2\2\u00d9")
+        buf.write("\u00da\7C\2\2\u00da\u00dc\7.\2\2\u00db\u00c6\3\2\2\2\u00db")
+        buf.write("\u00c9\3\2\2\2\u00db\u00cc\3\2\2\2\u00db\u00cf\3\2\2\2")
+        buf.write("\u00db\u00d2\3\2\2\2\u00db\u00d5\3\2\2\2\u00db\u00d8\3")
+        buf.write("\2\2\2\u00dc\27\3\2\2\2\u00dd\u00de\7\26\2\2\u00de\u00e4")
+        buf.write("\5\60\31\2\u00df\u00e0\7\27\2\2\u00e0\u00e4\5\60\31\2")
+        buf.write("\u00e1\u00e2\7\30\2\2\u00e2\u00e4\5\60\31\2\u00e3\u00dd")
+        buf.write("\3\2\2\2\u00e3\u00df\3\2\2\2\u00e3\u00e1\3\2\2\2\u00e4")
+        buf.write("\31\3\2\2\2\u00e5\u00e6\7\34\2\2\u00e6\u00e7\7.\2\2\u00e7")
+        buf.write("\33\3\2\2\2\u00e8\u00e9\7\22\2\2\u00e9\u00ea\7<\2\2\u00ea")
+        buf.write("\u00eb\5\60\31\2\u00eb\u00ec\7=\2\2\u00ec\u0126\3\2\2")
+        buf.write("\2\u00ed\u0126\7\22\2\2\u00ee\u00ef\7\23\2\2\u00ef\u00f3")
+        buf.write("\7>\2\2\u00f0\u00f2\7G\2\2\u00f1\u00f0\3\2\2\2\u00f2\u00f5")
+        buf.write("\3\2\2\2\u00f3\u00f1\3\2\2\2\u00f3\u00f4\3\2\2\2\u00f4")
+        buf.write("\u00f7\3\2\2\2\u00f5\u00f3\3\2\2\2\u00f6\u00f8\5,\27\2")
+        buf.write("\u00f7\u00f6\3\2\2\2\u00f7\u00f8\3\2\2\2\u00f8\u00fc\3")
+        buf.write("\2\2\2\u00f9\u00fb\7G\2\2\u00fa\u00f9\3\2\2\2\u00fb\u00fe")
+        buf.write("\3\2\2\2\u00fc\u00fa\3\2\2\2\u00fc\u00fd\3\2\2\2\u00fd")
+        buf.write("\u00ff\3\2\2\2\u00fe\u00fc\3\2\2\2\u00ff\u0126\7?\2\2")
+        buf.write("\u0100\u0101\7\24\2\2\u0101\u0105\7>\2\2\u0102\u0104\7")
+        buf.write("G\2\2\u0103\u0102\3\2\2\2\u0104\u0107\3\2\2\2\u0105\u0103")
+        buf.write("\3\2\2\2\u0105\u0106\3\2\2\2\u0106\u0109\3\2\2\2\u0107")
+        buf.write("\u0105\3\2\2\2\u0108\u010a\5,\27\2\u0109\u0108\3\2\2\2")
+        buf.write("\u0109\u010a\3\2\2\2\u010a\u010e\3\2\2\2\u010b\u010d\7")
+        buf.write("G\2\2\u010c\u010b\3\2\2\2\u010d\u0110\3\2\2\2\u010e\u010c")
+        buf.write("\3\2\2\2\u010e\u010f\3\2\2\2\u010f\u0111\3\2\2\2\u0110")
+        buf.write("\u010e\3\2\2\2\u0111\u0126\7?\2\2\u0112\u0113\7\25\2\2")
+        buf.write("\u0113\u0117\7>\2\2\u0114\u0116\7G\2\2\u0115\u0114\3\2")
+        buf.write("\2\2\u0116\u0119\3\2\2\2\u0117\u0115\3\2\2\2\u0117\u0118")
+        buf.write("\3\2\2\2\u0118\u011b\3\2\2\2\u0119\u0117\3\2\2\2\u011a")
+        buf.write("\u011c\5,\27\2\u011b\u011a\3\2\2\2\u011b\u011c\3\2\2\2")
+        buf.write("\u011c\u0120\3\2\2\2\u011d\u011f\7G\2\2\u011e\u011d\3")
+        buf.write("\2\2\2\u011f\u0122\3\2\2\2\u0120\u011e\3\2\2\2\u0120\u0121")
+        buf.write("\3\2\2\2\u0121\u0123\3\2\2\2\u0122\u0120\3\2\2\2\u0123")
+        buf.write("\u0126\7?\2\2\u0124\u0126\7\65\2\2\u0125\u00e8\3\2\2\2")
+        buf.write("\u0125\u00ed\3\2\2\2\u0125\u00ee\3\2\2\2\u0125\u0100\3")
+        buf.write("\2\2\2\u0125\u0112\3\2\2\2\u0125\u0124\3\2\2\2\u0126\35")
+        buf.write("\3\2\2\2\u0127\u0128\7\f\2\2\u0128\u0129\7\64\2\2\u0129")
+        buf.write("\u012d\7>\2\2\u012a\u012c\7G\2\2\u012b\u012a\3\2\2\2\u012c")
+        buf.write("\u012f\3\2\2\2\u012d\u012b\3\2\2\2\u012d\u012e\3\2\2\2")
+        buf.write("\u012e\u0130\3\2\2\2\u012f\u012d\3\2\2\2\u0130\u0136\5")
+        buf.write(" \21\2\u0131\u0132\5\4\3\2\u0132\u0133\5 \21\2\u0133\u0135")
+        buf.write("\3\2\2\2\u0134\u0131\3\2\2\2\u0135\u0138\3\2\2\2\u0136")
+        buf.write("\u0134\3\2\2\2\u0136\u0137\3\2\2\2\u0137\u013a\3\2\2\2")
+        buf.write("\u0138\u0136\3\2\2\2\u0139\u013b\5\4\3\2\u013a\u0139\3")
+        buf.write("\2\2\2\u013a\u013b\3\2\2\2\u013b\u013c\3\2\2\2\u013c\u013d")
+        buf.write("\7?\2\2\u013d\37\3\2\2\2\u013e\u013f\7\16\2\2\u013f\u0140")
+        buf.write("\7C\2\2\u0140\u0155\7\65\2\2\u0141\u0142\7\31\2\2\u0142")
+        buf.write("\u0143\7C\2\2\u0143\u0155\7.\2\2\u0144\u0145\7\r\2\2\u0145")
+        buf.write("\u0146\7\64\2\2\u0146\u0147\7\67\2\2\u0147\u0148\5\60")
+        buf.write("\31\2\u0148\u0149\7\32\2\2\u0149\u014a\5\60\31\2\u014a")
+        buf.write("\u0155\3\2\2\2\u014b\u014c\7\26\2\2\u014c\u014d\7C\2\2")
+        buf.write("\u014d\u0155\5\60\31\2\u014e\u014f\7\27\2\2\u014f\u0150")
+        buf.write("\7C\2\2\u0150\u0155\5\60\31\2\u0151\u0152\7\30\2\2\u0152")
+        buf.write("\u0153\7C\2\2\u0153\u0155\5\60\31\2\u0154\u013e\3\2\2")
+        buf.write("\2\u0154\u0141\3\2\2\2\u0154\u0144\3\2\2\2\u0154\u014b")
+        buf.write("\3\2\2\2\u0154\u014e\3\2\2\2\u0154\u0151\3\2\2\2\u0155")
+        buf.write("!\3\2\2\2\u0156\u0157\7\35\2\2\u0157\u0158\7\65\2\2\u0158")
+        buf.write("\u0159\7\66\2\2\u0159\u015a\7\65\2\2\u015a\u015b\7\67")
+        buf.write("\2\2\u015b\u015e\5\60\31\2\u015c\u015d\7\36\2\2\u015d")
+        buf.write("\u015f\7\64\2\2\u015e\u015c\3\2\2\2\u015e\u015f\3\2\2")
+        buf.write("\2\u015f\u0161\3\2\2\2\u0160\u0162\5\32\16\2\u0161\u0160")
+        buf.write("\3\2\2\2\u0161\u0162\3\2\2\2\u0162#\3\2\2\2\u0163\u0164")
+        buf.write("\7\37\2\2\u0164\u0165\7 \2\2\u0165%\3\2\2\2\u0166\u0167")
+        buf.write("\7!\2\2\u0167\u0179\7\"\2\2\u0168\u0169\7!\2\2\u0169\u0179")
+        buf.write("\7#\2\2\u016a\u016b\7!\2\2\u016b\u016c\7$\2\2\u016c\u016d")
+        buf.write("\7<\2\2\u016d\u016e\7\65\2\2\u016e\u0179\7=\2\2\u016f")
+        buf.write("\u0170\7!\2\2\u0170\u0179\7%\2\2\u0171\u0172\7!\2\2\u0172")
+        buf.write("\u0179\7\5\2\2\u0173\u0174\7!\2\2\u0174\u0179\7&\2\2\u0175")
+        buf.write("\u0176\7!\2\2\u0176\u0179\7\'\2\2\u0177\u0179\7(\2\2\u0178")
+        buf.write("\u0166\3\2\2\2\u0178\u0168\3\2\2\2\u0178\u016a\3\2\2\2")
+        buf.write("\u0178\u016f\3\2\2\2\u0178\u0171\3\2\2\2\u0178\u0173\3")
+        buf.write("\2\2\2\u0178\u0175\3\2\2\2\u0178\u0177\3\2\2\2\u0179\'")
+        buf.write("\3\2\2\2\u017a\u017f\7)\2\2\u017b\u017f\7*\2\2\u017c\u017f")
+        buf.write("\7+\2\2\u017d\u017f\7,\2\2\u017e\u017a\3\2\2\2\u017e\u017b")
+        buf.write("\3\2\2\2\u017e\u017c\3\2\2\2\u017e\u017d\3\2\2\2\u017f")
+        buf.write(")\3\2\2\2\u0180\u0181\7\65\2\2\u0181\u0185\7B\2\2\u0182")
+        buf.write("\u0184\7G\2\2\u0183\u0182\3\2\2\2\u0184\u0187\3\2\2\2")
+        buf.write("\u0185\u0183\3\2\2\2\u0185\u0186\3\2\2\2\u0186\u0188\3")
+        buf.write("\2\2\2\u0187\u0185\3\2\2\2\u0188\u018b\5*\26\2\u0189\u018b")
+        buf.write("\7\65\2\2\u018a\u0180\3\2\2\2\u018a\u0189\3\2\2\2\u018b")
+        buf.write("+\3\2\2\2\u018c\u018e\5.\30\2\u018d\u018f\t\3\2\2\u018e")
+        buf.write("\u018d\3\2\2\2\u018f\u0190\3\2\2\2\u0190\u018e\3\2\2\2")
+        buf.write("\u0190\u0191\3\2\2\2\u0191\u0192\3\2\2\2\u0192\u0193\5")
+        buf.write(",\27\2\u0193\u0199\3\2\2\2\u0194\u0196\5.\30\2\u0195\u0197")
+        buf.write("\7B\2\2\u0196\u0195\3\2\2\2\u0196\u0197\3\2\2\2\u0197")
+        buf.write("\u0199\3\2\2\2\u0198\u018c\3\2\2\2\u0198\u0194\3\2\2\2")
+        buf.write("\u0199-\3\2\2\2\u019a\u019b\7\65\2\2\u019b\u019c\7C\2")
+        buf.write("\2\u019c\u019d\5\60\31\2\u019d/\3\2\2\2\u019e\u019f\b")
+        buf.write("\31\1\2\u019f\u01a0\79\2\2\u01a0\u01be\5\60\31\16\u01a1")
+        buf.write("\u01a2\7<\2\2\u01a2\u01a3\5\60\31\2\u01a3\u01a4\7=\2\2")
+        buf.write("\u01a4\u01be\3\2\2\2\u01a5\u01a9\7@\2\2\u01a6\u01a8\7")
+        buf.write("G\2\2\u01a7\u01a6\3\2\2\2\u01a8\u01ab\3\2\2\2\u01a9\u01a7")
+        buf.write("\3\2\2\2\u01a9\u01aa\3\2\2\2\u01aa\u01ad\3\2\2\2\u01ab")
+        buf.write("\u01a9\3\2\2\2\u01ac\u01ae\5*\26\2\u01ad\u01ac\3\2\2\2")
+        buf.write("\u01ad\u01ae\3\2\2\2\u01ae\u01b2\3\2\2\2\u01af\u01b1\7")
+        buf.write("G\2\2\u01b0\u01af\3\2\2\2\u01b1\u01b4\3\2\2\2\u01b2\u01b0")
+        buf.write("\3\2\2\2\u01b2\u01b3\3\2\2\2\u01b3\u01b5\3\2\2\2\u01b4")
+        buf.write("\u01b2\3\2\2\2\u01b5\u01be\7A\2\2\u01b6\u01be\7\33\2\2")
+        buf.write("\u01b7\u01be\7/\2\2\u01b8\u01be\7\60\2\2\u01b9\u01be\7")
+        buf.write("\61\2\2\u01ba\u01be\7\62\2\2\u01bb\u01be\7\63\2\2\u01bc")
+        buf.write("\u01be\7\65\2\2\u01bd\u019e\3\2\2\2\u01bd\u01a1\3\2\2")
+        buf.write("\2\u01bd\u01a5\3\2\2\2\u01bd\u01b6\3\2\2\2\u01bd\u01b7")
+        buf.write("\3\2\2\2\u01bd\u01b8\3\2\2\2\u01bd\u01b9\3\2\2\2\u01bd")
+        buf.write("\u01ba\3\2\2\2\u01bd\u01bb\3\2\2\2\u01bd\u01bc\3\2\2\2")
+        buf.write("\u01be\u01c7\3\2\2\2\u01bf\u01c0\f\r\2\2\u01c0\u01c1\t")
+        buf.write("\4\2\2\u01c1\u01c6\5\60\31\16\u01c2\u01c3\f\f\2\2\u01c3")
+        buf.write("\u01c4\t\5\2\2\u01c4\u01c6\5\60\31\r\u01c5\u01bf\3\2\2")
+        buf.write("\2\u01c5\u01c2\3\2\2\2\u01c6\u01c9\3\2\2\2\u01c7\u01c5")
+        buf.write("\3\2\2\2\u01c7\u01c8\3\2\2\2\u01c8\61\3\2\2\2\u01c9\u01c7")
+        buf.write("\3\2\2\2\65\65>ADKX`imqz}\u008e\u00a2\u00a7\u00ab\u00b3")
+        buf.write("\u00bc\u00c0\u00c4\u00db\u00e3\u00f3\u00f7\u00fc\u0105")
+        buf.write("\u0109\u010e\u0117\u011b\u0120\u0125\u012d\u0136\u013a")
+        buf.write("\u0154\u015e\u0161\u0178\u017e\u0185\u018a\u0190\u0196")
+        buf.write("\u0198\u01a9\u01ad\u01b2\u01bd\u01c5\u01c7")
         return buf.getvalue()
 
 
@@ -203,146 +249,137 @@ class SplitLangParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+    literalNames = [ "<INVALID>", "'workspace'", "'currency'", "'members'", 
+                     "'member'", "'add'", "'remove'", "'let'", "'rule'", 
+                     "'expense'", "'bill'", "'item'", "'payer'", "'paid_by'", 
+                     "'amount'", "'split'", "'equal'", "'exact'", "'percent'", 
+                     "'ratio'", "'discount'", "'tax'", "'tip'", "'date'", 
+                     "'for'", "'all'", "'on'", "'transfer'", "'note'", "'assert'", 
+                     "'balanced'", "'query'", "'summary'", "'balances'", 
+                     "'balance'", "'expenses'", "'groups'", "'env'", "'settle'", 
+                     "'undo'", "'reset'", "'clear'", "'help'", "<INVALID>", 
                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                     "<INVALID>", "'+'", "'-'", "'*'", "'/'", "'('", "')'", 
-                     "'{'", "'}'", "','", "':'", "';'", "'?'" ]
+                     "'->'", "'='", "'+'", "'-'", "'*'", "'/'", "'('", "')'", 
+                     "'{'", "'}'", "'['", "']'", "','", "':'", "';'" ]
 
-    symbolicNames = [ "<INVALID>", "GROUP", "GROUPS", "USE", "CURRENCY", 
-                      "ADD", "REMOVE", "MEMBER_KW", "PAID", "PAYS", "FOR", 
-                      "SPLIT", "EQUALLY", "EXACT", "PERCENT", "RATIO", "AMONG", 
-                      "EXCLUDING", "WITH", "TAX", "TIP", "DISCOUNT", "ON", 
-                      "BILL", "BY", "ITEM", "SETTLE", "UP", "TO", "SHOW", 
-                      "CHECK", "BALANCES", "EXPENSES", "SUMMARY", "SETTLEMENTS", 
-                      "WHO", "OWES", "WHOM", "HOW", "MUCH", "DOES", "WHAT", 
-                      "IS", "UNDO", "RESET", "CLEAR", "HELP", "ALL", "CURRENCY_CODE", 
+    symbolicNames = [ "<INVALID>", "WORKSPACE", "CURRENCY", "MEMBERS", "MEMBER", 
+                      "ADD", "REMOVE", "LET", "RULE", "EXPENSE", "BILL", 
+                      "ITEM", "PAYER", "PAID_BY", "AMOUNT", "SPLIT", "EQUAL", 
+                      "EXACT", "PERCENT", "RATIO", "DISCOUNT", "TAX", "TIP", 
+                      "DATE_KW", "FOR", "ALL", "ON", "TRANSFER", "NOTE", 
+                      "ASSERT", "BALANCED", "QUERY", "SUMMARY", "BALANCES", 
+                      "BALANCE", "EXPENSES", "GROUPS", "ENV", "SETTLE", 
+                      "UNDO", "RESET", "CLEAR", "HELP", "CURRENCY_CODE", 
                       "DATE", "PERCENT_LIT", "MONEY_K", "MONEY_M", "MONEY_USD", 
-                      "NUMBER", "STRING", "ID", "PLUS", "MINUS", "STAR", 
-                      "SLASH", "LPAREN", "RPAREN", "LBRACE", "RBRACE", "COMMA", 
-                      "COLON", "SEMI", "QUESTIONMARK", "LINE_COMMENT", "NEWLINE", 
-                      "WS" ]
+                      "NUMBER", "STRING", "ID", "ARROW", "ASSIGN", "PLUS", 
+                      "MINUS", "STAR", "SLASH", "LPAREN", "RPAREN", "LBRACE", 
+                      "RBRACE", "LBRACK", "RBRACK", "COMMA", "COLON", "SEMI", 
+                      "BLOCK_COMMENT", "LINE_COMMENT", "NEWLINE", "WS" ]
 
     RULE_program = 0
     RULE_stmtSep = 1
     RULE_statement = 2
-    RULE_groupStmt = 3
-    RULE_currencyStmt = 4
-    RULE_memberStmt = 5
-    RULE_expenseStmt = 6
-    RULE_splitClause = 7
-    RULE_modifier = 8
-    RULE_dateClause = 9
-    RULE_billStmt = 10
-    RULE_billEntry = 11
-    RULE_settleStmt = 12
-    RULE_settleUpStmt = 13
-    RULE_queryStmt = 14
-    RULE_queryTarget = 15
-    RULE_controlStmt = 16
-    RULE_personList = 17
-    RULE_exactAllocList = 18
-    RULE_exactAlloc = 19
-    RULE_percentAllocList = 20
-    RULE_percentAlloc = 21
-    RULE_ratioAllocList = 22
-    RULE_ratioAlloc = 23
-    RULE_expr = 24
-    RULE_amountAtom = 25
-    RULE_person = 26
-    RULE_description = 27
+    RULE_workspaceStmt = 3
+    RULE_wsField = 4
+    RULE_currencyStmt = 5
+    RULE_memberStmt = 6
+    RULE_letStmt = 7
+    RULE_ruleStmt = 8
+    RULE_expenseStmt = 9
+    RULE_expenseField = 10
+    RULE_modifierClause = 11
+    RULE_dateClause = 12
+    RULE_splitExpr = 13
+    RULE_billStmt = 14
+    RULE_billField = 15
+    RULE_transferStmt = 16
+    RULE_assertStmt = 17
+    RULE_queryStmt = 18
+    RULE_controlStmt = 19
+    RULE_idList = 20
+    RULE_allocList = 21
+    RULE_allocEntry = 22
+    RULE_expr = 23
 
-    ruleNames =  [ "program", "stmtSep", "statement", "groupStmt", "currencyStmt", 
-                   "memberStmt", "expenseStmt", "splitClause", "modifier", 
-                   "dateClause", "billStmt", "billEntry", "settleStmt", 
-                   "settleUpStmt", "queryStmt", "queryTarget", "controlStmt", 
-                   "personList", "exactAllocList", "exactAlloc", "percentAllocList", 
-                   "percentAlloc", "ratioAllocList", "ratioAlloc", "expr", 
-                   "amountAtom", "person", "description" ]
+    ruleNames =  [ "program", "stmtSep", "statement", "workspaceStmt", "wsField", 
+                   "currencyStmt", "memberStmt", "letStmt", "ruleStmt", 
+                   "expenseStmt", "expenseField", "modifierClause", "dateClause", 
+                   "splitExpr", "billStmt", "billField", "transferStmt", 
+                   "assertStmt", "queryStmt", "controlStmt", "idList", "allocList", 
+                   "allocEntry", "expr" ]
 
     EOF = Token.EOF
-    GROUP=1
-    GROUPS=2
-    USE=3
-    CURRENCY=4
+    WORKSPACE=1
+    CURRENCY=2
+    MEMBERS=3
+    MEMBER=4
     ADD=5
     REMOVE=6
-    MEMBER_KW=7
-    PAID=8
-    PAYS=9
-    FOR=10
-    SPLIT=11
-    EQUALLY=12
-    EXACT=13
-    PERCENT=14
-    RATIO=15
-    AMONG=16
-    EXCLUDING=17
-    WITH=18
-    TAX=19
-    TIP=20
-    DISCOUNT=21
-    ON=22
-    BILL=23
-    BY=24
-    ITEM=25
-    SETTLE=26
-    UP=27
-    TO=28
-    SHOW=29
-    CHECK=30
-    BALANCES=31
-    EXPENSES=32
-    SUMMARY=33
-    SETTLEMENTS=34
-    WHO=35
-    OWES=36
-    WHOM=37
-    HOW=38
-    MUCH=39
-    DOES=40
-    WHAT=41
-    IS=42
-    UNDO=43
-    RESET=44
-    CLEAR=45
-    HELP=46
-    ALL=47
-    CURRENCY_CODE=48
-    DATE=49
-    PERCENT_LIT=50
-    MONEY_K=51
-    MONEY_M=52
-    MONEY_USD=53
-    NUMBER=54
-    STRING=55
-    ID=56
-    PLUS=57
-    MINUS=58
-    STAR=59
-    SLASH=60
-    LPAREN=61
-    RPAREN=62
-    LBRACE=63
-    RBRACE=64
-    COMMA=65
-    COLON=66
-    SEMI=67
-    QUESTIONMARK=68
-    LINE_COMMENT=69
-    NEWLINE=70
-    WS=71
+    LET=7
+    RULE=8
+    EXPENSE=9
+    BILL=10
+    ITEM=11
+    PAYER=12
+    PAID_BY=13
+    AMOUNT=14
+    SPLIT=15
+    EQUAL=16
+    EXACT=17
+    PERCENT=18
+    RATIO=19
+    DISCOUNT=20
+    TAX=21
+    TIP=22
+    DATE_KW=23
+    FOR=24
+    ALL=25
+    ON=26
+    TRANSFER=27
+    NOTE=28
+    ASSERT=29
+    BALANCED=30
+    QUERY=31
+    SUMMARY=32
+    BALANCES=33
+    BALANCE=34
+    EXPENSES=35
+    GROUPS=36
+    ENV=37
+    SETTLE=38
+    UNDO=39
+    RESET=40
+    CLEAR=41
+    HELP=42
+    CURRENCY_CODE=43
+    DATE=44
+    PERCENT_LIT=45
+    MONEY_K=46
+    MONEY_M=47
+    MONEY_USD=48
+    NUMBER=49
+    STRING=50
+    ID=51
+    ARROW=52
+    ASSIGN=53
+    PLUS=54
+    MINUS=55
+    STAR=56
+    SLASH=57
+    LPAREN=58
+    RPAREN=59
+    LBRACE=60
+    RBRACE=61
+    LBRACK=62
+    RBRACK=63
+    COMMA=64
+    COLON=65
+    SEMI=66
+    BLOCK_COMMENT=67
+    LINE_COMMENT=68
+    NEWLINE=69
+    WS=70
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -402,47 +439,47 @@ class SplitLangParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 59
+            self.state = 51
             self._errHandler.sync(self)
             _alt = self._interp.adaptivePredict(self._input,0,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
-                    self.state = 56
+                    self.state = 48
                     self.match(SplitLangParser.NEWLINE) 
-                self.state = 61
+                self.state = 53
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,0,self._ctx)
 
-            self.state = 71
+            self.state = 63
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SplitLangParser.GROUP) | (1 << SplitLangParser.USE) | (1 << SplitLangParser.CURRENCY) | (1 << SplitLangParser.ADD) | (1 << SplitLangParser.REMOVE) | (1 << SplitLangParser.BILL) | (1 << SplitLangParser.SETTLE) | (1 << SplitLangParser.SHOW) | (1 << SplitLangParser.CHECK) | (1 << SplitLangParser.WHO) | (1 << SplitLangParser.HOW) | (1 << SplitLangParser.WHAT) | (1 << SplitLangParser.UNDO) | (1 << SplitLangParser.RESET) | (1 << SplitLangParser.CLEAR) | (1 << SplitLangParser.HELP) | (1 << SplitLangParser.ID))) != 0):
-                self.state = 62
+            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SplitLangParser.WORKSPACE) | (1 << SplitLangParser.CURRENCY) | (1 << SplitLangParser.MEMBER) | (1 << SplitLangParser.LET) | (1 << SplitLangParser.RULE) | (1 << SplitLangParser.EXPENSE) | (1 << SplitLangParser.BILL) | (1 << SplitLangParser.TRANSFER) | (1 << SplitLangParser.ASSERT) | (1 << SplitLangParser.QUERY) | (1 << SplitLangParser.SETTLE) | (1 << SplitLangParser.UNDO) | (1 << SplitLangParser.RESET) | (1 << SplitLangParser.CLEAR) | (1 << SplitLangParser.HELP))) != 0):
+                self.state = 54
                 self.statement()
-                self.state = 68
+                self.state = 60
                 self._errHandler.sync(self)
                 _alt = self._interp.adaptivePredict(self._input,1,self._ctx)
                 while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                     if _alt==1:
-                        self.state = 63
+                        self.state = 55
                         self.stmtSep()
-                        self.state = 64
+                        self.state = 56
                         self.statement() 
-                    self.state = 70
+                    self.state = 62
                     self._errHandler.sync(self)
                     _alt = self._interp.adaptivePredict(self._input,1,self._ctx)
 
 
 
-            self.state = 74
+            self.state = 66
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==SplitLangParser.SEMI or _la==SplitLangParser.NEWLINE:
-                self.state = 73
+                self.state = 65
                 self.stmtSep()
 
 
-            self.state = 76
+            self.state = 68
             self.match(SplitLangParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
@@ -491,18 +528,18 @@ class SplitLangParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 79 
+            self.state = 71 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 78
+                self.state = 70
                 _la = self._input.LA(1)
                 if not(_la==SplitLangParser.SEMI or _la==SplitLangParser.NEWLINE):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 81 
+                self.state = 73 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not (_la==SplitLangParser.SEMI or _la==SplitLangParser.NEWLINE):
@@ -524,8 +561,8 @@ class SplitLangParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def groupStmt(self):
-            return self.getTypedRuleContext(SplitLangParser.GroupStmtContext,0)
+        def workspaceStmt(self):
+            return self.getTypedRuleContext(SplitLangParser.WorkspaceStmtContext,0)
 
 
         def currencyStmt(self):
@@ -536,6 +573,14 @@ class SplitLangParser ( Parser ):
             return self.getTypedRuleContext(SplitLangParser.MemberStmtContext,0)
 
 
+        def letStmt(self):
+            return self.getTypedRuleContext(SplitLangParser.LetStmtContext,0)
+
+
+        def ruleStmt(self):
+            return self.getTypedRuleContext(SplitLangParser.RuleStmtContext,0)
+
+
         def expenseStmt(self):
             return self.getTypedRuleContext(SplitLangParser.ExpenseStmtContext,0)
 
@@ -544,12 +589,12 @@ class SplitLangParser ( Parser ):
             return self.getTypedRuleContext(SplitLangParser.BillStmtContext,0)
 
 
-        def settleStmt(self):
-            return self.getTypedRuleContext(SplitLangParser.SettleStmtContext,0)
+        def transferStmt(self):
+            return self.getTypedRuleContext(SplitLangParser.TransferStmtContext,0)
 
 
-        def settleUpStmt(self):
-            return self.getTypedRuleContext(SplitLangParser.SettleUpStmtContext,0)
+        def assertStmt(self):
+            return self.getTypedRuleContext(SplitLangParser.AssertStmtContext,0)
 
 
         def queryStmt(self):
@@ -577,62 +622,179 @@ class SplitLangParser ( Parser ):
         localctx = SplitLangParser.StatementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_statement)
         try:
-            self.state = 92
+            self.state = 86
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,5,self._ctx)
-            if la_ == 1:
+            token = self._input.LA(1)
+            if token in [SplitLangParser.WORKSPACE]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 83
-                self.groupStmt()
+                self.state = 75
+                self.workspaceStmt()
                 pass
-
-            elif la_ == 2:
+            elif token in [SplitLangParser.CURRENCY]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 84
+                self.state = 76
                 self.currencyStmt()
                 pass
-
-            elif la_ == 3:
+            elif token in [SplitLangParser.MEMBER]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 85
+                self.state = 77
                 self.memberStmt()
                 pass
-
-            elif la_ == 4:
+            elif token in [SplitLangParser.LET]:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 86
+                self.state = 78
+                self.letStmt()
+                pass
+            elif token in [SplitLangParser.RULE]:
+                self.enterOuterAlt(localctx, 5)
+                self.state = 79
+                self.ruleStmt()
+                pass
+            elif token in [SplitLangParser.EXPENSE]:
+                self.enterOuterAlt(localctx, 6)
+                self.state = 80
                 self.expenseStmt()
                 pass
-
-            elif la_ == 5:
-                self.enterOuterAlt(localctx, 5)
-                self.state = 87
+            elif token in [SplitLangParser.BILL]:
+                self.enterOuterAlt(localctx, 7)
+                self.state = 81
                 self.billStmt()
                 pass
-
-            elif la_ == 6:
-                self.enterOuterAlt(localctx, 6)
-                self.state = 88
-                self.settleStmt()
-                pass
-
-            elif la_ == 7:
-                self.enterOuterAlt(localctx, 7)
-                self.state = 89
-                self.settleUpStmt()
-                pass
-
-            elif la_ == 8:
+            elif token in [SplitLangParser.TRANSFER]:
                 self.enterOuterAlt(localctx, 8)
-                self.state = 90
+                self.state = 82
+                self.transferStmt()
+                pass
+            elif token in [SplitLangParser.ASSERT]:
+                self.enterOuterAlt(localctx, 9)
+                self.state = 83
+                self.assertStmt()
+                pass
+            elif token in [SplitLangParser.QUERY, SplitLangParser.SETTLE]:
+                self.enterOuterAlt(localctx, 10)
+                self.state = 84
                 self.queryStmt()
                 pass
-
-            elif la_ == 9:
-                self.enterOuterAlt(localctx, 9)
-                self.state = 91
+            elif token in [SplitLangParser.UNDO, SplitLangParser.RESET, SplitLangParser.CLEAR, SplitLangParser.HELP]:
+                self.enterOuterAlt(localctx, 11)
+                self.state = 85
                 self.controlStmt()
                 pass
+            else:
+                raise NoViableAltException(self)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class WorkspaceStmtContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def WORKSPACE(self):
+            return self.getToken(SplitLangParser.WORKSPACE, 0)
+
+        def STRING(self):
+            return self.getToken(SplitLangParser.STRING, 0)
+
+        def LBRACE(self):
+            return self.getToken(SplitLangParser.LBRACE, 0)
+
+        def wsField(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SplitLangParser.WsFieldContext)
+            else:
+                return self.getTypedRuleContext(SplitLangParser.WsFieldContext,i)
+
+
+        def RBRACE(self):
+            return self.getToken(SplitLangParser.RBRACE, 0)
+
+        def NEWLINE(self, i:int=None):
+            if i is None:
+                return self.getTokens(SplitLangParser.NEWLINE)
+            else:
+                return self.getToken(SplitLangParser.NEWLINE, i)
+
+        def stmtSep(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SplitLangParser.StmtSepContext)
+            else:
+                return self.getTypedRuleContext(SplitLangParser.StmtSepContext,i)
+
+
+        def getRuleIndex(self):
+            return SplitLangParser.RULE_workspaceStmt
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWorkspaceStmt" ):
+                return visitor.visitWorkspaceStmt(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def workspaceStmt(self):
+
+        localctx = SplitLangParser.WorkspaceStmtContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 6, self.RULE_workspaceStmt)
+        self._la = 0 # Token type
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 88
+            self.match(SplitLangParser.WORKSPACE)
+            self.state = 89
+            self.match(SplitLangParser.STRING)
+            self.state = 111
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if _la==SplitLangParser.LBRACE:
+                self.state = 90
+                self.match(SplitLangParser.LBRACE)
+                self.state = 94
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                while _la==SplitLangParser.NEWLINE:
+                    self.state = 91
+                    self.match(SplitLangParser.NEWLINE)
+                    self.state = 96
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+
+                self.state = 97
+                self.wsField()
+                self.state = 103
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,7,self._ctx)
+                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                    if _alt==1:
+                        self.state = 98
+                        self.stmtSep()
+                        self.state = 99
+                        self.wsField() 
+                    self.state = 105
+                    self._errHandler.sync(self)
+                    _alt = self._interp.adaptivePredict(self._input,7,self._ctx)
+
+                self.state = 107
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==SplitLangParser.SEMI or _la==SplitLangParser.NEWLINE:
+                    self.state = 106
+                    self.stmtSep()
+
+
+                self.state = 109
+                self.match(SplitLangParser.RBRACE)
 
 
         except RecognitionException as re:
@@ -644,54 +806,111 @@ class SplitLangParser ( Parser ):
         return localctx
 
 
-    class GroupStmtContext(ParserRuleContext):
+    class WsFieldContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def GROUP(self):
-            return self.getToken(SplitLangParser.GROUP, 0)
-
-        def description(self):
-            return self.getTypedRuleContext(SplitLangParser.DescriptionContext,0)
-
-
-        def USE(self):
-            return self.getToken(SplitLangParser.USE, 0)
 
         def getRuleIndex(self):
-            return SplitLangParser.RULE_groupStmt
+            return SplitLangParser.RULE_wsField
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class WsCurrencyFieldContext(WsFieldContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.WsFieldContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def CURRENCY(self):
+            return self.getToken(SplitLangParser.CURRENCY, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
+        def CURRENCY_CODE(self):
+            return self.getToken(SplitLangParser.CURRENCY_CODE, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitGroupStmt" ):
-                return visitor.visitGroupStmt(self)
+            if hasattr( visitor, "visitWsCurrencyField" ):
+                return visitor.visitWsCurrencyField(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class WsMembersFieldContext(WsFieldContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.WsFieldContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def MEMBERS(self):
+            return self.getToken(SplitLangParser.MEMBERS, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
+        def LBRACK(self):
+            return self.getToken(SplitLangParser.LBRACK, 0)
+        def RBRACK(self):
+            return self.getToken(SplitLangParser.RBRACK, 0)
+        def idList(self):
+            return self.getTypedRuleContext(SplitLangParser.IdListContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWsMembersField" ):
+                return visitor.visitWsMembersField(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
+    def wsField(self):
 
-    def groupStmt(self):
-
-        localctx = SplitLangParser.GroupStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_groupStmt)
+        localctx = SplitLangParser.WsFieldContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 8, self.RULE_wsField)
         self._la = 0 # Token type
         try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 95
+            self.state = 123
             self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            if _la==SplitLangParser.USE:
-                self.state = 94
-                self.match(SplitLangParser.USE)
+            token = self._input.LA(1)
+            if token in [SplitLangParser.CURRENCY]:
+                localctx = SplitLangParser.WsCurrencyFieldContext(self, localctx)
+                self.enterOuterAlt(localctx, 1)
+                self.state = 113
+                self.match(SplitLangParser.CURRENCY)
+                self.state = 114
+                self.match(SplitLangParser.COLON)
+                self.state = 115
+                self.match(SplitLangParser.CURRENCY_CODE)
+                pass
+            elif token in [SplitLangParser.MEMBERS]:
+                localctx = SplitLangParser.WsMembersFieldContext(self, localctx)
+                self.enterOuterAlt(localctx, 2)
+                self.state = 116
+                self.match(SplitLangParser.MEMBERS)
+                self.state = 117
+                self.match(SplitLangParser.COLON)
+                self.state = 118
+                self.match(SplitLangParser.LBRACK)
+                self.state = 120
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==SplitLangParser.ID:
+                    self.state = 119
+                    self.idList()
 
 
-            self.state = 97
-            self.match(SplitLangParser.GROUP)
-            self.state = 98
-            self.description()
+                self.state = 122
+                self.match(SplitLangParser.RBRACK)
+                pass
+            else:
+                raise NoViableAltException(self)
+
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -729,12 +948,12 @@ class SplitLangParser ( Parser ):
     def currencyStmt(self):
 
         localctx = SplitLangParser.CurrencyStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_currencyStmt)
+        self.enterRule(localctx, 10, self.RULE_currencyStmt)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 100
+            self.state = 125
             self.match(SplitLangParser.CURRENCY)
-            self.state = 101
+            self.state = 126
             self.match(SplitLangParser.CURRENCY_CODE)
         except RecognitionException as re:
             localctx.exception = re
@@ -762,44 +981,52 @@ class SplitLangParser ( Parser ):
 
 
 
-    class RemoveMembersStmtContext(MemberStmtContext):
+    class MemberRemoveStmtContext(MemberStmtContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.MemberStmtContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
+        def MEMBER(self):
+            return self.getToken(SplitLangParser.MEMBER, 0)
         def REMOVE(self):
             return self.getToken(SplitLangParser.REMOVE, 0)
-        def MEMBER_KW(self):
-            return self.getToken(SplitLangParser.MEMBER_KW, 0)
-        def personList(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonListContext,0)
+        def LBRACK(self):
+            return self.getToken(SplitLangParser.LBRACK, 0)
+        def idList(self):
+            return self.getTypedRuleContext(SplitLangParser.IdListContext,0)
 
+        def RBRACK(self):
+            return self.getToken(SplitLangParser.RBRACK, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRemoveMembersStmt" ):
-                return visitor.visitRemoveMembersStmt(self)
+            if hasattr( visitor, "visitMemberRemoveStmt" ):
+                return visitor.visitMemberRemoveStmt(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class AddMembersStmtContext(MemberStmtContext):
+    class MemberAddStmtContext(MemberStmtContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.MemberStmtContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
+        def MEMBER(self):
+            return self.getToken(SplitLangParser.MEMBER, 0)
         def ADD(self):
             return self.getToken(SplitLangParser.ADD, 0)
-        def MEMBER_KW(self):
-            return self.getToken(SplitLangParser.MEMBER_KW, 0)
-        def personList(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonListContext,0)
+        def LBRACK(self):
+            return self.getToken(SplitLangParser.LBRACK, 0)
+        def idList(self):
+            return self.getTypedRuleContext(SplitLangParser.IdListContext,0)
 
+        def RBRACK(self):
+            return self.getToken(SplitLangParser.RBRACK, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAddMembersStmt" ):
-                return visitor.visitAddMembersStmt(self)
+            if hasattr( visitor, "visitMemberAddStmt" ):
+                return visitor.visitMemberAddStmt(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -808,34 +1035,152 @@ class SplitLangParser ( Parser ):
     def memberStmt(self):
 
         localctx = SplitLangParser.MemberStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 10, self.RULE_memberStmt)
+        self.enterRule(localctx, 12, self.RULE_memberStmt)
         try:
-            self.state = 109
+            self.state = 140
             self._errHandler.sync(self)
-            token = self._input.LA(1)
-            if token in [SplitLangParser.ADD]:
-                localctx = SplitLangParser.AddMembersStmtContext(self, localctx)
+            la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
+            if la_ == 1:
+                localctx = SplitLangParser.MemberAddStmtContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 103
+                self.state = 128
+                self.match(SplitLangParser.MEMBER)
+                self.state = 129
                 self.match(SplitLangParser.ADD)
-                self.state = 104
-                self.match(SplitLangParser.MEMBER_KW)
-                self.state = 105
-                self.personList()
+                self.state = 130
+                self.match(SplitLangParser.LBRACK)
+                self.state = 131
+                self.idList()
+                self.state = 132
+                self.match(SplitLangParser.RBRACK)
                 pass
-            elif token in [SplitLangParser.REMOVE]:
-                localctx = SplitLangParser.RemoveMembersStmtContext(self, localctx)
-                self.enterOuterAlt(localctx, 2)
-                self.state = 106
-                self.match(SplitLangParser.REMOVE)
-                self.state = 107
-                self.match(SplitLangParser.MEMBER_KW)
-                self.state = 108
-                self.personList()
-                pass
-            else:
-                raise NoViableAltException(self)
 
+            elif la_ == 2:
+                localctx = SplitLangParser.MemberRemoveStmtContext(self, localctx)
+                self.enterOuterAlt(localctx, 2)
+                self.state = 134
+                self.match(SplitLangParser.MEMBER)
+                self.state = 135
+                self.match(SplitLangParser.REMOVE)
+                self.state = 136
+                self.match(SplitLangParser.LBRACK)
+                self.state = 137
+                self.idList()
+                self.state = 138
+                self.match(SplitLangParser.RBRACK)
+                pass
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class LetStmtContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def LET(self):
+            return self.getToken(SplitLangParser.LET, 0)
+
+        def ID(self):
+            return self.getToken(SplitLangParser.ID, 0)
+
+        def ASSIGN(self):
+            return self.getToken(SplitLangParser.ASSIGN, 0)
+
+        def expr(self):
+            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
+
+
+        def getRuleIndex(self):
+            return SplitLangParser.RULE_letStmt
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLetStmt" ):
+                return visitor.visitLetStmt(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def letStmt(self):
+
+        localctx = SplitLangParser.LetStmtContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 14, self.RULE_letStmt)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 142
+            self.match(SplitLangParser.LET)
+            self.state = 143
+            self.match(SplitLangParser.ID)
+            self.state = 144
+            self.match(SplitLangParser.ASSIGN)
+            self.state = 145
+            self.expr(0)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class RuleStmtContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def RULE(self):
+            return self.getToken(SplitLangParser.RULE, 0)
+
+        def ID(self):
+            return self.getToken(SplitLangParser.ID, 0)
+
+        def ASSIGN(self):
+            return self.getToken(SplitLangParser.ASSIGN, 0)
+
+        def splitExpr(self):
+            return self.getTypedRuleContext(SplitLangParser.SplitExprContext,0)
+
+
+        def getRuleIndex(self):
+            return SplitLangParser.RULE_ruleStmt
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRuleStmt" ):
+                return visitor.visitRuleStmt(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def ruleStmt(self):
+
+        localctx = SplitLangParser.RuleStmtContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 16, self.RULE_ruleStmt)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 147
+            self.match(SplitLangParser.RULE)
+            self.state = 148
+            self.match(SplitLangParser.ID)
+            self.state = 149
+            self.match(SplitLangParser.ASSIGN)
+            self.state = 150
+            self.splitExpr()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -852,326 +1197,195 @@ class SplitLangParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def person(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonContext,0)
+
+        def getRuleIndex(self):
+            return SplitLangParser.RULE_expenseStmt
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
 
 
-        def PAID(self):
-            return self.getToken(SplitLangParser.PAID, 0)
 
+    class InlineExpenseStmtContext(ExpenseStmtContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExpenseStmtContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def EXPENSE(self):
+            return self.getToken(SplitLangParser.EXPENSE, 0)
+        def STRING(self):
+            return self.getToken(SplitLangParser.STRING, 0)
+        def PAID_BY(self):
+            return self.getToken(SplitLangParser.PAID_BY, 0)
+        def ID(self):
+            return self.getToken(SplitLangParser.ID, 0)
+        def ASSIGN(self):
+            return self.getToken(SplitLangParser.ASSIGN, 0)
         def expr(self):
             return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
 
+        def SPLIT(self):
+            return self.getToken(SplitLangParser.SPLIT, 0)
+        def splitExpr(self):
+            return self.getTypedRuleContext(SplitLangParser.SplitExprContext,0)
 
-        def FOR(self):
-            return self.getToken(SplitLangParser.FOR, 0)
-
-        def description(self):
-            return self.getTypedRuleContext(SplitLangParser.DescriptionContext,0)
-
-
-        def splitClause(self):
-            return self.getTypedRuleContext(SplitLangParser.SplitClauseContext,0)
-
-
-        def modifier(self, i:int=None):
+        def modifierClause(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(SplitLangParser.ModifierContext)
+                return self.getTypedRuleContexts(SplitLangParser.ModifierClauseContext)
             else:
-                return self.getTypedRuleContext(SplitLangParser.ModifierContext,i)
-
+                return self.getTypedRuleContext(SplitLangParser.ModifierClauseContext,i)
 
         def dateClause(self):
             return self.getTypedRuleContext(SplitLangParser.DateClauseContext,0)
 
 
-        def getRuleIndex(self):
-            return SplitLangParser.RULE_expenseStmt
-
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExpenseStmt" ):
-                return visitor.visitExpenseStmt(self)
+            if hasattr( visitor, "visitInlineExpenseStmt" ):
+                return visitor.visitInlineExpenseStmt(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class BlockExpenseStmtContext(ExpenseStmtContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExpenseStmtContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def EXPENSE(self):
+            return self.getToken(SplitLangParser.EXPENSE, 0)
+        def STRING(self):
+            return self.getToken(SplitLangParser.STRING, 0)
+        def LBRACE(self):
+            return self.getToken(SplitLangParser.LBRACE, 0)
+        def expenseField(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SplitLangParser.ExpenseFieldContext)
+            else:
+                return self.getTypedRuleContext(SplitLangParser.ExpenseFieldContext,i)
+
+        def RBRACE(self):
+            return self.getToken(SplitLangParser.RBRACE, 0)
+        def NEWLINE(self, i:int=None):
+            if i is None:
+                return self.getTokens(SplitLangParser.NEWLINE)
+            else:
+                return self.getToken(SplitLangParser.NEWLINE, i)
+        def stmtSep(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SplitLangParser.StmtSepContext)
+            else:
+                return self.getTypedRuleContext(SplitLangParser.StmtSepContext,i)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBlockExpenseStmt" ):
+                return visitor.visitBlockExpenseStmt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
     def expenseStmt(self):
 
         localctx = SplitLangParser.ExpenseStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_expenseStmt)
+        self.enterRule(localctx, 18, self.RULE_expenseStmt)
         self._la = 0 # Token type
         try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 111
-            self.person()
-            self.state = 112
-            self.match(SplitLangParser.PAID)
-            self.state = 113
-            self.expr(0)
-            self.state = 116
+            self.state = 194
             self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            if _la==SplitLangParser.FOR:
-                self.state = 114
-                self.match(SplitLangParser.FOR)
-                self.state = 115
-                self.description()
-
-
-            self.state = 119
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            if (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SplitLangParser.SPLIT) | (1 << SplitLangParser.AMONG) | (1 << SplitLangParser.EXCLUDING))) != 0):
-                self.state = 118
-                self.splitClause()
-
-
-            self.state = 124
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SplitLangParser.WITH) | (1 << SplitLangParser.TAX) | (1 << SplitLangParser.TIP) | (1 << SplitLangParser.DISCOUNT))) != 0):
-                self.state = 121
-                self.modifier()
-                self.state = 126
+            la_ = self._interp.adaptivePredict(self._input,19,self._ctx)
+            if la_ == 1:
+                localctx = SplitLangParser.InlineExpenseStmtContext(self, localctx)
+                self.enterOuterAlt(localctx, 1)
+                self.state = 152
+                self.match(SplitLangParser.EXPENSE)
+                self.state = 153
+                self.match(SplitLangParser.STRING)
+                self.state = 154
+                self.match(SplitLangParser.PAID_BY)
+                self.state = 155
+                self.match(SplitLangParser.ID)
+                self.state = 156
+                self.match(SplitLangParser.ASSIGN)
+                self.state = 157
+                self.expr(0)
+                self.state = 160
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-
-            self.state = 128
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            if _la==SplitLangParser.ON:
-                self.state = 127
-                self.dateClause()
+                if _la==SplitLangParser.SPLIT:
+                    self.state = 158
+                    self.match(SplitLangParser.SPLIT)
+                    self.state = 159
+                    self.splitExpr()
 
 
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class SplitClauseContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-
-        def getRuleIndex(self):
-            return SplitLangParser.RULE_splitClause
-
-     
-        def copyFrom(self, ctx:ParserRuleContext):
-            super().copyFrom(ctx)
-
-
-
-    class PercentSplitContext(SplitClauseContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitClauseContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SPLIT(self):
-            return self.getToken(SplitLangParser.SPLIT, 0)
-        def PERCENT(self):
-            return self.getToken(SplitLangParser.PERCENT, 0)
-        def percentAllocList(self):
-            return self.getTypedRuleContext(SplitLangParser.PercentAllocListContext,0)
-
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPercentSplit" ):
-                return visitor.visitPercentSplit(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class RatioSplitContext(SplitClauseContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitClauseContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SPLIT(self):
-            return self.getToken(SplitLangParser.SPLIT, 0)
-        def RATIO(self):
-            return self.getToken(SplitLangParser.RATIO, 0)
-        def ratioAllocList(self):
-            return self.getTypedRuleContext(SplitLangParser.RatioAllocListContext,0)
-
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRatioSplit" ):
-                return visitor.visitRatioSplit(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ExactSplitContext(SplitClauseContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitClauseContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SPLIT(self):
-            return self.getToken(SplitLangParser.SPLIT, 0)
-        def EXACT(self):
-            return self.getToken(SplitLangParser.EXACT, 0)
-        def exactAllocList(self):
-            return self.getTypedRuleContext(SplitLangParser.ExactAllocListContext,0)
-
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExactSplit" ):
-                return visitor.visitExactSplit(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ShorthandEqualSplitContext(SplitClauseContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitClauseContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def AMONG(self):
-            return self.getToken(SplitLangParser.AMONG, 0)
-        def personList(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonListContext,0)
-
-        def EXCLUDING(self):
-            return self.getToken(SplitLangParser.EXCLUDING, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShorthandEqualSplit" ):
-                return visitor.visitShorthandEqualSplit(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class EqualSplitContext(SplitClauseContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitClauseContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SPLIT(self):
-            return self.getToken(SplitLangParser.SPLIT, 0)
-        def EQUALLY(self):
-            return self.getToken(SplitLangParser.EQUALLY, 0)
-        def AMONG(self):
-            return self.getToken(SplitLangParser.AMONG, 0)
-        def personList(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonListContext,0)
-
-        def EXCLUDING(self):
-            return self.getToken(SplitLangParser.EXCLUDING, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitEqualSplit" ):
-                return visitor.visitEqualSplit(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-    def splitClause(self):
-
-        localctx = SplitLangParser.SplitClauseContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_splitClause)
-        try:
-            self.state = 153
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
-            if la_ == 1:
-                localctx = SplitLangParser.EqualSplitContext(self, localctx)
-                self.enterOuterAlt(localctx, 1)
-                self.state = 130
-                self.match(SplitLangParser.SPLIT)
-                self.state = 131
-                self.match(SplitLangParser.EQUALLY)
-                self.state = 136
+                self.state = 165
                 self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [SplitLangParser.AMONG]:
-                    self.state = 132
-                    self.match(SplitLangParser.AMONG)
-                    self.state = 133
-                    self.personList()
-                    pass
-                elif token in [SplitLangParser.EXCLUDING]:
-                    self.state = 134
-                    self.match(SplitLangParser.EXCLUDING)
-                    self.state = 135
-                    self.personList()
-                    pass
-                elif token in [SplitLangParser.EOF, SplitLangParser.WITH, SplitLangParser.TAX, SplitLangParser.TIP, SplitLangParser.DISCOUNT, SplitLangParser.ON, SplitLangParser.SEMI, SplitLangParser.NEWLINE]:
-                    pass
-                else:
-                    pass
+                _la = self._input.LA(1)
+                while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SplitLangParser.DISCOUNT) | (1 << SplitLangParser.TAX) | (1 << SplitLangParser.TIP))) != 0):
+                    self.state = 162
+                    self.modifierClause()
+                    self.state = 167
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+
+                self.state = 169
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==SplitLangParser.ON:
+                    self.state = 168
+                    self.dateClause()
+
+
                 pass
 
             elif la_ == 2:
-                localctx = SplitLangParser.ShorthandEqualSplitContext(self, localctx)
+                localctx = SplitLangParser.BlockExpenseStmtContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 142
+                self.state = 171
+                self.match(SplitLangParser.EXPENSE)
+                self.state = 172
+                self.match(SplitLangParser.STRING)
+                self.state = 173
+                self.match(SplitLangParser.LBRACE)
+                self.state = 177
                 self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [SplitLangParser.AMONG]:
-                    self.state = 138
-                    self.match(SplitLangParser.AMONG)
-                    self.state = 139
-                    self.personList()
-                    pass
-                elif token in [SplitLangParser.EXCLUDING]:
-                    self.state = 140
-                    self.match(SplitLangParser.EXCLUDING)
-                    self.state = 141
-                    self.personList()
-                    pass
-                else:
-                    raise NoViableAltException(self)
+                _la = self._input.LA(1)
+                while _la==SplitLangParser.NEWLINE:
+                    self.state = 174
+                    self.match(SplitLangParser.NEWLINE)
+                    self.state = 179
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
 
-                pass
+                self.state = 180
+                self.expenseField()
+                self.state = 186
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,17,self._ctx)
+                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                    if _alt==1:
+                        self.state = 181
+                        self.stmtSep()
+                        self.state = 182
+                        self.expenseField() 
+                    self.state = 188
+                    self._errHandler.sync(self)
+                    _alt = self._interp.adaptivePredict(self._input,17,self._ctx)
 
-            elif la_ == 3:
-                localctx = SplitLangParser.ExactSplitContext(self, localctx)
-                self.enterOuterAlt(localctx, 3)
-                self.state = 144
-                self.match(SplitLangParser.SPLIT)
-                self.state = 145
-                self.match(SplitLangParser.EXACT)
-                self.state = 146
-                self.exactAllocList()
-                pass
+                self.state = 190
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==SplitLangParser.SEMI or _la==SplitLangParser.NEWLINE:
+                    self.state = 189
+                    self.stmtSep()
 
-            elif la_ == 4:
-                localctx = SplitLangParser.PercentSplitContext(self, localctx)
-                self.enterOuterAlt(localctx, 4)
-                self.state = 147
-                self.match(SplitLangParser.SPLIT)
-                self.state = 148
-                self.match(SplitLangParser.PERCENT)
-                self.state = 149
-                self.percentAllocList()
-                pass
 
-            elif la_ == 5:
-                localctx = SplitLangParser.RatioSplitContext(self, localctx)
-                self.enterOuterAlt(localctx, 5)
-                self.state = 150
-                self.match(SplitLangParser.SPLIT)
-                self.state = 151
-                self.match(SplitLangParser.RATIO)
-                self.state = 152
-                self.ratioAllocList()
+                self.state = 192
+                self.match(SplitLangParser.RBRACE)
                 pass
 
 
@@ -1184,7 +1398,7 @@ class SplitLangParser ( Parser ):
         return localctx
 
 
-    class ModifierContext(ParserRuleContext):
+    class ExpenseFieldContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -1193,7 +1407,7 @@ class SplitLangParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return SplitLangParser.RULE_modifier
+            return SplitLangParser.RULE_expenseField
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -1201,172 +1415,351 @@ class SplitLangParser ( Parser ):
 
 
 
-    class TaxModContext(ModifierContext):
+    class ExpTipFieldContext(ExpenseFieldContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ModifierContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def TAX(self):
-            return self.getToken(SplitLangParser.TAX, 0)
-        def PERCENT_LIT(self):
-            return self.getToken(SplitLangParser.PERCENT_LIT, 0)
-        def expr(self):
-            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
-
-        def WITH(self):
-            return self.getToken(SplitLangParser.WITH, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTaxMod" ):
-                return visitor.visitTaxMod(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TipModContext(ModifierContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ModifierContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExpenseFieldContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def TIP(self):
             return self.getToken(SplitLangParser.TIP, 0)
-        def PERCENT_LIT(self):
-            return self.getToken(SplitLangParser.PERCENT_LIT, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
         def expr(self):
             return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
 
-        def WITH(self):
-            return self.getToken(SplitLangParser.WITH, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTipMod" ):
-                return visitor.visitTipMod(self)
+            if hasattr( visitor, "visitExpTipField" ):
+                return visitor.visitExpTipField(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class DiscountModContext(ModifierContext):
+    class ExpDateFieldContext(ExpenseFieldContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ModifierContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExpenseFieldContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def DATE_KW(self):
+            return self.getToken(SplitLangParser.DATE_KW, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
+        def DATE(self):
+            return self.getToken(SplitLangParser.DATE, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpDateField" ):
+                return visitor.visitExpDateField(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ExpSplitFieldContext(ExpenseFieldContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExpenseFieldContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def SPLIT(self):
+            return self.getToken(SplitLangParser.SPLIT, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
+        def splitExpr(self):
+            return self.getTypedRuleContext(SplitLangParser.SplitExprContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpSplitField" ):
+                return visitor.visitExpSplitField(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ExpAmountFieldContext(ExpenseFieldContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExpenseFieldContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def AMOUNT(self):
+            return self.getToken(SplitLangParser.AMOUNT, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
+        def expr(self):
+            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpAmountField" ):
+                return visitor.visitExpAmountField(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ExpDiscountFieldContext(ExpenseFieldContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExpenseFieldContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def DISCOUNT(self):
             return self.getToken(SplitLangParser.DISCOUNT, 0)
-        def PERCENT_LIT(self):
-            return self.getToken(SplitLangParser.PERCENT_LIT, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
         def expr(self):
             return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
 
-        def WITH(self):
-            return self.getToken(SplitLangParser.WITH, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDiscountMod" ):
-                return visitor.visitDiscountMod(self)
+            if hasattr( visitor, "visitExpDiscountField" ):
+                return visitor.visitExpDiscountField(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ExpTaxFieldContext(ExpenseFieldContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExpenseFieldContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def TAX(self):
+            return self.getToken(SplitLangParser.TAX, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
+        def expr(self):
+            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpTaxField" ):
+                return visitor.visitExpTaxField(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ExpPayerFieldContext(ExpenseFieldContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExpenseFieldContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def PAYER(self):
+            return self.getToken(SplitLangParser.PAYER, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
+        def ID(self):
+            return self.getToken(SplitLangParser.ID, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpPayerField" ):
+                return visitor.visitExpPayerField(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
-    def modifier(self):
+    def expenseField(self):
 
-        localctx = SplitLangParser.ModifierContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 16, self.RULE_modifier)
-        self._la = 0 # Token type
+        localctx = SplitLangParser.ExpenseFieldContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 20, self.RULE_expenseField)
         try:
-            self.state = 179
+            self.state = 217
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,21,self._ctx)
-            if la_ == 1:
-                localctx = SplitLangParser.TaxModContext(self, localctx)
+            token = self._input.LA(1)
+            if token in [SplitLangParser.PAYER]:
+                localctx = SplitLangParser.ExpPayerFieldContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 156
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==SplitLangParser.WITH:
-                    self.state = 155
-                    self.match(SplitLangParser.WITH)
-
-
-                self.state = 158
-                self.match(SplitLangParser.TAX)
-                self.state = 161
-                self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [SplitLangParser.PERCENT_LIT]:
-                    self.state = 159
-                    self.match(SplitLangParser.PERCENT_LIT)
-                    pass
-                elif token in [SplitLangParser.MONEY_K, SplitLangParser.MONEY_M, SplitLangParser.MONEY_USD, SplitLangParser.NUMBER, SplitLangParser.LPAREN]:
-                    self.state = 160
-                    self.expr(0)
-                    pass
-                else:
-                    raise NoViableAltException(self)
-
+                self.state = 196
+                self.match(SplitLangParser.PAYER)
+                self.state = 197
+                self.match(SplitLangParser.COLON)
+                self.state = 198
+                self.match(SplitLangParser.ID)
                 pass
-
-            elif la_ == 2:
-                localctx = SplitLangParser.TipModContext(self, localctx)
+            elif token in [SplitLangParser.AMOUNT]:
+                localctx = SplitLangParser.ExpAmountFieldContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 164
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==SplitLangParser.WITH:
-                    self.state = 163
-                    self.match(SplitLangParser.WITH)
-
-
-                self.state = 166
-                self.match(SplitLangParser.TIP)
-                self.state = 169
-                self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [SplitLangParser.PERCENT_LIT]:
-                    self.state = 167
-                    self.match(SplitLangParser.PERCENT_LIT)
-                    pass
-                elif token in [SplitLangParser.MONEY_K, SplitLangParser.MONEY_M, SplitLangParser.MONEY_USD, SplitLangParser.NUMBER, SplitLangParser.LPAREN]:
-                    self.state = 168
-                    self.expr(0)
-                    pass
-                else:
-                    raise NoViableAltException(self)
-
+                self.state = 199
+                self.match(SplitLangParser.AMOUNT)
+                self.state = 200
+                self.match(SplitLangParser.COLON)
+                self.state = 201
+                self.expr(0)
                 pass
-
-            elif la_ == 3:
-                localctx = SplitLangParser.DiscountModContext(self, localctx)
+            elif token in [SplitLangParser.SPLIT]:
+                localctx = SplitLangParser.ExpSplitFieldContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 172
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==SplitLangParser.WITH:
-                    self.state = 171
-                    self.match(SplitLangParser.WITH)
-
-
-                self.state = 174
-                self.match(SplitLangParser.DISCOUNT)
-                self.state = 177
-                self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [SplitLangParser.PERCENT_LIT]:
-                    self.state = 175
-                    self.match(SplitLangParser.PERCENT_LIT)
-                    pass
-                elif token in [SplitLangParser.MONEY_K, SplitLangParser.MONEY_M, SplitLangParser.MONEY_USD, SplitLangParser.NUMBER, SplitLangParser.LPAREN]:
-                    self.state = 176
-                    self.expr(0)
-                    pass
-                else:
-                    raise NoViableAltException(self)
-
+                self.state = 202
+                self.match(SplitLangParser.SPLIT)
+                self.state = 203
+                self.match(SplitLangParser.COLON)
+                self.state = 204
+                self.splitExpr()
                 pass
+            elif token in [SplitLangParser.DISCOUNT]:
+                localctx = SplitLangParser.ExpDiscountFieldContext(self, localctx)
+                self.enterOuterAlt(localctx, 4)
+                self.state = 205
+                self.match(SplitLangParser.DISCOUNT)
+                self.state = 206
+                self.match(SplitLangParser.COLON)
+                self.state = 207
+                self.expr(0)
+                pass
+            elif token in [SplitLangParser.TAX]:
+                localctx = SplitLangParser.ExpTaxFieldContext(self, localctx)
+                self.enterOuterAlt(localctx, 5)
+                self.state = 208
+                self.match(SplitLangParser.TAX)
+                self.state = 209
+                self.match(SplitLangParser.COLON)
+                self.state = 210
+                self.expr(0)
+                pass
+            elif token in [SplitLangParser.TIP]:
+                localctx = SplitLangParser.ExpTipFieldContext(self, localctx)
+                self.enterOuterAlt(localctx, 6)
+                self.state = 211
+                self.match(SplitLangParser.TIP)
+                self.state = 212
+                self.match(SplitLangParser.COLON)
+                self.state = 213
+                self.expr(0)
+                pass
+            elif token in [SplitLangParser.DATE_KW]:
+                localctx = SplitLangParser.ExpDateFieldContext(self, localctx)
+                self.enterOuterAlt(localctx, 7)
+                self.state = 214
+                self.match(SplitLangParser.DATE_KW)
+                self.state = 215
+                self.match(SplitLangParser.COLON)
+                self.state = 216
+                self.match(SplitLangParser.DATE)
+                pass
+            else:
+                raise NoViableAltException(self)
 
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class ModifierClauseContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+
+        def getRuleIndex(self):
+            return SplitLangParser.RULE_modifierClause
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class InlineDiscountModContext(ModifierClauseContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ModifierClauseContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def DISCOUNT(self):
+            return self.getToken(SplitLangParser.DISCOUNT, 0)
+        def expr(self):
+            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInlineDiscountMod" ):
+                return visitor.visitInlineDiscountMod(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class InlineTipModContext(ModifierClauseContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ModifierClauseContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def TIP(self):
+            return self.getToken(SplitLangParser.TIP, 0)
+        def expr(self):
+            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInlineTipMod" ):
+                return visitor.visitInlineTipMod(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class InlineTaxModContext(ModifierClauseContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ModifierClauseContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def TAX(self):
+            return self.getToken(SplitLangParser.TAX, 0)
+        def expr(self):
+            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInlineTaxMod" ):
+                return visitor.visitInlineTaxMod(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+    def modifierClause(self):
+
+        localctx = SplitLangParser.ModifierClauseContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 22, self.RULE_modifierClause)
+        try:
+            self.state = 225
+            self._errHandler.sync(self)
+            token = self._input.LA(1)
+            if token in [SplitLangParser.DISCOUNT]:
+                localctx = SplitLangParser.InlineDiscountModContext(self, localctx)
+                self.enterOuterAlt(localctx, 1)
+                self.state = 219
+                self.match(SplitLangParser.DISCOUNT)
+                self.state = 220
+                self.expr(0)
+                pass
+            elif token in [SplitLangParser.TAX]:
+                localctx = SplitLangParser.InlineTaxModContext(self, localctx)
+                self.enterOuterAlt(localctx, 2)
+                self.state = 221
+                self.match(SplitLangParser.TAX)
+                self.state = 222
+                self.expr(0)
+                pass
+            elif token in [SplitLangParser.TIP]:
+                localctx = SplitLangParser.InlineTipModContext(self, localctx)
+                self.enterOuterAlt(localctx, 3)
+                self.state = 223
+                self.match(SplitLangParser.TIP)
+                self.state = 224
+                self.expr(0)
+                pass
+            else:
+                raise NoViableAltException(self)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -1405,13 +1798,336 @@ class SplitLangParser ( Parser ):
     def dateClause(self):
 
         localctx = SplitLangParser.DateClauseContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 18, self.RULE_dateClause)
+        self.enterRule(localctx, 24, self.RULE_dateClause)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 181
+            self.state = 227
             self.match(SplitLangParser.ON)
-            self.state = 182
+            self.state = 228
             self.match(SplitLangParser.DATE)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class SplitExprContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+
+        def getRuleIndex(self):
+            return SplitLangParser.RULE_splitExpr
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class RuleRefSplitExprContext(SplitExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ID(self):
+            return self.getToken(SplitLangParser.ID, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRuleRefSplitExpr" ):
+                return visitor.visitRuleRefSplitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class PercentSplitExprContext(SplitExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def PERCENT(self):
+            return self.getToken(SplitLangParser.PERCENT, 0)
+        def LBRACE(self):
+            return self.getToken(SplitLangParser.LBRACE, 0)
+        def RBRACE(self):
+            return self.getToken(SplitLangParser.RBRACE, 0)
+        def NEWLINE(self, i:int=None):
+            if i is None:
+                return self.getTokens(SplitLangParser.NEWLINE)
+            else:
+                return self.getToken(SplitLangParser.NEWLINE, i)
+        def allocList(self):
+            return self.getTypedRuleContext(SplitLangParser.AllocListContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPercentSplitExpr" ):
+                return visitor.visitPercentSplitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class EqualAllSplitExprContext(SplitExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def EQUAL(self):
+            return self.getToken(SplitLangParser.EQUAL, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEqualAllSplitExpr" ):
+                return visitor.visitEqualAllSplitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class EqualSplitExprContext(SplitExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def EQUAL(self):
+            return self.getToken(SplitLangParser.EQUAL, 0)
+        def LPAREN(self):
+            return self.getToken(SplitLangParser.LPAREN, 0)
+        def expr(self):
+            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
+
+        def RPAREN(self):
+            return self.getToken(SplitLangParser.RPAREN, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEqualSplitExpr" ):
+                return visitor.visitEqualSplitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class RatioSplitExprContext(SplitExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def RATIO(self):
+            return self.getToken(SplitLangParser.RATIO, 0)
+        def LBRACE(self):
+            return self.getToken(SplitLangParser.LBRACE, 0)
+        def RBRACE(self):
+            return self.getToken(SplitLangParser.RBRACE, 0)
+        def NEWLINE(self, i:int=None):
+            if i is None:
+                return self.getTokens(SplitLangParser.NEWLINE)
+            else:
+                return self.getToken(SplitLangParser.NEWLINE, i)
+        def allocList(self):
+            return self.getTypedRuleContext(SplitLangParser.AllocListContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRatioSplitExpr" ):
+                return visitor.visitRatioSplitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ExactSplitExprContext(SplitExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SplitExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def EXACT(self):
+            return self.getToken(SplitLangParser.EXACT, 0)
+        def LBRACE(self):
+            return self.getToken(SplitLangParser.LBRACE, 0)
+        def RBRACE(self):
+            return self.getToken(SplitLangParser.RBRACE, 0)
+        def NEWLINE(self, i:int=None):
+            if i is None:
+                return self.getTokens(SplitLangParser.NEWLINE)
+            else:
+                return self.getToken(SplitLangParser.NEWLINE, i)
+        def allocList(self):
+            return self.getTypedRuleContext(SplitLangParser.AllocListContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExactSplitExpr" ):
+                return visitor.visitExactSplitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+    def splitExpr(self):
+
+        localctx = SplitLangParser.SplitExprContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 26, self.RULE_splitExpr)
+        self._la = 0 # Token type
+        try:
+            self.state = 291
+            self._errHandler.sync(self)
+            la_ = self._interp.adaptivePredict(self._input,31,self._ctx)
+            if la_ == 1:
+                localctx = SplitLangParser.EqualSplitExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 1)
+                self.state = 230
+                self.match(SplitLangParser.EQUAL)
+                self.state = 231
+                self.match(SplitLangParser.LPAREN)
+                self.state = 232
+                self.expr(0)
+                self.state = 233
+                self.match(SplitLangParser.RPAREN)
+                pass
+
+            elif la_ == 2:
+                localctx = SplitLangParser.EqualAllSplitExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 2)
+                self.state = 235
+                self.match(SplitLangParser.EQUAL)
+                pass
+
+            elif la_ == 3:
+                localctx = SplitLangParser.ExactSplitExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 3)
+                self.state = 236
+                self.match(SplitLangParser.EXACT)
+                self.state = 237
+                self.match(SplitLangParser.LBRACE)
+                self.state = 241
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,22,self._ctx)
+                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                    if _alt==1:
+                        self.state = 238
+                        self.match(SplitLangParser.NEWLINE) 
+                    self.state = 243
+                    self._errHandler.sync(self)
+                    _alt = self._interp.adaptivePredict(self._input,22,self._ctx)
+
+                self.state = 245
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==SplitLangParser.ID:
+                    self.state = 244
+                    self.allocList()
+
+
+                self.state = 250
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                while _la==SplitLangParser.NEWLINE:
+                    self.state = 247
+                    self.match(SplitLangParser.NEWLINE)
+                    self.state = 252
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+
+                self.state = 253
+                self.match(SplitLangParser.RBRACE)
+                pass
+
+            elif la_ == 4:
+                localctx = SplitLangParser.PercentSplitExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 4)
+                self.state = 254
+                self.match(SplitLangParser.PERCENT)
+                self.state = 255
+                self.match(SplitLangParser.LBRACE)
+                self.state = 259
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,25,self._ctx)
+                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                    if _alt==1:
+                        self.state = 256
+                        self.match(SplitLangParser.NEWLINE) 
+                    self.state = 261
+                    self._errHandler.sync(self)
+                    _alt = self._interp.adaptivePredict(self._input,25,self._ctx)
+
+                self.state = 263
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==SplitLangParser.ID:
+                    self.state = 262
+                    self.allocList()
+
+
+                self.state = 268
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                while _la==SplitLangParser.NEWLINE:
+                    self.state = 265
+                    self.match(SplitLangParser.NEWLINE)
+                    self.state = 270
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+
+                self.state = 271
+                self.match(SplitLangParser.RBRACE)
+                pass
+
+            elif la_ == 5:
+                localctx = SplitLangParser.RatioSplitExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 5)
+                self.state = 272
+                self.match(SplitLangParser.RATIO)
+                self.state = 273
+                self.match(SplitLangParser.LBRACE)
+                self.state = 277
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,28,self._ctx)
+                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                    if _alt==1:
+                        self.state = 274
+                        self.match(SplitLangParser.NEWLINE) 
+                    self.state = 279
+                    self._errHandler.sync(self)
+                    _alt = self._interp.adaptivePredict(self._input,28,self._ctx)
+
+                self.state = 281
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==SplitLangParser.ID:
+                    self.state = 280
+                    self.allocList()
+
+
+                self.state = 286
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                while _la==SplitLangParser.NEWLINE:
+                    self.state = 283
+                    self.match(SplitLangParser.NEWLINE)
+                    self.state = 288
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+
+                self.state = 289
+                self.match(SplitLangParser.RBRACE)
+                pass
+
+            elif la_ == 6:
+                localctx = SplitLangParser.RuleRefSplitExprContext(self, localctx)
+                self.enterOuterAlt(localctx, 6)
+                self.state = 290
+                self.match(SplitLangParser.ID)
+                pass
+
+
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -1431,36 +2147,21 @@ class SplitLangParser ( Parser ):
         def BILL(self):
             return self.getToken(SplitLangParser.BILL, 0)
 
-        def description(self):
-            return self.getTypedRuleContext(SplitLangParser.DescriptionContext,0)
-
-
-        def PAID(self):
-            return self.getToken(SplitLangParser.PAID, 0)
-
-        def BY(self):
-            return self.getToken(SplitLangParser.BY, 0)
-
-        def person(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonContext,0)
-
+        def STRING(self):
+            return self.getToken(SplitLangParser.STRING, 0)
 
         def LBRACE(self):
             return self.getToken(SplitLangParser.LBRACE, 0)
 
-        def billEntry(self, i:int=None):
+        def billField(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(SplitLangParser.BillEntryContext)
+                return self.getTypedRuleContexts(SplitLangParser.BillFieldContext)
             else:
-                return self.getTypedRuleContext(SplitLangParser.BillEntryContext,i)
+                return self.getTypedRuleContext(SplitLangParser.BillFieldContext,i)
 
 
         def RBRACE(self):
             return self.getToken(SplitLangParser.RBRACE, 0)
-
-        def dateClause(self):
-            return self.getTypedRuleContext(SplitLangParser.DateClauseContext,0)
-
 
         def NEWLINE(self, i:int=None):
             if i is None:
@@ -1490,64 +2191,50 @@ class SplitLangParser ( Parser ):
     def billStmt(self):
 
         localctx = SplitLangParser.BillStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 20, self.RULE_billStmt)
+        self.enterRule(localctx, 28, self.RULE_billStmt)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 184
+            self.state = 293
             self.match(SplitLangParser.BILL)
-            self.state = 185
-            self.description()
-            self.state = 186
-            self.match(SplitLangParser.PAID)
-            self.state = 187
-            self.match(SplitLangParser.BY)
-            self.state = 188
-            self.person()
-            self.state = 190
-            self._errHandler.sync(self)
-            _la = self._input.LA(1)
-            if _la==SplitLangParser.ON:
-                self.state = 189
-                self.dateClause()
-
-
-            self.state = 192
+            self.state = 294
+            self.match(SplitLangParser.STRING)
+            self.state = 295
             self.match(SplitLangParser.LBRACE)
-            self.state = 196
+            self.state = 299
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==SplitLangParser.NEWLINE:
-                self.state = 193
+                self.state = 296
                 self.match(SplitLangParser.NEWLINE)
-                self.state = 198
+                self.state = 301
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 199
-            self.billEntry()
-            self.state = 205
+            self.state = 302
+            self.billField()
+            self.state = 308
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,24,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,33,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
-                    self.state = 200
+                    self.state = 303
                     self.stmtSep()
-                    self.state = 201
-                    self.billEntry() 
-                self.state = 207
+                    self.state = 304
+                    self.billField() 
+                self.state = 310
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,24,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,33,self._ctx)
 
-            self.state = 209
+            self.state = 312
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==SplitLangParser.SEMI or _la==SplitLangParser.NEWLINE:
-                self.state = 208
+                self.state = 311
                 self.stmtSep()
 
 
-            self.state = 211
+            self.state = 314
             self.match(SplitLangParser.RBRACE)
         except RecognitionException as re:
             localctx.exception = re
@@ -1558,7 +2245,7 @@ class SplitLangParser ( Parser ):
         return localctx
 
 
-    class BillEntryContext(ParserRuleContext):
+    class BillFieldContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -1567,7 +2254,7 @@ class SplitLangParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return SplitLangParser.RULE_billEntry
+            return SplitLangParser.RULE_billField
 
      
         def copyFrom(self, ctx:ParserRuleContext):
@@ -1575,205 +2262,211 @@ class SplitLangParser ( Parser ):
 
 
 
-    class BillItemEntryContext(BillEntryContext):
+    class BillTaxFieldContext(BillFieldContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.BillEntryContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ITEM(self):
-            return self.getToken(SplitLangParser.ITEM, 0)
-        def description(self):
-            return self.getTypedRuleContext(SplitLangParser.DescriptionContext,0)
-
-        def expr(self):
-            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
-
-        def FOR(self):
-            return self.getToken(SplitLangParser.FOR, 0)
-        def ALL(self):
-            return self.getToken(SplitLangParser.ALL, 0)
-        def personList(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonListContext,0)
-
-        def EXCLUDING(self):
-            return self.getToken(SplitLangParser.EXCLUDING, 0)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBillItemEntry" ):
-                return visitor.visitBillItemEntry(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class BillTaxEntryContext(BillEntryContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.BillEntryContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.BillFieldContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def TAX(self):
             return self.getToken(SplitLangParser.TAX, 0)
-        def PERCENT_LIT(self):
-            return self.getToken(SplitLangParser.PERCENT_LIT, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
         def expr(self):
             return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
 
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBillTaxEntry" ):
-                return visitor.visitBillTaxEntry(self)
+            if hasattr( visitor, "visitBillTaxField" ):
+                return visitor.visitBillTaxField(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class BillTipEntryContext(BillEntryContext):
+    class BillDateFieldContext(BillFieldContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.BillEntryContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.BillFieldContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def DATE_KW(self):
+            return self.getToken(SplitLangParser.DATE_KW, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
+        def DATE(self):
+            return self.getToken(SplitLangParser.DATE, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBillDateField" ):
+                return visitor.visitBillDateField(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class BillItemFieldContext(BillFieldContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.BillFieldContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ITEM(self):
+            return self.getToken(SplitLangParser.ITEM, 0)
+        def STRING(self):
+            return self.getToken(SplitLangParser.STRING, 0)
+        def ASSIGN(self):
+            return self.getToken(SplitLangParser.ASSIGN, 0)
+        def expr(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(SplitLangParser.ExprContext)
+            else:
+                return self.getTypedRuleContext(SplitLangParser.ExprContext,i)
+
+        def FOR(self):
+            return self.getToken(SplitLangParser.FOR, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBillItemField" ):
+                return visitor.visitBillItemField(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class BillTipFieldContext(BillFieldContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.BillFieldContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def TIP(self):
             return self.getToken(SplitLangParser.TIP, 0)
-        def PERCENT_LIT(self):
-            return self.getToken(SplitLangParser.PERCENT_LIT, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
         def expr(self):
             return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
 
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBillTipEntry" ):
-                return visitor.visitBillTipEntry(self)
+            if hasattr( visitor, "visitBillTipField" ):
+                return visitor.visitBillTipField(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class BillDiscountEntryContext(BillEntryContext):
+    class BillPayerFieldContext(BillFieldContext):
 
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.BillEntryContext
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.BillFieldContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def PAYER(self):
+            return self.getToken(SplitLangParser.PAYER, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
+        def ID(self):
+            return self.getToken(SplitLangParser.ID, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBillPayerField" ):
+                return visitor.visitBillPayerField(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class BillDiscountFieldContext(BillFieldContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.BillFieldContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
         def DISCOUNT(self):
             return self.getToken(SplitLangParser.DISCOUNT, 0)
-        def PERCENT_LIT(self):
-            return self.getToken(SplitLangParser.PERCENT_LIT, 0)
+        def COLON(self):
+            return self.getToken(SplitLangParser.COLON, 0)
         def expr(self):
             return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
 
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBillDiscountEntry" ):
-                return visitor.visitBillDiscountEntry(self)
+            if hasattr( visitor, "visitBillDiscountField" ):
+                return visitor.visitBillDiscountField(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
-    def billEntry(self):
+    def billField(self):
 
-        localctx = SplitLangParser.BillEntryContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 22, self.RULE_billEntry)
-        self._la = 0 # Token type
+        localctx = SplitLangParser.BillFieldContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 30, self.RULE_billField)
         try:
-            self.state = 240
+            self.state = 338
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [SplitLangParser.ITEM]:
-                localctx = SplitLangParser.BillItemEntryContext(self, localctx)
+            if token in [SplitLangParser.PAYER]:
+                localctx = SplitLangParser.BillPayerFieldContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 213
-                self.match(SplitLangParser.ITEM)
-                self.state = 214
-                self.description()
-                self.state = 215
-                self.expr(0)
-                self.state = 216
-                self.match(SplitLangParser.FOR)
-                self.state = 223
-                self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [SplitLangParser.ALL]:
-                    self.state = 217
-                    self.match(SplitLangParser.ALL)
-                    self.state = 220
-                    self._errHandler.sync(self)
-                    _la = self._input.LA(1)
-                    if _la==SplitLangParser.EXCLUDING:
-                        self.state = 218
-                        self.match(SplitLangParser.EXCLUDING)
-                        self.state = 219
-                        self.personList()
-
-
-                    pass
-                elif token in [SplitLangParser.ID]:
-                    self.state = 222
-                    self.personList()
-                    pass
-                else:
-                    raise NoViableAltException(self)
-
+                self.state = 316
+                self.match(SplitLangParser.PAYER)
+                self.state = 317
+                self.match(SplitLangParser.COLON)
+                self.state = 318
+                self.match(SplitLangParser.ID)
                 pass
-            elif token in [SplitLangParser.TAX]:
-                localctx = SplitLangParser.BillTaxEntryContext(self, localctx)
+            elif token in [SplitLangParser.DATE_KW]:
+                localctx = SplitLangParser.BillDateFieldContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 225
-                self.match(SplitLangParser.TAX)
-                self.state = 228
-                self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [SplitLangParser.PERCENT_LIT]:
-                    self.state = 226
-                    self.match(SplitLangParser.PERCENT_LIT)
-                    pass
-                elif token in [SplitLangParser.MONEY_K, SplitLangParser.MONEY_M, SplitLangParser.MONEY_USD, SplitLangParser.NUMBER, SplitLangParser.LPAREN]:
-                    self.state = 227
-                    self.expr(0)
-                    pass
-                else:
-                    raise NoViableAltException(self)
-
+                self.state = 319
+                self.match(SplitLangParser.DATE_KW)
+                self.state = 320
+                self.match(SplitLangParser.COLON)
+                self.state = 321
+                self.match(SplitLangParser.DATE)
                 pass
-            elif token in [SplitLangParser.TIP]:
-                localctx = SplitLangParser.BillTipEntryContext(self, localctx)
+            elif token in [SplitLangParser.ITEM]:
+                localctx = SplitLangParser.BillItemFieldContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 230
-                self.match(SplitLangParser.TIP)
-                self.state = 233
-                self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [SplitLangParser.PERCENT_LIT]:
-                    self.state = 231
-                    self.match(SplitLangParser.PERCENT_LIT)
-                    pass
-                elif token in [SplitLangParser.MONEY_K, SplitLangParser.MONEY_M, SplitLangParser.MONEY_USD, SplitLangParser.NUMBER, SplitLangParser.LPAREN]:
-                    self.state = 232
-                    self.expr(0)
-                    pass
-                else:
-                    raise NoViableAltException(self)
-
+                self.state = 322
+                self.match(SplitLangParser.ITEM)
+                self.state = 323
+                self.match(SplitLangParser.STRING)
+                self.state = 324
+                self.match(SplitLangParser.ASSIGN)
+                self.state = 325
+                self.expr(0)
+                self.state = 326
+                self.match(SplitLangParser.FOR)
+                self.state = 327
+                self.expr(0)
                 pass
             elif token in [SplitLangParser.DISCOUNT]:
-                localctx = SplitLangParser.BillDiscountEntryContext(self, localctx)
+                localctx = SplitLangParser.BillDiscountFieldContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 235
+                self.state = 329
                 self.match(SplitLangParser.DISCOUNT)
-                self.state = 238
-                self._errHandler.sync(self)
-                token = self._input.LA(1)
-                if token in [SplitLangParser.PERCENT_LIT]:
-                    self.state = 236
-                    self.match(SplitLangParser.PERCENT_LIT)
-                    pass
-                elif token in [SplitLangParser.MONEY_K, SplitLangParser.MONEY_M, SplitLangParser.MONEY_USD, SplitLangParser.NUMBER, SplitLangParser.LPAREN]:
-                    self.state = 237
-                    self.expr(0)
-                    pass
-                else:
-                    raise NoViableAltException(self)
-
+                self.state = 330
+                self.match(SplitLangParser.COLON)
+                self.state = 331
+                self.expr(0)
+                pass
+            elif token in [SplitLangParser.TAX]:
+                localctx = SplitLangParser.BillTaxFieldContext(self, localctx)
+                self.enterOuterAlt(localctx, 5)
+                self.state = 332
+                self.match(SplitLangParser.TAX)
+                self.state = 333
+                self.match(SplitLangParser.COLON)
+                self.state = 334
+                self.expr(0)
+                pass
+            elif token in [SplitLangParser.TIP]:
+                localctx = SplitLangParser.BillTipFieldContext(self, localctx)
+                self.enterOuterAlt(localctx, 6)
+                self.state = 335
+                self.match(SplitLangParser.TIP)
+                self.state = 336
+                self.match(SplitLangParser.COLON)
+                self.state = 337
+                self.expr(0)
                 pass
             else:
                 raise NoViableAltException(self)
@@ -1787,165 +2480,90 @@ class SplitLangParser ( Parser ):
         return localctx
 
 
-    class SettleStmtContext(ParserRuleContext):
+    class TransferStmtContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def TRANSFER(self):
+            return self.getToken(SplitLangParser.TRANSFER, 0)
+
+        def ID(self, i:int=None):
+            if i is None:
+                return self.getTokens(SplitLangParser.ID)
+            else:
+                return self.getToken(SplitLangParser.ID, i)
+
+        def ARROW(self):
+            return self.getToken(SplitLangParser.ARROW, 0)
+
+        def ASSIGN(self):
+            return self.getToken(SplitLangParser.ASSIGN, 0)
+
+        def expr(self):
+            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
+
+
+        def NOTE(self):
+            return self.getToken(SplitLangParser.NOTE, 0)
+
+        def STRING(self):
+            return self.getToken(SplitLangParser.STRING, 0)
+
+        def dateClause(self):
+            return self.getTypedRuleContext(SplitLangParser.DateClauseContext,0)
+
 
         def getRuleIndex(self):
-            return SplitLangParser.RULE_settleStmt
-
-     
-        def copyFrom(self, ctx:ParserRuleContext):
-            super().copyFrom(ctx)
-
-
-
-    class KeywordSettleContext(SettleStmtContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SettleStmtContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SETTLE(self):
-            return self.getToken(SplitLangParser.SETTLE, 0)
-        def person(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(SplitLangParser.PersonContext)
-            else:
-                return self.getTypedRuleContext(SplitLangParser.PersonContext,i)
-
-        def TO(self):
-            return self.getToken(SplitLangParser.TO, 0)
-        def expr(self):
-            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
-
-        def FOR(self):
-            return self.getToken(SplitLangParser.FOR, 0)
-        def description(self):
-            return self.getTypedRuleContext(SplitLangParser.DescriptionContext,0)
-
-        def dateClause(self):
-            return self.getTypedRuleContext(SplitLangParser.DateClauseContext,0)
-
+            return SplitLangParser.RULE_transferStmt
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitKeywordSettle" ):
-                return visitor.visitKeywordSettle(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class DirectPaySettleContext(SettleStmtContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.SettleStmtContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def person(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(SplitLangParser.PersonContext)
-            else:
-                return self.getTypedRuleContext(SplitLangParser.PersonContext,i)
-
-        def PAYS(self):
-            return self.getToken(SplitLangParser.PAYS, 0)
-        def expr(self):
-            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
-
-        def FOR(self):
-            return self.getToken(SplitLangParser.FOR, 0)
-        def description(self):
-            return self.getTypedRuleContext(SplitLangParser.DescriptionContext,0)
-
-        def dateClause(self):
-            return self.getTypedRuleContext(SplitLangParser.DateClauseContext,0)
-
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDirectPaySettle" ):
-                return visitor.visitDirectPaySettle(self)
+            if hasattr( visitor, "visitTransferStmt" ):
+                return visitor.visitTransferStmt(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
-    def settleStmt(self):
 
-        localctx = SplitLangParser.SettleStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 24, self.RULE_settleStmt)
+    def transferStmt(self):
+
+        localctx = SplitLangParser.TransferStmtContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 32, self.RULE_transferStmt)
         self._la = 0 # Token type
         try:
-            self.state = 265
+            self.enterOuterAlt(localctx, 1)
+            self.state = 340
+            self.match(SplitLangParser.TRANSFER)
+            self.state = 341
+            self.match(SplitLangParser.ID)
+            self.state = 342
+            self.match(SplitLangParser.ARROW)
+            self.state = 343
+            self.match(SplitLangParser.ID)
+            self.state = 344
+            self.match(SplitLangParser.ASSIGN)
+            self.state = 345
+            self.expr(0)
+            self.state = 348
             self._errHandler.sync(self)
-            token = self._input.LA(1)
-            if token in [SplitLangParser.ID]:
-                localctx = SplitLangParser.DirectPaySettleContext(self, localctx)
-                self.enterOuterAlt(localctx, 1)
-                self.state = 242
-                self.person()
-                self.state = 243
-                self.match(SplitLangParser.PAYS)
-                self.state = 244
-                self.person()
-                self.state = 245
-                self.expr(0)
-                self.state = 248
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==SplitLangParser.FOR:
-                    self.state = 246
-                    self.match(SplitLangParser.FOR)
-                    self.state = 247
-                    self.description()
+            _la = self._input.LA(1)
+            if _la==SplitLangParser.NOTE:
+                self.state = 346
+                self.match(SplitLangParser.NOTE)
+                self.state = 347
+                self.match(SplitLangParser.STRING)
 
 
-                self.state = 251
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==SplitLangParser.ON:
-                    self.state = 250
-                    self.dateClause()
+            self.state = 351
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if _la==SplitLangParser.ON:
+                self.state = 350
+                self.dateClause()
 
-
-                pass
-            elif token in [SplitLangParser.SETTLE]:
-                localctx = SplitLangParser.KeywordSettleContext(self, localctx)
-                self.enterOuterAlt(localctx, 2)
-                self.state = 253
-                self.match(SplitLangParser.SETTLE)
-                self.state = 254
-                self.person()
-                self.state = 255
-                self.match(SplitLangParser.TO)
-                self.state = 256
-                self.person()
-                self.state = 257
-                self.expr(0)
-                self.state = 260
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==SplitLangParser.FOR:
-                    self.state = 258
-                    self.match(SplitLangParser.FOR)
-                    self.state = 259
-                    self.description()
-
-
-                self.state = 263
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==SplitLangParser.ON:
-                    self.state = 262
-                    self.dateClause()
-
-
-                pass
-            else:
-                raise NoViableAltException(self)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -1956,41 +2574,41 @@ class SplitLangParser ( Parser ):
         return localctx
 
 
-    class SettleUpStmtContext(ParserRuleContext):
+    class AssertStmtContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def SETTLE(self):
-            return self.getToken(SplitLangParser.SETTLE, 0)
+        def ASSERT(self):
+            return self.getToken(SplitLangParser.ASSERT, 0)
 
-        def UP(self):
-            return self.getToken(SplitLangParser.UP, 0)
+        def BALANCED(self):
+            return self.getToken(SplitLangParser.BALANCED, 0)
 
         def getRuleIndex(self):
-            return SplitLangParser.RULE_settleUpStmt
+            return SplitLangParser.RULE_assertStmt
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSettleUpStmt" ):
-                return visitor.visitSettleUpStmt(self)
+            if hasattr( visitor, "visitAssertStmt" ):
+                return visitor.visitAssertStmt(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def settleUpStmt(self):
+    def assertStmt(self):
 
-        localctx = SplitLangParser.SettleUpStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 26, self.RULE_settleUpStmt)
+        localctx = SplitLangParser.AssertStmtContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 34, self.RULE_assertStmt)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 267
-            self.match(SplitLangParser.SETTLE)
-            self.state = 268
-            self.match(SplitLangParser.UP)
+            self.state = 353
+            self.match(SplitLangParser.ASSERT)
+            self.state = 354
+            self.match(SplitLangParser.BALANCED)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -2017,97 +2635,150 @@ class SplitLangParser ( Parser ):
 
 
 
-    class ShowQueryContext(QueryStmtContext):
+    class QueryPersonBalanceContext(QueryStmtContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.QueryStmtContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def queryTarget(self):
-            return self.getTypedRuleContext(SplitLangParser.QueryTargetContext,0)
-
-        def SHOW(self):
-            return self.getToken(SplitLangParser.SHOW, 0)
-        def CHECK(self):
-            return self.getToken(SplitLangParser.CHECK, 0)
+        def QUERY(self):
+            return self.getToken(SplitLangParser.QUERY, 0)
+        def BALANCE(self):
+            return self.getToken(SplitLangParser.BALANCE, 0)
+        def LPAREN(self):
+            return self.getToken(SplitLangParser.LPAREN, 0)
+        def ID(self):
+            return self.getToken(SplitLangParser.ID, 0)
+        def RPAREN(self):
+            return self.getToken(SplitLangParser.RPAREN, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowQuery" ):
-                return visitor.visitShowQuery(self)
+            if hasattr( visitor, "visitQueryPersonBalance" ):
+                return visitor.visitQueryPersonBalance(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class WhoOwesWhomQueryContext(QueryStmtContext):
+    class QueryMembersContext(QueryStmtContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.QueryStmtContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def WHO(self):
-            return self.getToken(SplitLangParser.WHO, 0)
-        def OWES(self):
-            return self.getToken(SplitLangParser.OWES, 0)
-        def WHOM(self):
-            return self.getToken(SplitLangParser.WHOM, 0)
-        def QUESTIONMARK(self):
-            return self.getToken(SplitLangParser.QUESTIONMARK, 0)
+        def QUERY(self):
+            return self.getToken(SplitLangParser.QUERY, 0)
+        def MEMBERS(self):
+            return self.getToken(SplitLangParser.MEMBERS, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitWhoOwesWhomQuery" ):
-                return visitor.visitWhoOwesWhomQuery(self)
+            if hasattr( visitor, "visitQueryMembers" ):
+                return visitor.visitQueryMembers(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class PersonBalanceQueryContext(QueryStmtContext):
+    class QueryBalancesContext(QueryStmtContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.QueryStmtContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def WHAT(self):
-            return self.getToken(SplitLangParser.WHAT, 0)
-        def IS(self):
-            return self.getToken(SplitLangParser.IS, 0)
-        def person(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonContext,0)
-
+        def QUERY(self):
+            return self.getToken(SplitLangParser.QUERY, 0)
         def BALANCES(self):
             return self.getToken(SplitLangParser.BALANCES, 0)
-        def QUESTIONMARK(self):
-            return self.getToken(SplitLangParser.QUESTIONMARK, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPersonBalanceQuery" ):
-                return visitor.visitPersonBalanceQuery(self)
+            if hasattr( visitor, "visitQueryBalances" ):
+                return visitor.visitQueryBalances(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class HowMuchOwesQueryContext(QueryStmtContext):
+    class QuerySummaryContext(QueryStmtContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.QueryStmtContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def HOW(self):
-            return self.getToken(SplitLangParser.HOW, 0)
-        def MUCH(self):
-            return self.getToken(SplitLangParser.MUCH, 0)
-        def DOES(self):
-            return self.getToken(SplitLangParser.DOES, 0)
-        def person(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonContext,0)
-
-        def OWES(self):
-            return self.getToken(SplitLangParser.OWES, 0)
-        def QUESTIONMARK(self):
-            return self.getToken(SplitLangParser.QUESTIONMARK, 0)
+        def QUERY(self):
+            return self.getToken(SplitLangParser.QUERY, 0)
+        def SUMMARY(self):
+            return self.getToken(SplitLangParser.SUMMARY, 0)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitHowMuchOwesQuery" ):
-                return visitor.visitHowMuchOwesQuery(self)
+            if hasattr( visitor, "visitQuerySummary" ):
+                return visitor.visitQuerySummary(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class QueryEnvContext(QueryStmtContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.QueryStmtContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def QUERY(self):
+            return self.getToken(SplitLangParser.QUERY, 0)
+        def ENV(self):
+            return self.getToken(SplitLangParser.ENV, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitQueryEnv" ):
+                return visitor.visitQueryEnv(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class QueryExpensesContext(QueryStmtContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.QueryStmtContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def QUERY(self):
+            return self.getToken(SplitLangParser.QUERY, 0)
+        def EXPENSES(self):
+            return self.getToken(SplitLangParser.EXPENSES, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitQueryExpenses" ):
+                return visitor.visitQueryExpenses(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class QueryGroupsContext(QueryStmtContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.QueryStmtContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def QUERY(self):
+            return self.getToken(SplitLangParser.QUERY, 0)
+        def GROUPS(self):
+            return self.getToken(SplitLangParser.GROUPS, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitQueryGroups" ):
+                return visitor.visitQueryGroups(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SettleQueryContext(QueryStmtContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.QueryStmtContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def SETTLE(self):
+            return self.getToken(SplitLangParser.SETTLE, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSettleQuery" ):
+                return visitor.visitSettleQuery(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -2116,148 +2787,88 @@ class SplitLangParser ( Parser ):
     def queryStmt(self):
 
         localctx = SplitLangParser.QueryStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 28, self.RULE_queryStmt)
-        self._la = 0 # Token type
+        self.enterRule(localctx, 36, self.RULE_queryStmt)
         try:
-            self.state = 293
+            self.state = 374
             self._errHandler.sync(self)
-            token = self._input.LA(1)
-            if token in [SplitLangParser.SHOW, SplitLangParser.CHECK]:
-                localctx = SplitLangParser.ShowQueryContext(self, localctx)
+            la_ = self._interp.adaptivePredict(self._input,38,self._ctx)
+            if la_ == 1:
+                localctx = SplitLangParser.QuerySummaryContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 270
-                _la = self._input.LA(1)
-                if not(_la==SplitLangParser.SHOW or _la==SplitLangParser.CHECK):
-                    self._errHandler.recoverInline(self)
-                else:
-                    self._errHandler.reportMatch(self)
-                    self.consume()
-                self.state = 271
-                self.queryTarget()
+                self.state = 356
+                self.match(SplitLangParser.QUERY)
+                self.state = 357
+                self.match(SplitLangParser.SUMMARY)
                 pass
-            elif token in [SplitLangParser.WHO]:
-                localctx = SplitLangParser.WhoOwesWhomQueryContext(self, localctx)
+
+            elif la_ == 2:
+                localctx = SplitLangParser.QueryBalancesContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 272
-                self.match(SplitLangParser.WHO)
-                self.state = 273
-                self.match(SplitLangParser.OWES)
-                self.state = 274
-                self.match(SplitLangParser.WHOM)
-                self.state = 276
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==SplitLangParser.QUESTIONMARK:
-                    self.state = 275
-                    self.match(SplitLangParser.QUESTIONMARK)
-
-
-                pass
-            elif token in [SplitLangParser.HOW]:
-                localctx = SplitLangParser.HowMuchOwesQueryContext(self, localctx)
-                self.enterOuterAlt(localctx, 3)
-                self.state = 278
-                self.match(SplitLangParser.HOW)
-                self.state = 279
-                self.match(SplitLangParser.MUCH)
-                self.state = 280
-                self.match(SplitLangParser.DOES)
-                self.state = 281
-                self.person()
-                self.state = 282
-                self.match(SplitLangParser.OWES)
-                self.state = 284
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==SplitLangParser.QUESTIONMARK:
-                    self.state = 283
-                    self.match(SplitLangParser.QUESTIONMARK)
-
-
-                pass
-            elif token in [SplitLangParser.WHAT]:
-                localctx = SplitLangParser.PersonBalanceQueryContext(self, localctx)
-                self.enterOuterAlt(localctx, 4)
-                self.state = 286
-                self.match(SplitLangParser.WHAT)
-                self.state = 287
-                self.match(SplitLangParser.IS)
-                self.state = 288
-                self.person()
-                self.state = 289
+                self.state = 358
+                self.match(SplitLangParser.QUERY)
+                self.state = 359
                 self.match(SplitLangParser.BALANCES)
-                self.state = 291
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                if _la==SplitLangParser.QUESTIONMARK:
-                    self.state = 290
-                    self.match(SplitLangParser.QUESTIONMARK)
-
-
                 pass
-            else:
-                raise NoViableAltException(self)
 
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
+            elif la_ == 3:
+                localctx = SplitLangParser.QueryPersonBalanceContext(self, localctx)
+                self.enterOuterAlt(localctx, 3)
+                self.state = 360
+                self.match(SplitLangParser.QUERY)
+                self.state = 361
+                self.match(SplitLangParser.BALANCE)
+                self.state = 362
+                self.match(SplitLangParser.LPAREN)
+                self.state = 363
+                self.match(SplitLangParser.ID)
+                self.state = 364
+                self.match(SplitLangParser.RPAREN)
+                pass
+
+            elif la_ == 4:
+                localctx = SplitLangParser.QueryExpensesContext(self, localctx)
+                self.enterOuterAlt(localctx, 4)
+                self.state = 365
+                self.match(SplitLangParser.QUERY)
+                self.state = 366
+                self.match(SplitLangParser.EXPENSES)
+                pass
+
+            elif la_ == 5:
+                localctx = SplitLangParser.QueryMembersContext(self, localctx)
+                self.enterOuterAlt(localctx, 5)
+                self.state = 367
+                self.match(SplitLangParser.QUERY)
+                self.state = 368
+                self.match(SplitLangParser.MEMBERS)
+                pass
+
+            elif la_ == 6:
+                localctx = SplitLangParser.QueryGroupsContext(self, localctx)
+                self.enterOuterAlt(localctx, 6)
+                self.state = 369
+                self.match(SplitLangParser.QUERY)
+                self.state = 370
+                self.match(SplitLangParser.GROUPS)
+                pass
+
+            elif la_ == 7:
+                localctx = SplitLangParser.QueryEnvContext(self, localctx)
+                self.enterOuterAlt(localctx, 7)
+                self.state = 371
+                self.match(SplitLangParser.QUERY)
+                self.state = 372
+                self.match(SplitLangParser.ENV)
+                pass
+
+            elif la_ == 8:
+                localctx = SplitLangParser.SettleQueryContext(self, localctx)
+                self.enterOuterAlt(localctx, 8)
+                self.state = 373
+                self.match(SplitLangParser.SETTLE)
+                pass
 
 
-    class QueryTargetContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def MEMBER_KW(self):
-            return self.getToken(SplitLangParser.MEMBER_KW, 0)
-
-        def EXPENSES(self):
-            return self.getToken(SplitLangParser.EXPENSES, 0)
-
-        def BALANCES(self):
-            return self.getToken(SplitLangParser.BALANCES, 0)
-
-        def SUMMARY(self):
-            return self.getToken(SplitLangParser.SUMMARY, 0)
-
-        def SETTLEMENTS(self):
-            return self.getToken(SplitLangParser.SETTLEMENTS, 0)
-
-        def GROUPS(self):
-            return self.getToken(SplitLangParser.GROUPS, 0)
-
-        def getRuleIndex(self):
-            return SplitLangParser.RULE_queryTarget
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitQueryTarget" ):
-                return visitor.visitQueryTarget(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def queryTarget(self):
-
-        localctx = SplitLangParser.QueryTargetContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 30, self.RULE_queryTarget)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 295
-            _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SplitLangParser.GROUPS) | (1 << SplitLangParser.MEMBER_KW) | (1 << SplitLangParser.BALANCES) | (1 << SplitLangParser.EXPENSES) | (1 << SplitLangParser.SUMMARY) | (1 << SplitLangParser.SETTLEMENTS))) != 0)):
-                self._errHandler.recoverInline(self)
-            else:
-                self._errHandler.reportMatch(self)
-                self.consume()
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -2352,33 +2963,33 @@ class SplitLangParser ( Parser ):
     def controlStmt(self):
 
         localctx = SplitLangParser.ControlStmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 32, self.RULE_controlStmt)
+        self.enterRule(localctx, 38, self.RULE_controlStmt)
         try:
-            self.state = 301
+            self.state = 380
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [SplitLangParser.UNDO]:
                 localctx = SplitLangParser.UndoCtrlContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 297
+                self.state = 376
                 self.match(SplitLangParser.UNDO)
                 pass
             elif token in [SplitLangParser.RESET]:
                 localctx = SplitLangParser.ResetCtrlContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 298
+                self.state = 377
                 self.match(SplitLangParser.RESET)
                 pass
             elif token in [SplitLangParser.CLEAR]:
                 localctx = SplitLangParser.ClearCtrlContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
-                self.state = 299
+                self.state = 378
                 self.match(SplitLangParser.CLEAR)
                 pass
             elif token in [SplitLangParser.HELP]:
                 localctx = SplitLangParser.HelpCtrlContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
-                self.state = 300
+                self.state = 379
                 self.match(SplitLangParser.HELP)
                 pass
             else:
@@ -2393,58 +3004,74 @@ class SplitLangParser ( Parser ):
         return localctx
 
 
-    class PersonListContext(ParserRuleContext):
+    class IdListContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def person(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonContext,0)
-
+        def ID(self):
+            return self.getToken(SplitLangParser.ID, 0)
 
         def COMMA(self):
             return self.getToken(SplitLangParser.COMMA, 0)
 
-        def personList(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonListContext,0)
+        def idList(self):
+            return self.getTypedRuleContext(SplitLangParser.IdListContext,0)
 
+
+        def NEWLINE(self, i:int=None):
+            if i is None:
+                return self.getTokens(SplitLangParser.NEWLINE)
+            else:
+                return self.getToken(SplitLangParser.NEWLINE, i)
 
         def getRuleIndex(self):
-            return SplitLangParser.RULE_personList
+            return SplitLangParser.RULE_idList
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPersonList" ):
-                return visitor.visitPersonList(self)
+            if hasattr( visitor, "visitIdList" ):
+                return visitor.visitIdList(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def personList(self):
+    def idList(self):
 
-        localctx = SplitLangParser.PersonListContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 34, self.RULE_personList)
+        localctx = SplitLangParser.IdListContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 40, self.RULE_idList)
+        self._la = 0 # Token type
         try:
-            self.state = 308
+            self.state = 392
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,42,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,41,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 303
-                self.person()
-                self.state = 304
+                self.state = 382
+                self.match(SplitLangParser.ID)
+                self.state = 383
                 self.match(SplitLangParser.COMMA)
-                self.state = 305
-                self.personList()
+                self.state = 387
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                while _la==SplitLangParser.NEWLINE:
+                    self.state = 384
+                    self.match(SplitLangParser.NEWLINE)
+                    self.state = 389
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+
+                self.state = 390
+                self.idList()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 307
-                self.person()
+                self.state = 391
+                self.match(SplitLangParser.ID)
                 pass
 
 
@@ -2457,58 +3084,91 @@ class SplitLangParser ( Parser ):
         return localctx
 
 
-    class ExactAllocListContext(ParserRuleContext):
+    class AllocListContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def exactAlloc(self):
-            return self.getTypedRuleContext(SplitLangParser.ExactAllocContext,0)
+        def allocEntry(self):
+            return self.getTypedRuleContext(SplitLangParser.AllocEntryContext,0)
 
 
-        def COMMA(self):
-            return self.getToken(SplitLangParser.COMMA, 0)
+        def allocList(self):
+            return self.getTypedRuleContext(SplitLangParser.AllocListContext,0)
 
-        def exactAllocList(self):
-            return self.getTypedRuleContext(SplitLangParser.ExactAllocListContext,0)
 
+        def COMMA(self, i:int=None):
+            if i is None:
+                return self.getTokens(SplitLangParser.COMMA)
+            else:
+                return self.getToken(SplitLangParser.COMMA, i)
+
+        def NEWLINE(self, i:int=None):
+            if i is None:
+                return self.getTokens(SplitLangParser.NEWLINE)
+            else:
+                return self.getToken(SplitLangParser.NEWLINE, i)
 
         def getRuleIndex(self):
-            return SplitLangParser.RULE_exactAllocList
+            return SplitLangParser.RULE_allocList
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExactAllocList" ):
-                return visitor.visitExactAllocList(self)
+            if hasattr( visitor, "visitAllocList" ):
+                return visitor.visitAllocList(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def exactAllocList(self):
+    def allocList(self):
 
-        localctx = SplitLangParser.ExactAllocListContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 36, self.RULE_exactAllocList)
+        localctx = SplitLangParser.AllocListContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 42, self.RULE_allocList)
+        self._la = 0 # Token type
         try:
-            self.state = 315
+            self.state = 406
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,43,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,44,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 310
-                self.exactAlloc()
-                self.state = 311
-                self.match(SplitLangParser.COMMA)
-                self.state = 312
-                self.exactAllocList()
+                self.state = 394
+                self.allocEntry()
+                self.state = 396 
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                while True:
+                    self.state = 395
+                    _la = self._input.LA(1)
+                    if not(_la==SplitLangParser.COMMA or _la==SplitLangParser.NEWLINE):
+                        self._errHandler.recoverInline(self)
+                    else:
+                        self._errHandler.reportMatch(self)
+                        self.consume()
+                    self.state = 398 
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+                    if not (_la==SplitLangParser.COMMA or _la==SplitLangParser.NEWLINE):
+                        break
+
+                self.state = 400
+                self.allocList()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 314
-                self.exactAlloc()
+                self.state = 402
+                self.allocEntry()
+                self.state = 404
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==SplitLangParser.COMMA:
+                    self.state = 403
+                    self.match(SplitLangParser.COMMA)
+
+
                 pass
 
 
@@ -2521,16 +3181,15 @@ class SplitLangParser ( Parser ):
         return localctx
 
 
-    class ExactAllocContext(ParserRuleContext):
+    class AllocEntryContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def person(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonContext,0)
-
+        def ID(self):
+            return self.getToken(SplitLangParser.ID, 0)
 
         def COLON(self):
             return self.getToken(SplitLangParser.COLON, 0)
@@ -2540,257 +3199,29 @@ class SplitLangParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return SplitLangParser.RULE_exactAlloc
+            return SplitLangParser.RULE_allocEntry
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExactAlloc" ):
-                return visitor.visitExactAlloc(self)
+            if hasattr( visitor, "visitAllocEntry" ):
+                return visitor.visitAllocEntry(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def exactAlloc(self):
+    def allocEntry(self):
 
-        localctx = SplitLangParser.ExactAllocContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 38, self.RULE_exactAlloc)
+        localctx = SplitLangParser.AllocEntryContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 44, self.RULE_allocEntry)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 317
-            self.person()
-            self.state = 318
+            self.state = 408
+            self.match(SplitLangParser.ID)
+            self.state = 409
             self.match(SplitLangParser.COLON)
-            self.state = 319
+            self.state = 410
             self.expr(0)
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class PercentAllocListContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def percentAlloc(self):
-            return self.getTypedRuleContext(SplitLangParser.PercentAllocContext,0)
-
-
-        def COMMA(self):
-            return self.getToken(SplitLangParser.COMMA, 0)
-
-        def percentAllocList(self):
-            return self.getTypedRuleContext(SplitLangParser.PercentAllocListContext,0)
-
-
-        def getRuleIndex(self):
-            return SplitLangParser.RULE_percentAllocList
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPercentAllocList" ):
-                return visitor.visitPercentAllocList(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def percentAllocList(self):
-
-        localctx = SplitLangParser.PercentAllocListContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 40, self.RULE_percentAllocList)
-        try:
-            self.state = 326
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,44,self._ctx)
-            if la_ == 1:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 321
-                self.percentAlloc()
-                self.state = 322
-                self.match(SplitLangParser.COMMA)
-                self.state = 323
-                self.percentAllocList()
-                pass
-
-            elif la_ == 2:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 325
-                self.percentAlloc()
-                pass
-
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class PercentAllocContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def person(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonContext,0)
-
-
-        def COLON(self):
-            return self.getToken(SplitLangParser.COLON, 0)
-
-        def PERCENT_LIT(self):
-            return self.getToken(SplitLangParser.PERCENT_LIT, 0)
-
-        def getRuleIndex(self):
-            return SplitLangParser.RULE_percentAlloc
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPercentAlloc" ):
-                return visitor.visitPercentAlloc(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def percentAlloc(self):
-
-        localctx = SplitLangParser.PercentAllocContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 42, self.RULE_percentAlloc)
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 328
-            self.person()
-            self.state = 329
-            self.match(SplitLangParser.COLON)
-            self.state = 330
-            self.match(SplitLangParser.PERCENT_LIT)
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class RatioAllocListContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def ratioAlloc(self):
-            return self.getTypedRuleContext(SplitLangParser.RatioAllocContext,0)
-
-
-        def COMMA(self):
-            return self.getToken(SplitLangParser.COMMA, 0)
-
-        def ratioAllocList(self):
-            return self.getTypedRuleContext(SplitLangParser.RatioAllocListContext,0)
-
-
-        def getRuleIndex(self):
-            return SplitLangParser.RULE_ratioAllocList
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRatioAllocList" ):
-                return visitor.visitRatioAllocList(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def ratioAllocList(self):
-
-        localctx = SplitLangParser.RatioAllocListContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 44, self.RULE_ratioAllocList)
-        try:
-            self.state = 337
-            self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,45,self._ctx)
-            if la_ == 1:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 332
-                self.ratioAlloc()
-                self.state = 333
-                self.match(SplitLangParser.COMMA)
-                self.state = 334
-                self.ratioAllocList()
-                pass
-
-            elif la_ == 2:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 336
-                self.ratioAlloc()
-                pass
-
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class RatioAllocContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def person(self):
-            return self.getTypedRuleContext(SplitLangParser.PersonContext,0)
-
-
-        def COLON(self):
-            return self.getToken(SplitLangParser.COLON, 0)
-
-        def NUMBER(self):
-            return self.getToken(SplitLangParser.NUMBER, 0)
-
-        def getRuleIndex(self):
-            return SplitLangParser.RULE_ratioAlloc
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRatioAlloc" ):
-                return visitor.visitRatioAlloc(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def ratioAlloc(self):
-
-        localctx = SplitLangParser.RatioAllocContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 46, self.RULE_ratioAlloc)
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 339
-            self.person()
-            self.state = 340
-            self.match(SplitLangParser.COLON)
-            self.state = 341
-            self.match(SplitLangParser.NUMBER)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -2814,6 +3245,22 @@ class SplitLangParser ( Parser ):
      
         def copyFrom(self, ctx:ParserRuleContext):
             super().copyFrom(ctx)
+
+
+    class MoneyUsdLitExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def MONEY_USD(self):
+            return self.getToken(SplitLangParser.MONEY_USD, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMoneyUsdLitExpr" ):
+                return visitor.visitMoneyUsdLitExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
     class MulDivExprContext(ExprContext):
@@ -2841,6 +3288,128 @@ class SplitLangParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class MoneyMLitExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def MONEY_M(self):
+            return self.getToken(SplitLangParser.MONEY_M, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMoneyMLitExpr" ):
+                return visitor.visitMoneyMLitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class PercentLitExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def PERCENT_LIT(self):
+            return self.getToken(SplitLangParser.PERCENT_LIT, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPercentLitExpr" ):
+                return visitor.visitPercentLitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class VarRefExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ID(self):
+            return self.getToken(SplitLangParser.ID, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitVarRefExpr" ):
+                return visitor.visitVarRefExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SetLitExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def LBRACK(self):
+            return self.getToken(SplitLangParser.LBRACK, 0)
+        def RBRACK(self):
+            return self.getToken(SplitLangParser.RBRACK, 0)
+        def NEWLINE(self, i:int=None):
+            if i is None:
+                return self.getTokens(SplitLangParser.NEWLINE)
+            else:
+                return self.getToken(SplitLangParser.NEWLINE, i)
+        def idList(self):
+            return self.getTypedRuleContext(SplitLangParser.IdListContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSetLitExpr" ):
+                return visitor.visitSetLitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class MoneyKLitExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def MONEY_K(self):
+            return self.getToken(SplitLangParser.MONEY_K, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMoneyKLitExpr" ):
+                return visitor.visitMoneyKLitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class NumberLitExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def NUMBER(self):
+            return self.getToken(SplitLangParser.NUMBER, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNumberLitExpr" ):
+                return visitor.visitNumberLitExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AllMembersExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ALL(self):
+            return self.getToken(SplitLangParser.ALL, 0)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAllMembersExpr" ):
+                return visitor.visitAllMembersExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class ParenExprContext(ExprContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
@@ -2858,23 +3427,6 @@ class SplitLangParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitParenExpr" ):
                 return visitor.visitParenExpr(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AtomExprContext(ExprContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def amountAtom(self):
-            return self.getTypedRuleContext(SplitLangParser.AmountAtomContext,0)
-
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAtomExpr" ):
-                return visitor.visitAtomExpr(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -2904,62 +3456,170 @@ class SplitLangParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class UnaryNegExprContext(ExprContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a SplitLangParser.ExprContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def MINUS(self):
+            return self.getToken(SplitLangParser.MINUS, 0)
+        def expr(self):
+            return self.getTypedRuleContext(SplitLangParser.ExprContext,0)
+
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnaryNegExpr" ):
+                return visitor.visitUnaryNegExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
+
 
     def expr(self, _p:int=0):
         _parentctx = self._ctx
         _parentState = self.state
         localctx = SplitLangParser.ExprContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 48
-        self.enterRecursionRule(localctx, 48, self.RULE_expr, _p)
+        _startState = 46
+        self.enterRecursionRule(localctx, 46, self.RULE_expr, _p)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 349
+            self.state = 443
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [SplitLangParser.LPAREN]:
-                localctx = SplitLangParser.ParenExprContext(self, localctx)
+            if token in [SplitLangParser.MINUS]:
+                localctx = SplitLangParser.UnaryNegExprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
 
-                self.state = 344
-                self.match(SplitLangParser.LPAREN)
-                self.state = 345
-                self.expr(0)
-                self.state = 346
-                self.match(SplitLangParser.RPAREN)
+                self.state = 413
+                self.match(SplitLangParser.MINUS)
+                self.state = 414
+                self.expr(12)
                 pass
-            elif token in [SplitLangParser.MONEY_K, SplitLangParser.MONEY_M, SplitLangParser.MONEY_USD, SplitLangParser.NUMBER]:
-                localctx = SplitLangParser.AtomExprContext(self, localctx)
+            elif token in [SplitLangParser.LPAREN]:
+                localctx = SplitLangParser.ParenExprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 348
-                self.amountAtom()
+                self.state = 415
+                self.match(SplitLangParser.LPAREN)
+                self.state = 416
+                self.expr(0)
+                self.state = 417
+                self.match(SplitLangParser.RPAREN)
+                pass
+            elif token in [SplitLangParser.LBRACK]:
+                localctx = SplitLangParser.SetLitExprContext(self, localctx)
+                self._ctx = localctx
+                _prevctx = localctx
+                self.state = 419
+                self.match(SplitLangParser.LBRACK)
+                self.state = 423
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input,45,self._ctx)
+                while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
+                    if _alt==1:
+                        self.state = 420
+                        self.match(SplitLangParser.NEWLINE) 
+                    self.state = 425
+                    self._errHandler.sync(self)
+                    _alt = self._interp.adaptivePredict(self._input,45,self._ctx)
+
+                self.state = 427
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                if _la==SplitLangParser.ID:
+                    self.state = 426
+                    self.idList()
+
+
+                self.state = 432
+                self._errHandler.sync(self)
+                _la = self._input.LA(1)
+                while _la==SplitLangParser.NEWLINE:
+                    self.state = 429
+                    self.match(SplitLangParser.NEWLINE)
+                    self.state = 434
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+
+                self.state = 435
+                self.match(SplitLangParser.RBRACK)
+                pass
+            elif token in [SplitLangParser.ALL]:
+                localctx = SplitLangParser.AllMembersExprContext(self, localctx)
+                self._ctx = localctx
+                _prevctx = localctx
+                self.state = 436
+                self.match(SplitLangParser.ALL)
+                pass
+            elif token in [SplitLangParser.PERCENT_LIT]:
+                localctx = SplitLangParser.PercentLitExprContext(self, localctx)
+                self._ctx = localctx
+                _prevctx = localctx
+                self.state = 437
+                self.match(SplitLangParser.PERCENT_LIT)
+                pass
+            elif token in [SplitLangParser.MONEY_K]:
+                localctx = SplitLangParser.MoneyKLitExprContext(self, localctx)
+                self._ctx = localctx
+                _prevctx = localctx
+                self.state = 438
+                self.match(SplitLangParser.MONEY_K)
+                pass
+            elif token in [SplitLangParser.MONEY_M]:
+                localctx = SplitLangParser.MoneyMLitExprContext(self, localctx)
+                self._ctx = localctx
+                _prevctx = localctx
+                self.state = 439
+                self.match(SplitLangParser.MONEY_M)
+                pass
+            elif token in [SplitLangParser.MONEY_USD]:
+                localctx = SplitLangParser.MoneyUsdLitExprContext(self, localctx)
+                self._ctx = localctx
+                _prevctx = localctx
+                self.state = 440
+                self.match(SplitLangParser.MONEY_USD)
+                pass
+            elif token in [SplitLangParser.NUMBER]:
+                localctx = SplitLangParser.NumberLitExprContext(self, localctx)
+                self._ctx = localctx
+                _prevctx = localctx
+                self.state = 441
+                self.match(SplitLangParser.NUMBER)
+                pass
+            elif token in [SplitLangParser.ID]:
+                localctx = SplitLangParser.VarRefExprContext(self, localctx)
+                self._ctx = localctx
+                _prevctx = localctx
+                self.state = 442
+                self.match(SplitLangParser.ID)
                 pass
             else:
                 raise NoViableAltException(self)
 
             self._ctx.stop = self._input.LT(-1)
-            self.state = 359
+            self.state = 453
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,48,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,50,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 357
+                    self.state = 451
                     self._errHandler.sync(self)
-                    la_ = self._interp.adaptivePredict(self._input,47,self._ctx)
+                    la_ = self._interp.adaptivePredict(self._input,49,self._ctx)
                     if la_ == 1:
                         localctx = SplitLangParser.MulDivExprContext(self, SplitLangParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 351
-                        if not self.precpred(self._ctx, 4):
+                        self.state = 445
+                        if not self.precpred(self._ctx, 11):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 4)")
-                        self.state = 352
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 11)")
+                        self.state = 446
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
                         if not(_la==SplitLangParser.STAR or _la==SplitLangParser.SLASH):
@@ -2967,18 +3627,18 @@ class SplitLangParser ( Parser ):
                         else:
                             self._errHandler.reportMatch(self)
                             self.consume()
-                        self.state = 353
-                        self.expr(5)
+                        self.state = 447
+                        self.expr(12)
                         pass
 
                     elif la_ == 2:
                         localctx = SplitLangParser.AddSubExprContext(self, SplitLangParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 354
-                        if not self.precpred(self._ctx, 3):
+                        self.state = 448
+                        if not self.precpred(self._ctx, 10):
                             from antlr4.error.Errors import FailedPredicateException
-                            raise FailedPredicateException(self, "self.precpred(self._ctx, 3)")
-                        self.state = 355
+                            raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
+                        self.state = 449
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
                         if not(_la==SplitLangParser.PLUS or _la==SplitLangParser.MINUS):
@@ -2986,14 +3646,14 @@ class SplitLangParser ( Parser ):
                         else:
                             self._errHandler.reportMatch(self)
                             self.consume()
-                        self.state = 356
-                        self.expr(4)
+                        self.state = 450
+                        self.expr(11)
                         pass
 
              
-                self.state = 361
+                self.state = 455
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,48,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,50,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -3004,173 +3664,11 @@ class SplitLangParser ( Parser ):
         return localctx
 
 
-    class AmountAtomContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def MONEY_K(self):
-            return self.getToken(SplitLangParser.MONEY_K, 0)
-
-        def MONEY_M(self):
-            return self.getToken(SplitLangParser.MONEY_M, 0)
-
-        def MONEY_USD(self):
-            return self.getToken(SplitLangParser.MONEY_USD, 0)
-
-        def NUMBER(self):
-            return self.getToken(SplitLangParser.NUMBER, 0)
-
-        def getRuleIndex(self):
-            return SplitLangParser.RULE_amountAtom
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAmountAtom" ):
-                return visitor.visitAmountAtom(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def amountAtom(self):
-
-        localctx = SplitLangParser.AmountAtomContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 50, self.RULE_amountAtom)
-        self._la = 0 # Token type
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 362
-            _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SplitLangParser.MONEY_K) | (1 << SplitLangParser.MONEY_M) | (1 << SplitLangParser.MONEY_USD) | (1 << SplitLangParser.NUMBER))) != 0)):
-                self._errHandler.recoverInline(self)
-            else:
-                self._errHandler.reportMatch(self)
-                self.consume()
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class PersonContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def ID(self):
-            return self.getToken(SplitLangParser.ID, 0)
-
-        def getRuleIndex(self):
-            return SplitLangParser.RULE_person
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPerson" ):
-                return visitor.visitPerson(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def person(self):
-
-        localctx = SplitLangParser.PersonContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 52, self.RULE_person)
-        try:
-            self.enterOuterAlt(localctx, 1)
-            self.state = 364
-            self.match(SplitLangParser.ID)
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
-    class DescriptionContext(ParserRuleContext):
-        __slots__ = 'parser'
-
-        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
-            super().__init__(parent, invokingState)
-            self.parser = parser
-
-        def STRING(self):
-            return self.getToken(SplitLangParser.STRING, 0)
-
-        def ID(self, i:int=None):
-            if i is None:
-                return self.getTokens(SplitLangParser.ID)
-            else:
-                return self.getToken(SplitLangParser.ID, i)
-
-        def getRuleIndex(self):
-            return SplitLangParser.RULE_description
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDescription" ):
-                return visitor.visitDescription(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-
-
-    def description(self):
-
-        localctx = SplitLangParser.DescriptionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 54, self.RULE_description)
-        self._la = 0 # Token type
-        try:
-            self.state = 372
-            self._errHandler.sync(self)
-            token = self._input.LA(1)
-            if token in [SplitLangParser.STRING]:
-                self.enterOuterAlt(localctx, 1)
-                self.state = 366
-                self.match(SplitLangParser.STRING)
-                pass
-            elif token in [SplitLangParser.ID]:
-                self.enterOuterAlt(localctx, 2)
-                self.state = 368 
-                self._errHandler.sync(self)
-                _la = self._input.LA(1)
-                while True:
-                    self.state = 367
-                    self.match(SplitLangParser.ID)
-                    self.state = 370 
-                    self._errHandler.sync(self)
-                    _la = self._input.LA(1)
-                    if not (_la==SplitLangParser.ID):
-                        break
-
-                pass
-            else:
-                raise NoViableAltException(self)
-
-        except RecognitionException as re:
-            localctx.exception = re
-            self._errHandler.reportError(self, re)
-            self._errHandler.recover(self, re)
-        finally:
-            self.exitRule()
-        return localctx
-
-
 
     def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
         if self._predicates == None:
             self._predicates = dict()
-        self._predicates[24] = self.expr_sempred
+        self._predicates[23] = self.expr_sempred
         pred = self._predicates.get(ruleIndex, None)
         if pred is None:
             raise Exception("No predicate with index:" + str(ruleIndex))
@@ -3179,11 +3677,11 @@ class SplitLangParser ( Parser ):
 
     def expr_sempred(self, localctx:ExprContext, predIndex:int):
             if predIndex == 0:
-                return self.precpred(self._ctx, 4)
+                return self.precpred(self._ctx, 11)
          
 
             if predIndex == 1:
-                return self.precpred(self._ctx, 3)
+                return self.precpred(self._ctx, 10)
          
 
 

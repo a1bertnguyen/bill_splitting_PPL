@@ -1,8 +1,8 @@
 """
-ANTLR4 Parse Tree -> Abstract Syntax Tree (AST) Visitor for SplitLang.
+ANTLR4 Parse Tree -> Abstract Syntax Tree (AST) Visitor for SplitLang v2.0.
 
-Subclasses the ANTLR-generated SplitLangVisitor to transform concrete parse trees
-into clean, execution-ready AST Op objects while stripping syntactic sugar.
+Builds pure, typed AST nodes (ExprNode, SplitNode, Command Ops) without executing
+side effects during tree traversal (strict separation of Syntax -> AST -> Evaluation).
 """
 
 from __future__ import annotations
@@ -12,7 +12,6 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
-# Ensure ANTLR-generated CompiledFiles is importable
 _COMPILED_DIR = str(Path(__file__).resolve().parent.parent / "parserAnalyzer" / "CompiledFiles")
 if _COMPILED_DIR not in sys.path:
     sys.path.insert(0, _COMPILED_DIR)
@@ -21,33 +20,42 @@ from SplitLangParser import SplitLangParser
 from SplitLangVisitor import SplitLangVisitor
 
 from module.ASTutils import (
+    AllMembersLit,
+    AssertBalancedOp,
     BaseOp,
+    BillItemNode,
     BillOp,
+    BinaryOp,
     ControlOp,
     CurrencyOp,
     ExpenseOp,
-    GroupOp,
+    ExprNode,
+    LetOp,
     MemberOp,
+    MoneyLit,
+    PercentLit,
     QueryOp,
-    SettleOp,
-    SettleUpOp,
+    RuleOp,
+    ScalarLit,
+    SetLit,
+    SplitNode,
+    TransferOp,
+    UnaryNeg,
+    VarRef,
+    WorkspaceOp,
 )
 from module.utilFunction import SemanticError
 
 
-class SplitLangASTGenerator(SplitLangVisitor):
-    """
-    Walks an ANTLR4 parse tree for SplitLang and builds a list of AST Op nodes.
+def _unquote(token_text: str) -> str:
+    return token_text[1:-1].replace(r'\"', '"').replace(r"\'", "'")
 
-    Demonstrates all four PPL Visitor patterns:
-      1. Leaf rules returning primitive values (visitAmountAtom, visitPerson, visitDescription)
-      2. Recursive rules gathering lists (visitPersonList, visitExactAllocList, ...)
-      3. Expression evaluation respecting operator precedence (visitMulDivExpr, visitAddSubExpr)
-      4. Request rules building high-level AST Op nodes (visitExpenseStmt, visitBillStmt, ...)
-    """
+
+class SplitLangASTGenerator(SplitLangVisitor):
+    """Transforms ANTLR4 SplitLang v2.0 parse trees into clean AST Op trees."""
 
     # ------------------------------------------------------------------
-    # Top-level Program & Statement Dispatch
+    # Program & Statement Dispatch
     # ------------------------------------------------------------------
 
     def visitProgram(self, ctx: SplitLangParser.ProgramContext) -> list[BaseOp]:
@@ -59,219 +67,250 @@ class SplitLangASTGenerator(SplitLangVisitor):
         return ops
 
     def visitStatement(self, ctx: SplitLangParser.StatementContext) -> BaseOp:
-        # Delegate directly to the single matched statement child
         return self.visit(ctx.getChild(0))
 
     # ------------------------------------------------------------------
-    # 1. Group, Currency & Member Rules
+    # 1. Workspace, Currency & Members
     # ------------------------------------------------------------------
 
-    def visitGroupStmt(self, ctx: SplitLangParser.GroupStmtContext) -> GroupOp:
-        name = self.visit(ctx.description())
-        return GroupOp(name=name)
+    def visitWorkspaceStmt(self, ctx: SplitLangParser.WorkspaceStmtContext) -> WorkspaceOp:
+        name = _unquote(ctx.STRING().getText())
+        currency: str | None = None
+        members: list[str] | None = None
+        for f_ctx in ctx.wsField():
+            kind, val = self.visit(f_ctx)
+            if kind == "currency":
+                currency = val
+            elif kind == "members":
+                members = val
+        return WorkspaceOp(name=name, currency=currency, members=members)
+
+    def visitWsCurrencyField(self, ctx: SplitLangParser.WsCurrencyFieldContext) -> tuple[str, str]:
+        return ("currency", ctx.CURRENCY_CODE().getText().upper())
+
+    def visitWsMembersField(self, ctx: SplitLangParser.WsMembersFieldContext) -> tuple[str, list[str]]:
+        ids = self.visit(ctx.idList()) if ctx.idList() else []
+        return ("members", ids)
 
     def visitCurrencyStmt(self, ctx: SplitLangParser.CurrencyStmtContext) -> CurrencyOp:
-        code = ctx.CURRENCY_CODE().getText().upper()
-        return CurrencyOp(currency=code)
+        return CurrencyOp(currency=ctx.CURRENCY_CODE().getText().upper())
 
-    def visitAddMembersStmt(self, ctx: SplitLangParser.AddMembersStmtContext) -> MemberOp:
-        members = self.visit(ctx.personList())
-        return MemberOp(verb="add", members=members)
+    def visitMemberAddStmt(self, ctx: SplitLangParser.MemberAddStmtContext) -> MemberOp:
+        return MemberOp(verb="add", members=self.visit(ctx.idList()))
 
-    def visitRemoveMembersStmt(self, ctx: SplitLangParser.RemoveMembersStmtContext) -> MemberOp:
-        members = self.visit(ctx.personList())
-        return MemberOp(verb="remove", members=members)
+    def visitMemberRemoveStmt(self, ctx: SplitLangParser.MemberRemoveStmtContext) -> MemberOp:
+        return MemberOp(verb="remove", members=self.visit(ctx.idList()))
 
     # ------------------------------------------------------------------
-    # 2. Expense Rule & Split Clauses
+    # 2. Symbol Table Bindings & Reusable Rules
     # ------------------------------------------------------------------
 
-    def visitExpenseStmt(self, ctx: SplitLangParser.ExpenseStmtContext) -> ExpenseOp:
-        payer = self.visit(ctx.person())
-        amount = self.visit(ctx.expr())
-        description = self.visit(ctx.description()) if ctx.description() else "Expense"
-        split_spec = (
-            self.visit(ctx.splitClause())
-            if ctx.splitClause()
-            else {"mode": "equal", "among": None, "excluding": None}
-        )
-        modifiers = [self.visit(m) for m in ctx.modifier()]
+    def visitLetStmt(self, ctx: SplitLangParser.LetStmtContext) -> LetOp:
+        return LetOp(name=ctx.ID().getText(), expr=self.visit(ctx.expr()))
+
+    def visitRuleStmt(self, ctx: SplitLangParser.RuleStmtContext) -> RuleOp:
+        return RuleOp(name=ctx.ID().getText(), split_node=self.visit(ctx.splitExpr()))
+
+    # ------------------------------------------------------------------
+    # 3. Expenses (Inline & Block Forms)
+    # ------------------------------------------------------------------
+
+    def visitInlineExpenseStmt(self, ctx: SplitLangParser.InlineExpenseStmtContext) -> ExpenseOp:
+        desc = _unquote(ctx.STRING().getText())
+        payer = ctx.ID().getText()
+        amt_expr = self.visit(ctx.expr())
+        split_node = self.visit(ctx.splitExpr()) if ctx.splitExpr() else SplitNode(mode="equal")
+        mods = [self.visit(m) for m in ctx.modifierClause()]
         exp_date = self.visit(ctx.dateClause()) if ctx.dateClause() else None
-
         return ExpenseOp(
+            description=desc,
             payer=payer,
-            amount=amount,
-            description=description,
-            split_spec=split_spec,
-            modifiers=modifiers,
+            amount_expr=amt_expr,
+            split_node=split_node,
+            modifier_exprs=mods,
             expense_date=exp_date,
         )
 
-    def visitEqualSplit(self, ctx: SplitLangParser.EqualSplitContext) -> dict[str, Any]:
-        if ctx.AMONG():
-            return {"mode": "equal", "among": self.visit(ctx.personList()), "excluding": None}
-        if ctx.EXCLUDING():
-            return {"mode": "equal", "among": None, "excluding": self.visit(ctx.personList())}
-        return {"mode": "equal", "among": None, "excluding": None}
+    def visitBlockExpenseStmt(self, ctx: SplitLangParser.BlockExpenseStmtContext) -> ExpenseOp:
+        desc = _unquote(ctx.STRING().getText())
+        payer: str | None = None
+        amount_expr: ExprNode | None = None
+        split_node = SplitNode(mode="equal")
+        mods: list[tuple[str, ExprNode]] = []
+        exp_date: str | None = None
 
-    def visitShorthandEqualSplit(
-        self, ctx: SplitLangParser.ShorthandEqualSplitContext
-    ) -> dict[str, Any]:
-        if ctx.AMONG():
-            return {"mode": "equal", "among": self.visit(ctx.personList()), "excluding": None}
-        return {"mode": "equal", "among": None, "excluding": self.visit(ctx.personList())}
+        for f_ctx in ctx.expenseField():
+            kind, val = self.visit(f_ctx)
+            if kind == "payer":
+                payer = val
+            elif kind == "amount":
+                amount_expr = val
+            elif kind == "split":
+                split_node = val
+            elif kind in ("discount", "tax", "tip"):
+                mods.append((kind, val))
+            elif kind == "date":
+                exp_date = val
 
-    def visitExactSplit(self, ctx: SplitLangParser.ExactSplitContext) -> dict[str, Any]:
-        allocs = self.visit(ctx.exactAllocList())
-        return {"mode": "exact", "allocations": allocs}
+        if not payer:
+            raise SemanticError(f"Expense '{desc}' block is missing required 'payer:' field.")
+        if amount_expr is None:
+            raise SemanticError(f"Expense '{desc}' block is missing required 'amount:' field.")
 
-    def visitPercentSplit(self, ctx: SplitLangParser.PercentSplitContext) -> dict[str, Any]:
-        allocs = self.visit(ctx.percentAllocList())
-        return {"mode": "percent", "allocations": allocs}
+        return ExpenseOp(
+            description=desc,
+            payer=payer,
+            amount_expr=amount_expr,
+            split_node=split_node,
+            modifier_exprs=mods,
+            expense_date=exp_date,
+        )
 
-    def visitRatioSplit(self, ctx: SplitLangParser.RatioSplitContext) -> dict[str, Any]:
-        allocs = self.visit(ctx.ratioAllocList())
-        return {"mode": "ratio", "allocations": allocs}
+    def visitExpPayerField(self, ctx: SplitLangParser.ExpPayerFieldContext):
+        return ("payer", ctx.ID().getText())
 
-    # ------------------------------------------------------------------
-    # Modifiers & Date
-    # ------------------------------------------------------------------
+    def visitExpAmountField(self, ctx: SplitLangParser.ExpAmountFieldContext):
+        return ("amount", self.visit(ctx.expr()))
 
-    def _parse_modifier(self, kind: str, ctx: Any) -> dict[str, Any]:
-        if ctx.PERCENT_LIT():
-            raw = ctx.PERCENT_LIT().getText().rstrip("%")
-            return {"kind": kind, "is_percent": True, "value": Decimal(raw)}
-        val = self.visit(ctx.expr())
-        return {"kind": kind, "is_percent": False, "value": val}
+    def visitExpSplitField(self, ctx: SplitLangParser.ExpSplitFieldContext):
+        return ("split", self.visit(ctx.splitExpr()))
 
-    def visitTaxMod(self, ctx: SplitLangParser.TaxModContext) -> dict[str, Any]:
-        return self._parse_modifier("tax", ctx)
+    def visitExpDiscountField(self, ctx: SplitLangParser.ExpDiscountFieldContext):
+        return ("discount", self.visit(ctx.expr()))
 
-    def visitTipMod(self, ctx: SplitLangParser.TipModContext) -> dict[str, Any]:
-        return self._parse_modifier("tip", ctx)
+    def visitExpTaxField(self, ctx: SplitLangParser.ExpTaxFieldContext):
+        return ("tax", self.visit(ctx.expr()))
 
-    def visitDiscountMod(self, ctx: SplitLangParser.DiscountModContext) -> dict[str, Any]:
-        return self._parse_modifier("discount", ctx)
+    def visitExpTipField(self, ctx: SplitLangParser.ExpTipFieldContext):
+        return ("tip", self.visit(ctx.expr()))
+
+    def visitExpDateField(self, ctx: SplitLangParser.ExpDateFieldContext):
+        return ("date", ctx.DATE().getText())
+
+    def visitInlineDiscountMod(self, ctx: SplitLangParser.InlineDiscountModContext):
+        return ("discount", self.visit(ctx.expr()))
+
+    def visitInlineTaxMod(self, ctx: SplitLangParser.InlineTaxModContext):
+        return ("tax", self.visit(ctx.expr()))
+
+    def visitInlineTipMod(self, ctx: SplitLangParser.InlineTipModContext):
+        return ("tip", self.visit(ctx.expr()))
 
     def visitDateClause(self, ctx: SplitLangParser.DateClauseContext) -> str:
-        return ctx.DATE().getText().replace("/", "-")
+        return ctx.DATE().getText()
+
+    # Split Expressions
+    def visitEqualSplitExpr(self, ctx: SplitLangParser.EqualSplitExprContext) -> SplitNode:
+        return SplitNode(mode="equal", target_expr=self.visit(ctx.expr()))
+
+    def visitEqualAllSplitExpr(self, ctx: SplitLangParser.EqualAllSplitExprContext) -> SplitNode:
+        return SplitNode(mode="equal", target_expr=None)
+
+    def visitExactSplitExpr(self, ctx: SplitLangParser.ExactSplitExprContext) -> SplitNode:
+        allocs = self.visit(ctx.allocList()) if ctx.allocList() else []
+        return SplitNode(mode="exact", alloc_exprs=allocs)
+
+    def visitPercentSplitExpr(self, ctx: SplitLangParser.PercentSplitExprContext) -> SplitNode:
+        allocs = self.visit(ctx.allocList()) if ctx.allocList() else []
+        return SplitNode(mode="percent", alloc_exprs=allocs)
+
+    def visitRatioSplitExpr(self, ctx: SplitLangParser.RatioSplitExprContext) -> SplitNode:
+        allocs = self.visit(ctx.allocList()) if ctx.allocList() else []
+        return SplitNode(mode="ratio", alloc_exprs=allocs)
+
+    def visitRuleRefSplitExpr(self, ctx: SplitLangParser.RuleRefSplitExprContext) -> SplitNode:
+        return SplitNode(mode="rule_ref", rule_name=ctx.ID().getText())
 
     # ------------------------------------------------------------------
-    # 3. Itemized Bill Block
+    # 4. Itemized Bill Block
     # ------------------------------------------------------------------
 
     def visitBillStmt(self, ctx: SplitLangParser.BillStmtContext) -> BillOp:
-        title = self.visit(ctx.description())
-        payer = self.visit(ctx.person())
-        b_date = self.visit(ctx.dateClause()) if ctx.dateClause() else None
+        title = _unquote(ctx.STRING().getText())
+        payer: str | None = None
+        b_date: str | None = None
+        items: list[BillItemNode] = []
+        mods: list[tuple[str, ExprNode]] = []
 
-        items: list[dict[str, Any]] = []
-        modifiers: list[dict[str, Any]] = []
-        for entry_ctx in ctx.billEntry():
-            entry = self.visit(entry_ctx)
-            if entry["entry_type"] == "item":
-                items.append(entry)
-            else:
-                modifiers.append(entry["modifier"])
+        for f_ctx in ctx.billField():
+            kind, val = self.visit(f_ctx)
+            if kind == "payer":
+                payer = val
+            elif kind == "date":
+                b_date = val
+            elif kind == "item":
+                items.append(val)
+            elif kind in ("discount", "tax", "tip"):
+                mods.append((kind, val))
 
-        return BillOp(
-            title=title,
-            payer=payer,
-            items=items,
-            modifiers=modifiers,
-            bill_date=b_date,
+        if not payer:
+            raise SemanticError(f"Bill '{title}' is missing required 'payer:' field.")
+        if not items:
+            raise SemanticError(f"Bill '{title}' must contain at least one 'item' entry.")
+
+        return BillOp(title=title, payer=payer, items=items, modifier_exprs=mods, bill_date=b_date)
+
+    def visitBillPayerField(self, ctx: SplitLangParser.BillPayerFieldContext):
+        return ("payer", ctx.ID().getText())
+
+    def visitBillDateField(self, ctx: SplitLangParser.BillDateFieldContext):
+        return ("date", ctx.DATE().getText())
+
+    def visitBillItemField(self, ctx: SplitLangParser.BillItemFieldContext):
+        item = BillItemNode(
+            name=_unquote(ctx.STRING().getText()),
+            amount_expr=self.visit(ctx.expr(0)),
+            target_expr=self.visit(ctx.expr(1)),
         )
+        return ("item", item)
 
-    def visitBillItemEntry(self, ctx: SplitLangParser.BillItemEntryContext) -> dict[str, Any]:
-        name = self.visit(ctx.description())
-        amount = self.visit(ctx.expr())
-        if ctx.ALL():
-            excluding = self.visit(ctx.personList()) if ctx.EXCLUDING() else []
-            return {
-                "entry_type": "item",
-                "name": name,
-                "amount": amount,
-                "for_all": True,
-                "excluding": excluding,
-                "consumers": [],
-            }
-        consumers = self.visit(ctx.personList())
-        return {
-            "entry_type": "item",
-            "name": name,
-            "amount": amount,
-            "for_all": False,
-            "excluding": [],
-            "consumers": consumers,
-        }
+    def visitBillDiscountField(self, ctx: SplitLangParser.BillDiscountFieldContext):
+        return ("discount", self.visit(ctx.expr()))
 
-    def visitBillTaxEntry(self, ctx: SplitLangParser.BillTaxEntryContext) -> dict[str, Any]:
-        return {"entry_type": "modifier", "modifier": self._parse_modifier("tax", ctx)}
+    def visitBillTaxField(self, ctx: SplitLangParser.BillTaxFieldContext):
+        return ("tax", self.visit(ctx.expr()))
 
-    def visitBillTipEntry(self, ctx: SplitLangParser.BillTipEntryContext) -> dict[str, Any]:
-        return {"entry_type": "modifier", "modifier": self._parse_modifier("tip", ctx)}
-
-    def visitBillDiscountEntry(
-        self, ctx: SplitLangParser.BillDiscountEntryContext
-    ) -> dict[str, Any]:
-        return {"entry_type": "modifier", "modifier": self._parse_modifier("discount", ctx)}
+    def visitBillTipField(self, ctx: SplitLangParser.BillTipFieldContext):
+        return ("tip", self.visit(ctx.expr()))
 
     # ------------------------------------------------------------------
-    # 4. Settlement Rules
+    # 5. Transfers, Assertions, Queries & Controls
     # ------------------------------------------------------------------
 
-    def visitDirectPaySettle(self, ctx: SplitLangParser.DirectPaySettleContext) -> SettleOp:
-        src = self.visit(ctx.person(0))
-        dst = self.visit(ctx.person(1))
-        amount = self.visit(ctx.expr())
-        note = self.visit(ctx.description()) if ctx.description() else ""
+    def visitTransferStmt(self, ctx: SplitLangParser.TransferStmtContext) -> TransferOp:
+        src = ctx.ID(0).getText()
+        dst = ctx.ID(1).getText()
+        amt_expr = self.visit(ctx.expr())
+        note = _unquote(ctx.STRING().getText()) if ctx.STRING() else ""
         s_date = self.visit(ctx.dateClause()) if ctx.dateClause() else None
-        return SettleOp(from_member=src, to_member=dst, amount=amount, note=note, settle_date=s_date)
+        return TransferOp(from_member=src, to_member=dst, amount_expr=amt_expr, note=note, settle_date=s_date)
 
-    def visitKeywordSettle(self, ctx: SplitLangParser.KeywordSettleContext) -> SettleOp:
-        src = self.visit(ctx.person(0))
-        dst = self.visit(ctx.person(1))
-        amount = self.visit(ctx.expr())
-        note = self.visit(ctx.description()) if ctx.description() else ""
-        s_date = self.visit(ctx.dateClause()) if ctx.dateClause() else None
-        return SettleOp(from_member=src, to_member=dst, amount=amount, note=note, settle_date=s_date)
+    def visitAssertStmt(self, ctx: SplitLangParser.AssertStmtContext) -> AssertBalancedOp:
+        return AssertBalancedOp()
 
-    def visitSettleUpStmt(self, ctx: SplitLangParser.SettleUpStmtContext) -> SettleUpOp:
-        return SettleUpOp()
+    def visitQuerySummary(self, ctx: SplitLangParser.QuerySummaryContext) -> QueryOp:
+        return QueryOp(query_kind="summary")
 
-    # ------------------------------------------------------------------
-    # 5. Query & Control Rules
-    # ------------------------------------------------------------------
+    def visitQueryBalances(self, ctx: SplitLangParser.QueryBalancesContext) -> QueryOp:
+        return QueryOp(query_kind="balances")
 
-    def visitShowQuery(self, ctx: SplitLangParser.ShowQueryContext) -> QueryOp:
-        target = self.visit(ctx.queryTarget())
-        return QueryOp(query_kind=target)
+    def visitQueryPersonBalance(self, ctx: SplitLangParser.QueryPersonBalanceContext) -> QueryOp:
+        return QueryOp(query_kind="person_balance", target_member=ctx.ID().getText())
 
-    def visitQueryTarget(self, ctx: SplitLangParser.QueryTargetContext) -> str:
-        if ctx.MEMBER_KW():
-            return "members"
-        if ctx.EXPENSES():
-            return "expenses"
-        if ctx.BALANCES():
-            return "balances"
-        if ctx.SUMMARY():
-            return "summary"
-        if ctx.SETTLEMENTS():
-            return "settlements"
-        if ctx.GROUPS():
-            return "groups"
-        return "summary"
+    def visitQueryExpenses(self, ctx: SplitLangParser.QueryExpensesContext) -> QueryOp:
+        return QueryOp(query_kind="expenses")
 
-    def visitWhoOwesWhomQuery(self, ctx: SplitLangParser.WhoOwesWhomQueryContext) -> QueryOp:
-        return QueryOp(query_kind="who_owes_whom")
+    def visitQueryMembers(self, ctx: SplitLangParser.QueryMembersContext) -> QueryOp:
+        return QueryOp(query_kind="members")
 
-    def visitHowMuchOwesQuery(self, ctx: SplitLangParser.HowMuchOwesQueryContext) -> QueryOp:
-        member = self.visit(ctx.person())
-        return QueryOp(query_kind="how_much_owes", target_member=member)
+    def visitQueryGroups(self, ctx: SplitLangParser.QueryGroupsContext) -> QueryOp:
+        return QueryOp(query_kind="groups")
 
-    def visitPersonBalanceQuery(self, ctx: SplitLangParser.PersonBalanceQueryContext) -> QueryOp:
-        member = self.visit(ctx.person())
-        return QueryOp(query_kind="person_balance", target_member=member)
+    def visitQueryEnv(self, ctx: SplitLangParser.QueryEnvContext) -> QueryOp:
+        return QueryOp(query_kind="env")
+
+    def visitSettleQuery(self, ctx: SplitLangParser.SettleQueryContext) -> QueryOp:
+        return QueryOp(query_kind="settle")
 
     def visitUndoCtrl(self, ctx: SplitLangParser.UndoCtrlContext) -> ControlOp:
         return ControlOp(command="undo")
@@ -286,99 +325,63 @@ class SplitLangASTGenerator(SplitLangVisitor):
         return ControlOp(command="help")
 
     # ------------------------------------------------------------------
-    # 6. Recursive List Rules (Right-Recursion in Grammar)
+    # 6. Recursive Lists (CFG Right-Recursion)
     # ------------------------------------------------------------------
 
-    def visitPersonList(self, ctx: SplitLangParser.PersonListContext) -> list[str]:
-        out = [self.visit(ctx.person())]
-        if ctx.personList():
-            out += self.visit(ctx.personList())
+    def visitIdList(self, ctx: SplitLangParser.IdListContext) -> list[str]:
+        out = [ctx.ID().getText()]
+        if ctx.idList():
+            out += self.visit(ctx.idList())
         return out
 
-    def visitExactAllocList(
-        self, ctx: SplitLangParser.ExactAllocListContext
-    ) -> list[tuple[str, Decimal]]:
-        out = [self.visit(ctx.exactAlloc())]
-        if ctx.exactAllocList():
-            out += self.visit(ctx.exactAllocList())
+    def visitAllocList(self, ctx: SplitLangParser.AllocListContext) -> list[tuple[str, ExprNode]]:
+        out = [self.visit(ctx.allocEntry())]
+        if ctx.allocList():
+            out += self.visit(ctx.allocList())
         return out
 
-    def visitExactAlloc(self, ctx: SplitLangParser.ExactAllocContext) -> tuple[str, Decimal]:
-        return (self.visit(ctx.person()), self.visit(ctx.expr()))
-
-    def visitPercentAllocList(
-        self, ctx: SplitLangParser.PercentAllocListContext
-    ) -> list[tuple[str, Decimal]]:
-        out = [self.visit(ctx.percentAlloc())]
-        if ctx.percentAllocList():
-            out += self.visit(ctx.percentAllocList())
-        return out
-
-    def visitPercentAlloc(self, ctx: SplitLangParser.PercentAllocContext) -> tuple[str, Decimal]:
-        pct = Decimal(ctx.PERCENT_LIT().getText().rstrip("%"))
-        return (self.visit(ctx.person()), pct)
-
-    def visitRatioAllocList(
-        self, ctx: SplitLangParser.RatioAllocListContext
-    ) -> list[tuple[str, Decimal]]:
-        out = [self.visit(ctx.ratioAlloc())]
-        if ctx.ratioAllocList():
-            out += self.visit(ctx.ratioAllocList())
-        return out
-
-    def visitRatioAlloc(self, ctx: SplitLangParser.RatioAllocContext) -> tuple[str, Decimal]:
-        return (self.visit(ctx.person()), Decimal(ctx.NUMBER().getText()))
+    def visitAllocEntry(self, ctx: SplitLangParser.AllocEntryContext) -> tuple[str, ExprNode]:
+        return (ctx.ID().getText(), self.visit(ctx.expr()))
 
     # ------------------------------------------------------------------
-    # 7. Arithmetic Expressions (Precedence: * / > + -, Parentheses)
+    # 7. Unified Typed Expressions
     # ------------------------------------------------------------------
 
-    def visitMulDivExpr(self, ctx: SplitLangParser.MulDivExprContext) -> Decimal:
-        left = self.visit(ctx.expr(0))
-        right = self.visit(ctx.expr(1))
-        if ctx.op.type == SplitLangParser.STAR:
-            return left * right
-        if right == 0:
-            raise SemanticError("Division by zero in amount expression.")
-        return left / right
+    def visitUnaryNegExpr(self, ctx: SplitLangParser.UnaryNegExprContext) -> ExprNode:
+        return UnaryNeg(self.visit(ctx.expr()))
 
-    def visitAddSubExpr(self, ctx: SplitLangParser.AddSubExprContext) -> Decimal:
-        left = self.visit(ctx.expr(0))
-        right = self.visit(ctx.expr(1))
-        if ctx.op.type == SplitLangParser.PLUS:
-            return left + right
-        return left - right
+    def visitMulDivExpr(self, ctx: SplitLangParser.MulDivExprContext) -> ExprNode:
+        op = "*" if ctx.op.type == SplitLangParser.STAR else "/"
+        return BinaryOp(op=op, left=self.visit(ctx.expr(0)), right=self.visit(ctx.expr(1)))
 
-    def visitParenExpr(self, ctx: SplitLangParser.ParenExprContext) -> Decimal:
+    def visitAddSubExpr(self, ctx: SplitLangParser.AddSubExprContext) -> ExprNode:
+        op = "+" if ctx.op.type == SplitLangParser.PLUS else "-"
+        return BinaryOp(op=op, left=self.visit(ctx.expr(0)), right=self.visit(ctx.expr(1)))
+
+    def visitParenExpr(self, ctx: SplitLangParser.ParenExprContext) -> ExprNode:
         return self.visit(ctx.expr())
 
-    def visitAtomExpr(self, ctx: SplitLangParser.AtomExprContext) -> Decimal:
-        return self.visit(ctx.amountAtom())
+    def visitSetLitExpr(self, ctx: SplitLangParser.SetLitExprContext) -> ExprNode:
+        ids = self.visit(ctx.idList()) if ctx.idList() else []
+        return SetLit(tuple(ids))
 
-    def visitAmountAtom(self, ctx: SplitLangParser.AmountAtomContext) -> Decimal:
-        if ctx.MONEY_K():
-            return Decimal(ctx.MONEY_K().getText()[:-1]) * Decimal("1000")
-        if ctx.MONEY_M():
-            return Decimal(ctx.MONEY_M().getText()[:-1]) * Decimal("1000000")
-        if ctx.MONEY_USD():
-            return Decimal(ctx.MONEY_USD().getText()[1:])
-        return Decimal(ctx.NUMBER().getText())
+    def visitAllMembersExpr(self, ctx: SplitLangParser.AllMembersExprContext) -> ExprNode:
+        return AllMembersLit()
 
-    # ------------------------------------------------------------------
-    # 8. Leaf Helpers (Person & Description)
-    # ------------------------------------------------------------------
+    def visitPercentLitExpr(self, ctx: SplitLangParser.PercentLitExprContext) -> ExprNode:
+        return PercentLit(Decimal(ctx.PERCENT_LIT().getText().rstrip("%")))
 
-    def visitPerson(self, ctx: SplitLangParser.PersonContext) -> str:
-        raw = ctx.ID().getText()
-        # Allow natural English possessive like "alice's" in "what is alice's balance?"
-        if raw.lower().endswith("'s") and len(raw) > 2:
-            raw = raw[:-2]
-        return raw
+    def visitMoneyKLitExpr(self, ctx: SplitLangParser.MoneyKLitExprContext) -> ExprNode:
+        return MoneyLit(Decimal(ctx.MONEY_K().getText()[:-1]) * Decimal("1000"))
 
-    def visitDescription(self, ctx: SplitLangParser.DescriptionContext) -> str:
-        if ctx.STRING():
-            raw = ctx.STRING().getText()
-            # Strip enclosing quotes and unescape simple escaped quotes
-            inner = raw[1:-1]
-            return inner.replace(r'\"', '"').replace(r"\'", "'")
-        return " ".join(tok.getText() for tok in ctx.ID())
+    def visitMoneyMLitExpr(self, ctx: SplitLangParser.MoneyMLitExprContext) -> ExprNode:
+        return MoneyLit(Decimal(ctx.MONEY_M().getText()[:-1]) * Decimal("1000000"))
+
+    def visitMoneyUsdLitExpr(self, ctx: SplitLangParser.MoneyUsdLitExprContext) -> ExprNode:
+        return MoneyLit(Decimal(ctx.MONEY_USD().getText()[1:]))
+
+    def visitNumberLitExpr(self, ctx: SplitLangParser.NumberLitExprContext) -> ExprNode:
+        return ScalarLit(Decimal(ctx.NUMBER().getText()))
+
+    def visitVarRefExpr(self, ctx: SplitLangParser.VarRefExprContext) -> ExprNode:
+        return VarRef(ctx.ID().getText())

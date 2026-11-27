@@ -1,41 +1,74 @@
-// SplitLang Live Demo Script — Weekend Group Outing (VND)
-// Run with: python cli.py examples/dinner_demo.split --inspect
-// Or click "Run Demo Script" in the SplitLang GUI!
+/*
+ * SplitLang v2.0 Demo Script — Saigon Weekend Outing (VND)
+ * Demonstrates: workspace blocks, typed `let` bindings, set algebra (`all - [charlie]`),
+ * reusable `rule` abstractions, inline & block expenses, itemized `bill`, `transfer ->`,
+ * `assert balanced`, and `settle`.
+ */
 
-group "Saigon Weekend"
-currency VND
+workspace "Saigon Weekend" {
+    currency: VND
+}
 reset
-add members alice, bob, charlie, dave
+member add [alice, bob, charlie, dave]
 
-// 1. Equal split with arithmetic expression (operator precedence: * before +)
-alice paid 120k + 30k * 4 for "Grab & Parking" split equally on 26-11-2026
+// Typed Symbol Table bindings
+let vat      = 10%
+let tip_rate = 5%
+let beer     = 60k
+let drinkers = all - [charlie]
 
-// 2. Equal split excluding a member who skipped coffee
-bob paid 180k for "Specialty Coffee" excluding dave on 26-11-2026
+// Reusable weighted split rule
+rule host_weighted = ratio { alice: 2, bob: 1, charlie: 1, dave: 1 }
 
-// 3. Exact split with tax modifier
-charlie paid 300k for "Cinema Tickets" split exact alice: 100k, bob: 80k, charlie: 60k, dave: 60k on 26-11-2026
+// 1. Inline expense with arithmetic precedence (* binds tighter than +)
+expense "Grab & Parking" paid_by alice = 120k + 30k * 4 split equal(all) on 2026-11-26
 
-// 4. Percentage split for karaoke room
-dave paid 500k for "Karaoke Room" split percent alice: 30%, bob: 30%, charlie: 20%, dave: 20% on 26-11-2026
+// 2. Inline expense using set difference on members
+expense "Specialty Coffee" paid_by bob = 180k split equal(all - [dave]) on 2026-11-26
 
-// 5. Ratio / weighted split with discount
-alice paid 400k for "Hotpot" split ratio alice: 2, bob: 1, charlie: 1, dave: 1 with discount 50k on 26-11-2026
-
-// 6. Block-structured Itemized Bill with proportional tax & tip
-bill "BBQ Night" paid by bob on 26-11-2026 {
-    item "Wagyu Beef Platter" 480k for all
-    item "Craft Beer Tower" 240k for alice, bob, dave
-    item "Matcha Iced Tea" 60k for charlie
-    discount 60k
-    tax 10%
-    tip 5%
+// 3. Structured block expense — exact split
+expense "Cinema Tickets" {
+    payer:  charlie
+    amount: 300k
+    split:  exact { alice: 100k, bob: 80k, charlie: 60k, dave: 60k }
+    date:   2026-11-26
 }
 
-// 7. Partial repayment
-dave pays alice 100k for "partial payback" on 26-11-2026
+// 4. Structured block expense — percentage split
+expense "Karaoke Room" {
+    payer:  dave
+    amount: 500k
+    split:  percent { alice: 30%, bob: 30%, charlie: 20%, dave: 20% }
+    date:   2026-11-26
+}
 
-// 8. Queries & Optimal Minimum-Transfer Settlement Plan
-show summary
-show balances
-settle up
+// 5. Structured block expense referencing reusable split rule
+expense "Hotpot Dinner" {
+    payer:    alice
+    amount:   400k
+    split:    host_weighted
+    discount: 50k
+    date:     2026-11-26
+}
+
+// 6. Block-structured Itemized Receipt using `let` variables & set algebra
+bill "BBQ Night" {
+    payer:    bob
+    date:     2026-11-26
+    item "Wagyu Beef Platter" = 480k     for all
+    item "Craft Beer Tower"   = beer * 4 for drinkers
+    item "Matcha Iced Tea"    = 60k      for [charlie]
+    discount: 60k
+    tax:      vat
+    tip:      tip_rate
+}
+
+// 7. Explicit arrow repayment transfer
+transfer dave -> alice = 100k note "partial payback" on 2026-11-26
+
+// 8. Verify zero-sum ledger invariant & inspect environment/settlements
+assert balanced
+query env
+query summary
+query balances
+settle
