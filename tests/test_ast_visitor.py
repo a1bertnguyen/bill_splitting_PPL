@@ -3,8 +3,7 @@
 from decimal import Decimal
 import pytest
 
-from controller.Response import SplitLangInterpreter
-from module.ASTutils import (
+from backend.compiler.ast_nodes import (
     AssertBalancedOp,
     BillOp,
     BinaryOp,
@@ -17,6 +16,7 @@ from module.ASTutils import (
     TransferOp,
     WorkspaceOp,
 )
+from backend.services.interpreter import SplitLangInterpreter
 
 
 @pytest.fixture
