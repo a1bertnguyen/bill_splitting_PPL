@@ -25,11 +25,8 @@ RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend, ANTLR generated files, demo scripts, and built React SPA
-COPY api ./api
-COPY controller ./controller
-COPY module ./module
-COPY parserAnalyzer ./parserAnalyzer
+# Copy enterprise layered backend, ANTLR generated files, demo scripts, and built React SPA
+COPY backend ./backend
 COPY examples ./examples
 COPY main.py cli.py ./
 COPY --from=frontend-builder /build/frontend/dist ./frontend/dist
@@ -42,4 +39,4 @@ EXPOSE 8000
 HEALTHCHECK --interval=20s --timeout=5s --start-period=15s --retries=3 \
   CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=3)" || exit 1
 
-CMD ["uvicorn", "api.server:get_default_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "backend.app:get_default_app", "--factory", "--host", "0.0.0.0", "--port", "8000"]

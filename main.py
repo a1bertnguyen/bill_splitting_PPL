@@ -30,7 +30,7 @@ def main() -> None:
         threading.Timer(1.0, lambda: webbrowser.open(url)).start()
 
     uvicorn.run(
-        "api.server:get_default_app",
+        "backend.app:get_default_app",
         factory=True,
         host=args.host,
         port=args.port,

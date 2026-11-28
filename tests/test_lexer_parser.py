@@ -1,7 +1,7 @@
 """Unit tests for Stage 2 (Lexer) and Stage 3 (Parser) of SplitLang v2.0."""
 
 import pytest
-from controller.Response import SplitLangInterpreter
+from backend.services.interpreter import SplitLangInterpreter
 
 
 @pytest.fixture

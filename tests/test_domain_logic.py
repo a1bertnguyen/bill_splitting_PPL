@@ -3,8 +3,8 @@
 from decimal import Decimal
 import pytest
 
-from controller.Response import SplitLangInterpreter
-from module.utilFunction import compute_balances, compute_optimal_settlements
+from backend.services.interpreter import SplitLangInterpreter
+from backend.services.split_math import compute_balances, compute_optimal_settlements
 
 
 @pytest.fixture

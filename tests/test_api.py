@@ -22,11 +22,9 @@ import pytest
 from fastapi import HTTPException
 from pydantic import ValidationError
 
-from api.schemas import ExecuteRequest, RegisterRequest
-from api.server import create_app
-from module.config import load_settings
-from module.Database import Database
-from module.security import (
+from backend.app import create_app
+from backend.core.config import load_settings
+from backend.core.security import (
     BotProtector,
     FieldEncryptor,
     SlidingWindowRateLimiter,
@@ -36,6 +34,8 @@ from module.security import (
     verify_csrf_token,
     verify_password,
 )
+from backend.repositories.database import Database
+from backend.schemas.api_schemas import ExecuteRequest, RegisterRequest
 
 
 def test_control_10_argon2id_and_password_policy():

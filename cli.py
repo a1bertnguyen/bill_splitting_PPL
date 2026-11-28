@@ -13,7 +13,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from controller.Response import SplitLangInterpreter
+from backend.services.interpreter import SplitLangInterpreter
 
 
 def print_inspection(res: dict) -> None:
